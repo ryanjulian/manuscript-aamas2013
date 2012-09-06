@@ -21,16 +21,39 @@
 % hyperref setup
 \definecolor{linkCol}{gray}{0.25}
 \hypersetup{
-    pdftitle={},
-    pdfauthor={},
+    pdftitle={Multi-Camera Visual Servoing of a Flapping Wing Micro Air Vehicle},
+    pdfauthor={Ryan C. Julian, Cameron J. Rose, Humphrey Hu, and Ronald S. Fearing},
     pdfsubject={},
     pdfkeywords={},
     pdfpagemode=UseOutlines, bookmarksopen, bookmarksnumbered,
     colorlinks, linkcolor=linkCol, citecolor=linkCol, urlcolor=linkCol
 }
 
-\title{}
-\author{}
+\title{\LARGE \bf Multi-Camera Visual Servoing of a Flapping Wing Micro Air Vehicle}
+
+\author{
+    Ryan C. Julian$^{*}$,
+    Cameron J. Rose$^{*}$,
+    Humphrey Hu$^{\dagger}$, and
+    Ronald S. Fearing$^{*}$
+    \thanks{$^{*}$
+    	R.C. Julian, C.J. Rose and R.S. Fearing are
+        with the Department of Electrical Engineering and Computer Sciences,
+        University of California, Berkeley, CA 94720 USA.
+        \href{mailto:ryanjulian@berkeley.edu}{\tt ryanjulian@berkeley.edu},
+        \href{mailto:c\_rose@eecs.berkeley.edu}{\tt c\_rose@eecs.berkeley.edu},
+        \href{mailto:ronf@eecs.berkeley.edu}{\tt ronf@eecs.berkeley.edu}
+    }
+    \thanks{$^{\dagger}$
+        H. Hu is with the Robotics Institute,
+        Carnegie Mellon University, Pittsburgh, PA 15213 USA.
+        \href{mailto:humphreh@andrew.cmu.edu.edu}{\tt humphreh@andrew.cmu.edu}
+    }
+%    \thanks{
+%        This material is based upon work supported by the National Science
+%        Foundation under Grants No. CNS-0931463 and IIS-0931463.
+%    }
+}
 
 \begin{document}
 
@@ -40,17 +63,100 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{INTRODUCTION}
+\section{Introduction}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/h2bird.jpg}
+\caption{H2Bird Ornithopter Platform}
+\label{fig:H2Bird}
+\end{figure}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{}
+\section{Robotic and Vision Platforms}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %----------------------------------------------------------------------------%
-\subsection{}
+\subsection{Flapping Wing Micro Air Vehicle}
+%TODO(humphrey)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%----------------------------------------------------------------------------%
+\subsection{Computer Vision Platform}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{System Concept and Algorithms}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%----------------------------------------------------------------------------%
+\subsection{MAV Internal Control}
+%TODO(humphrey)
+Due to the high pitch angles experienced by the IBird, a quaternion representation of vehicle pose was chosen to avoid Euler angle singularities. A quaternion-based controller as used in was adapted to control the iBird thrust, yaw, and pitch actuators. Given a reference attitude q, the error qe is dened as the rotation required to reach the reference from the current pose. The components of the error quaternion are then linearized to produce body axis angular errors. Control of the pitch and yaw axes is handled by three PID loops commanding the wing thrust, elevator, and tail prop. This independent PID loop architecture was chosen for simplicity in tuning and implementation, as well as acceptable performance in the absence of a system model. The iBird currently does not have a roll actuator, but our current control scheme has sufficed for the reference tracking in this work.
+
+%----------------------------------------------------------------------------%
+\subsection{Pose Estimation}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%----------------------------------------------------------------------------%
+\subsection{Visual Servoing}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experiments}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%----------------------------------------------------------------------------%
+\subsection{Window Seeking}
+%TODO(cameron)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%----------------------------------------------------------------------------%
+\subsection{Orbiting}
+%TODO(cameron)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Performance}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%----------------------------------------------------------------------------%
+\subsection{MAV Internal Control}
+%TODO(cameron)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%----------------------------------------------------------------------------%
+\subsection{Pose Estimation}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+
+%----------------------------------------------------------------------------%
+\subsection{Visual Servoing}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \addtolength{\textheight}{-0cm}
@@ -63,13 +169,17 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{CONCLUSIONS AND FUTURE WORK}
+\section{Conclusions and Future Work}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{ACKNOWLEDGMENTS}
+\section{Acknowledgements}
+%TODO(ryan)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{IEEEtranS}
-%\bibliography{}
+\bibliography{}
 
 \end{document}
