@@ -2,6 +2,10 @@
 % ICRA 2013 Paper Submission
 % created on Sep 5, 2012
 %
+\def \papertitle{Cooperative Control for Narrow Passage Traversal with a Flapping-Wing Micro Air Vehicle and Lightweight Ground Station}
+
+% NOTE: WE WRITE ALL TEXT IN FIRST PERSON PLURAL ("we")
+% Conventions: flapping-wing, small-scale
 
 %!TEX TS-program = latex
 %!TEX encoding = UTF-8 Unicode
@@ -21,7 +25,7 @@
 % hyperref setup
 \definecolor{linkCol}{gray}{0.25}
 \hypersetup{
-    pdftitle={Multi-Camera Visual Servoing of a Flapping Wing Micro Air Vehicle},
+    pdftitle={\papertitle},
     pdfauthor={Ryan C. Julian, Cameron J. Rose, Humphrey Hu, and Ronald S. Fearing},
     pdfsubject={},
     pdfkeywords={},
@@ -29,8 +33,10 @@
     colorlinks, linkcolor=linkCol, citecolor=linkCol, urlcolor=linkCol
 }
 
-\title{\LARGE \bf Multi-Camera Visual Servoing of a Flapping Wing Micro Air Vehicle}
+% Title
+\title{\LARGE \bf \papertitle}
 
+% Authors
 \author{
     Ryan C. Julian$^{*}$,
     Cameron J. Rose$^{*}$,
@@ -47,7 +53,7 @@
     \thanks{$^{\dagger}$
         H. Hu is with the Robotics Institute,
         Carnegie Mellon University, Pittsburgh, PA 15213 USA.
-        \href{mailto:humphreh@andrew.cmu.edu.edu}{\tt humphreh@andrew.cmu.edu}
+        \href{mailto:humphreh@andrew.cmu.edu}{\tt humphreh@andrew.cmu.edu}
     }
     \thanks{
         This material is based upon work supported by the National Science
@@ -66,99 +72,83 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+The power, size, and weight constraints of micro air vehicle (MAV) platforms limit their on-board sensing and computational resources. In this work, we demonstrate cooperative control of a 14 gram ornithopter MAV by a lightweight ground station using computer vision. We also introduce a new ornithopter MAV platform, the h$^2$Bird, which...
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
-\begin{figure}[tb]
-\centering
-\includegraphics[width=\linewidth]{figures/h2bird.jpg}
-\caption{H2Bird Ornithopter Platform}
-\label{fig:H2Bird}
-\end{figure}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
+The power, size, and weight constraints of micro air vehicle (MAV) platforms significantly limit on-board sensing and computational resources, and thus the complexity of the control and state estimation algorithms which can be executed on-board. These constraints are particularly severe for flapping wing MAVs offer the promise of superior safety, efficiency, and noise profile to rotor craft MAVs, but at the expense of payload weight.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %----------------------------------------------------------------------------%
-\subsection{Flapping Wing Micro Air Vehicle}
+\subsection{h$^2$Bird Ornithoper MAV}
 %TODO(humphrey)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/h2bird.jpg}
+\caption{h$^2$Bird Ornithopter MAV}
+\label{fig:H2Bird}
+\end{figure}
+
 
 %----------------------------------------------------------------------------%
-\subsection{Computer Vision Platform}
+\subsection{Ground Station Computer Vision Platform}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Concept and Algorithms}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %----------------------------------------------------------------------------%
-\subsection{MAV Internal Control}
+\subsection{Ornithoper Flight Control}
 %TODO(humphrey)
-Due to the high pitch angles experienced by the IBird, a quaternion representation of vehicle pose was chosen to avoid Euler angle singularities. A quaternion-based controller as used in was adapted to control the iBird thrust, yaw, and pitch actuators. Given a reference attitude q, the error qe is dened as the rotation required to reach the reference from the current pose. The components of the error quaternion are then linearized to produce body axis angular errors. Control of the pitch and yaw axes is handled by three PID loops commanding the wing thrust, elevator, and tail prop. This independent PID loop architecture was chosen for simplicity in tuning and implementation, as well as acceptable performance in the absence of a system model. The iBird currently does not have a roll actuator, but our current control scheme has sufficed for the reference tracking in this work.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/h2bird_axes.jpg}
+\caption{h$^2$Bird Ornithopter with flight control axes}
+\label{fig:H2Bird}
+\end{figure}
+
+We use simple controllers to actuate the h$^2$Bird's wing beat frequency, tail rotor, and tail elevator, which we designed to actuate thrust, yaw, and pitch respectively. Due to the high pitch angles experienced by the h$^2$Bird, we use a quaternion representation of vehicle attitude to avoid the numerical instabilities of Euler angle representations. Given a reference attitude $q$, we define the error $q_e$ as the rotation required to reach the reference attitude from the measured attitude. We then linearize the error quaternion to produce body axis angular errors. Three independent proportional-integral-derivative controllers commanding the wing thrust, elevator, and tail propeller. We use this independent PID controller architecture for simplicity in tuning and implementation, and because it demonstrates acceptable performance in the absence of a system model.
 
 %----------------------------------------------------------------------------%
 \subsection{Pose Estimation}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %----------------------------------------------------------------------------%
 \subsection{Visual Servoing}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiments}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
-%----------------------------------------------------------------------------%
-\subsection{Window Seeking}
-%TODO(cameron)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
-%----------------------------------------------------------------------------%
-\subsection{Orbiting}
-%TODO(cameron)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Performance}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %----------------------------------------------------------------------------%
 \subsection{MAV Internal Control}
 %TODO(cameron)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %----------------------------------------------------------------------------%
 \subsection{Pose Estimation}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %----------------------------------------------------------------------------%
 \subsection{Visual Servoing}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \addtolength{\textheight}{-0cm}
@@ -173,13 +163,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et d
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Acknowledgements}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
+The authors would like to thank Fernando L. Garcia Bermudez for his assistance with the Vicon motion capture system, and the members of the Biomimetic Millisystems Laboratory and the EECS community at the University of California, Berkeley for their advice and support.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{IEEEtranS}
 \bibliography{}
