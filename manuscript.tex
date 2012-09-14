@@ -87,6 +87,7 @@ The power, size, and weight constraints of micro air vehicle (MAV) platforms sig
 %----------------------------------------------------------------------------%
 \subsection{h$^2$Bird Ornithoper MAV}
 %TODO(humphrey)
+<<<<<<< HEAD
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/h2bird.jpg}
@@ -94,6 +95,9 @@ The power, size, and weight constraints of micro air vehicle (MAV) platforms sig
 \label{fig:H2Bird}
 \end{figure}
 
+=======
+The flying platform used in this experiment is the H2Bird flapping wing MAV. Built around the Silverlit I-Bird RC flyer powertrain and clap-fling wings, the H2Bird has a wingspan of [40?] cm and weighs [14?] grams fully loaded. A tail propeller and servo-controlled tail elevator provide control in the yaw and pitch axes. An onboard electronics package combines a 40 MIPS microprocessor, 6 DoF IMU, 802.15.4 radio, VGA camera, and motor drivers with a 90 mAh lithium polymer battery for autonomous flight. In routine flight, the H2Bird averages [insert speed] m/s ground speed and can operate for approximately [10] minutes.
+>>>>>>> origin/humphrey
 
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Computer Vision Platform}
@@ -117,6 +121,26 @@ The power, size, and weight constraints of micro air vehicle (MAV) platforms sig
 \end{figure}
 
 We use simple controllers to actuate the h$^2$Bird's wing beat frequency, tail rotor, and tail elevator, which we designed to actuate thrust, yaw, and pitch respectively. Due to the high pitch angles experienced by the h$^2$Bird, we use a quaternion representation of vehicle attitude to avoid the numerical instabilities of Euler angle representations. Given a reference attitude $q$, we define the error $q_e$ as the rotation required to reach the reference attitude from the measured attitude. We then linearize the error quaternion to produce body axis angular errors. Three independent proportional-integral-derivative controllers commanding the wing thrust, elevator, and tail propeller. We use this independent PID controller architecture for simplicity in tuning and implementation, and because it demonstrates acceptable performance in the absence of a system model.
+Rudimentary attitude control for the H2Bird runs onboard, estimating pose by naively integrating the IMU and depending on PID for control. The simplistic nature of our state estimation and control is due to the stringent resource constraints applied by the platform.
+
+A quaternion representation of vehicle pose was chosen to avoid Euler angle singularities. This choice of pose representation also lends itself well to remote guidance, as relative body and world coordinate angular displacements can be represented compactly with quaternion multiplication. 
+
+Given a reference attitude $q$, the error $q_e$ is defined as the rotation required to reach the reference from the current pose. The components of the error quaternion are then linearized to produce body axis angular errors. Control of the pitch and yaw axes is handled by three PID loops commanding the wing thrust, elevator, and tail prop.
+
+\begin{equation}
+\label{quat_error}
+q_e = q'\otimes q_r
+\end{equation}
+
+\begin{equation}
+\label{quat_angle}
+\alpha = 2acos(q_{e,w})
+\end{equation}
+
+\begin{equation}
+\label{quat_linearize}
+Q_e = \alpha*q_e/sin(\alpha /2)
+\end{equation}
 
 %----------------------------------------------------------------------------%
 \subsection{Pose Estimation}
