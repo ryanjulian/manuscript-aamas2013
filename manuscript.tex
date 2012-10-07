@@ -71,8 +71,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-%TODO(ryan)
-The power, size, and weight constraints of micro air vehicle (MAV) platforms limit their on-board sensing and computational resources. In this work, we demonstrate cooperative control of a 14 gram ornithopter MAV by a lightweight ground station using computer vision. We also introduce a new ornithopter MAV platform, the h$^2$Bird, which...
+The power, size, and weight constraints of micro air vehicle (MAV) platforms limit their on-board sensing and computational resources. Ground vehicles have less mobility than MAVs, but relaxed size constrains and typically more computing power, creating a opportunity for cooperation between the two platforms. In this work, we demonstrate cooperative target-seeking by a 14 gram ornithopter MAV with a lightweight ground station using computer vision. We also introduce a new ornithopter MAV platform, the H$^2$Bird, which features clap and fling flight mechanics and improves upon a previous design with yaw and pitch control and improved payload. To augment the built-in navigation and sensing capabilities of the ornithopter, the ground station to provides heading estimates to the ornithoper by running a real-time motion tracking algorithm over the a live video stream. This allows the ornithopter to negotiate indoor navigation through a window. We discuss the performance of both the location estimation and navigation algorithms. We analytically determine the backwards-reachable region for successfully navigating through the window, and use it to determine the operational limits of the system. Finally, we verify this region through data collected in experimental trials. We achieve a success rate of X\% within the feasible region.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,7 +89,7 @@ The power, size, and weight constraints of micro air vehicle (MAV) platforms sig
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=\linewidth]{figures/h2bird.jpg}
+\includegraphics[width=\linewidth]{figures/h2bird.png}
 \caption{H$^2$Bird Ornithopter MAV}
 \label{fig:h2bird}
 \end{figure}
@@ -109,9 +108,9 @@ The flying platform used in this experiment is the H$^2$Bird flapping wing MAV. 
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=\linewidth]{figures/block_diagrams.pdf}
-\caption{Overall block diagram of cooperative control}
-\label{fig:block_diagram}
+\includegraphics[width=\linewidth]{figures/process_flow.pdf}
+\caption{Process flow diagram for the cooperative control system.}
+\label{fig:process_flow}
 \end{figure}
 
 %----------------------------------------------------------------------------%
@@ -160,10 +159,19 @@ Q_e = \alpha*q_e/sin(\alpha /2)
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=\linewidth]{figures/h2bird.jpg}
-\caption{Frame sequence from particle filter video, showing particles and state estimate}
+\includegraphics[width=\linewidth]{figures/block_diagrams.pdf}
+\caption{Overall block diagram of cooperative control}
+\label{fig:block_diagram}
+\end{figure}
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/pf_screencap.pdf}
+\caption{Frame sequence from video feed used for tracking, showing particles and state estimate}
 \label{fig:pf_screencap}
 \end{figure}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -200,9 +208,9 @@ Q_e = \alpha*q_e/sin(\alpha /2)
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=\linewidth]{figures/window_trials.jpg}
+\includegraphics[width=\linewidth]{figures/flight_paths.pdf}
 \caption{Plot of camera field-of-view and H$^2$Bird minimum turning radius cone, with experimental trials overlayed.}
-\label{fig:experiment_cone}
+\label{fig:flight_paths}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
