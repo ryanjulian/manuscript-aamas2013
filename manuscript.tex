@@ -173,7 +173,7 @@ with collected in experiments with window traversal.
 % http://www.acm.org/about/class/1998/.
 
 \category{I.2.9}{Robotics}{Autonomous Vehicles}
-\category{I.2.9}{Robotics}{Distributed Artificial Intelligence}[Multiagent systems] 
+\category{I.2.9}{Robotics}{Distributed Artificial Intelligence}[Multiagent Systems]
 \category{I.2.9}{Robotics}{Vision and Scene Understanding}[Motion]
 
 % A category including the fourth, optional field follows...
@@ -354,54 +354,68 @@ particles and state estimate}
 \label{fig:step_response}
 \end{figure}
 
-We determined the turning speed and turning radius of the H$^2$Bird 
-experimentally using the response of the system to the input of a 90 
-degree turn to the right. The results of this experiment are depicted in 
-Figure \ref{fig:step_response}. The data for the experiment was gathered 
-from the gyro data integrated on-board the H$^2$Bird. We used Matlab to 
-fit a simple low-order model, $H(s) = \frac{0.94782}{1+0.61998s}$, of the 
-turning system to the step response with the physical heading as the state 
-and the heading setpoint as the input. We use this model in Section X to 
-determine the backwards reachable set for navigating through the window in 
-simulation.
+We determined the turning speed and turning radius of the H$^2$Bird
+experimentally using the response of the system to the step input of a
+clockwise 90 degree turn. The results of this experiment are depicted in
+Figure~\ref{fig:step_response}. The data for the experiment was gathered from
+the integration of the H$^2$Bird's built in gyroscope data. We used Matlab to
+fit a simple low-order model, $H(s) = \frac{0.94782}{1+0.61998s}$, of the
+turning behavior to the step response with the physical heading as the state
+and the heading set point as the input. This model serves as a simplification
+of both the turning dynamics of the ornithopter and the on-board PID
+controller regulating the actuator inputs to reach the desired orientation. We
+use this model in Section~\ref{sec:visual_servoing} to determine the backwards
+reachable region for navigating through the window in simulation.
 
-The step response exhibits a rise time of approximately 1.4 seconds. The H
-$^2$Bird flies at an average forward velocity of 1.2 m/s, so the estimated 
-minimum turning radius of the robot is 1.07 meters.
+The step response has a rise time of approximately 1.4 seconds. The H$^2$Bird
+flies at an average forward velocity of 1.2 m/s, so the estimated minimum
+turning radius of the robot is 1.07 meters. This flight speed is slower than
+the maximum speed of the ornithopter to facilitate more reliable tracking.
 
 
 %----------------------------------------------------------------------------%
 \subsection{Visual Servoing}
+\label{sec:visual_servoing}
 %TODO(cameron)
 
-\begin{figure}[tb]
+\begin{figure*}[tb]
+\begin{minipage}[b]{0.45\linewidth}
 \centering
-\includegraphics[width=\linewidth]{figures/feasible_set.pdf}
+\includegraphics[width=\textwidth]{figures/feasible_set.pdf}
 \caption{Plot of backwards reachable set for successful window traversal.}
 \label{fig:feasible_set}
-\end{figure}
-
-\begin{figure}[tb]
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.45\linewidth}
 \centering
-\includegraphics[width=\linewidth]{figures/flight_paths.pdf}
+\includegraphics[width=\textwidth]{figures/flight_paths.pdf}
 \caption{Plot of camera field-of-view and H$^2$Bird minimum turning radius 
 cone, with experimental trials overlayed.}
 \label{fig:flight_paths}
-\end{figure}
+\end{minipage}
+\end{figure*}
 
-We determined the backwards reachable set of initial states for sussessful 
-window traversal both geometrically and in simulation. The results are 
-shown in Figure X. The geometrically infeasible region is indicated in 
-blue and was computed using the minimum turning radius and simple 
-geometery. Both the regions in red and blue indicate the infeasible region 
-determined in simulation. We executed the simulation on the fitted turning 
-model described in Section \ref{sec:flight_control}, with a PID controller 
-steering the system to the center of the window as the input. The 
-infeasible region calculated in simulation is a superset of the 
-geometrically infeasible region, and is closer to the true infeasible 
-region of the real system.
 
-The
+We determined the backwards reachable set of initial states for successful
+window traversal both geometrically and in simulation. The results are shown
+in Figure~\ref{fig:feasible_set}. The initial conditions that we chose are
+spatially gridded in the camera viewing region at 0.05 meter increments and an
+initial angular position perpendicular to the window plane. The geometrically
+infeasible region is indicated in blue and was computed using the minimum
+turning radius and simple geometry. Both the regions in red and blue indicate
+the infeasible region determined in simulation. We simulated the turning model
+described in Section~\ref{sec:flight_control}, with a PID controller steering
+the system to the center of the window as the input. The infeasible region
+calculated in simulation is a superset of the geometrically infeasible region.
+The simulation is more realistic as the rotational damping during the turn and
+the on-board PID controller cause the real system to react to inputs at a
+non-constant angular velocity.
+
+To verify the feasible region experimentally, we conducted trials at initial
+distances in X meter increments from the window along the edges of the image
+frame of the camera. We started each trial with an initial heading
+perpendicular to the window plane. The results of the experiments are shown in
+Figure~\ref{fig:flight_paths}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
