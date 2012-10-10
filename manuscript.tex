@@ -39,6 +39,24 @@
 
 \documentclass{aamas2013}
 
+% Packages
+\usepackage{color}
+\usepackage[pdftex]{hyperref}
+
+% PDF bookmarks
+\definecolor{linkCol}{gray}{0.25}
+\hypersetup{
+    pdftitle={Cooperative Control for Narrow Passage Traversal with an 
+Ornithopter Micro Air Vehicle and Lightweight Ground Station},
+    pdfauthor={R.C. Julian, C.J. Rose, H. Hu, and R.S. Fearing},
+    pdfsubject={},
+    pdfkeywords={AAMAS proceedings, multiagent systems, cooperative control, 
+particle filter, micro air vehicle, ground station, visual servoing, pose 
+estimation, flapping wing, ornithopter, biomimetic},
+    pdfpagemode=UseOutlines, bookmarksopen, bookmarksnumbered,
+    colorlinks, linkcolor=linkCol, citecolor=linkCol, urlcolor=linkCol
+}
+
 % if you are using PDF LaTex and you cannot find a way for producing
 % letter, the following explicit settings may help
  
@@ -364,7 +382,7 @@ of both the turning dynamics of the ornithopter and the on-board PID
 controller regulating the actuator inputs to reach the desired orientation. We
 use this model in Section~\ref{sec:visual_servoing} to determine the backwards
 reachable region for navigating through the window in simulation.
-
+\\
 The step response has a rise time of approximately 1.4 seconds. The H$^2$Bird
 flies at an average forward velocity of 1.2 m/s, so the estimated minimum
 turning radius of the robot is 1.07 meters. This flight speed is slower than
@@ -408,13 +426,13 @@ calculated in simulation is a superset of the geometrically infeasible region.
 The simulation is more realistic as the rotational damping during the turn and
 the on-board PID controller cause the real system to react to inputs at a
 non-constant angular velocity.
-
+\\
 To verify the feasible region experimentally, we conducted trials at initial
 distances in X meter increments from the window along the edges of the image
 frame of the camera. We started each trial with an initial heading
 perpendicular to the window plane. The results of the experiments are shown in
 Figure~\ref{fig:flight_paths}.
-
+\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
 %TODO ryan
