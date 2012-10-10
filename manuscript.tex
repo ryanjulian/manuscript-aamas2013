@@ -157,7 +157,7 @@ features clap and fling wings, improves upon a previous design by
 utilizing a carbon fiber airframe, tail rotor, and elevator, and carries a 
 payload of 2.8 grams. We augment the ornithopter's built-in 
 gyroscope-based control with a ground station, which has power and weight 
-requirements appropriate for deployment on a ground vehicle. The ground 
+requirements appropriate for deployment on 30 gram a ground vehicle. The ground 
 station provides heading estimates to the ornithoper by running a 
 real-time motion tracking algorithm on a live video stream. This allows 
 the ornithopter to reliably negotiate flight through narrow openings.
@@ -290,12 +290,10 @@ model.
 \label{quat_error}
 q_e = q'\otimes q_r
 \end{equation}
-
 \begin{equation}
 \label{quat_angle}
 \alpha = 2acos(q_{e,w})
 \end{equation}
-
 \begin{equation}
 \label{quat_linearize}
 Q_e = \alpha*q_e/sin(\alpha /2)
