@@ -331,28 +331,28 @@ the maximum speed of the ornithopter to facilitate more reliable tracking.
 
 %TODO make these span the page, with identical scales/style
 \begin{figure*}[tb]
-\begin{minipage}[b]{0.45\linewidth}
+
+\begin{minipage}{\linewidth}
 \centering
-\includegraphics[width=\textwidth]{figures/feasible_set.pdf}
-\caption{Plot of backwards reachable set for successful window traversal.}
+\includegraphics[width=0.45\textwidth]{figures/feasible_set.pdf}
+\caption{Plot of camera field-of-view and backwards reachable set for successful window traversal.}
 \label{fig:feasible_set}
 \end{minipage}
-\hspace{0.5cm}
+\vspace{1em}
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{figures/flight_paths_feasible.pdf}
+\caption{Plot of camera field of view and experimental trials within the feasible region.}
+\label{fig:flight_paths_feasible}
+\end{minipage}
+\hfill
 \begin{minipage}[b]{0.45\linewidth}
 \centering
 \includegraphics[width=\textwidth]{figures/flight_paths.pdf}
-\caption{Plot of camera field-of-view and H$^2$Bird minimum turning radius 
-cone, with experimental trials overlayed.}
+\caption{Plot of camera field-of-view and perimeter experimental trials overlayed.}
 \label{fig:flight_paths}
 \end{minipage}
 \end{figure*}
-
-\begin{figure}[tb]
-\centering
-\includegraphics[width=\linewidth]{figures/flight_paths_feasible.pdf}
-\caption{Plot of camera field of view and experimental trials within the feasible region.}
-\label{fig:flight_paths_feasible}
-\end{figure}
 
 We determined the backwards reachable set of initial states for successful
 window traversal both geometrically and in simulation. The results are shown
