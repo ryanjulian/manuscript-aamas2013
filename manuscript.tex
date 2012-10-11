@@ -169,23 +169,22 @@ expense of payload weight.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
-%TODO ryan
+% ryan
 
 %----------------------------------------------------------------------------%
 \subsection{H$^2$Bird Ornithoper MAV}
-%TODO(humphrey)
-The flying platform used in this experiment is the H$^2$Bird flapping wing 
-MAV. Built around the Silverlit I-Bird RC flyer power train and clap-fling 
-wings, the H$^2$Bird has a wingspan of [40?] cm and has a flight weight of 
-13 grams. A tail propeller and servo-controlled tail elevator provide 
-control in the yaw and pitch axes. The on-board electronics package consists of 
-a 40 MIPS microprocessor, 6 DOF IMU, IEEE 802.15.4 radio, VGA camera, and motor 
-drivers with a 90 mAh lithium polymer battery. In routine flight, the H$^2$Bird 
-averages [1.2 m/s] and can operate for approximately 10 minutes.
-
+% humphrey
+In order to conduct these experiments on cooperation we designed a new
+flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit I-Bird 
+RC flyer power train and clap-fling wings, the H$^2$Bird's wingspan is 26.5 
+cm and it has a flight weight of 13 grams. A tail propeller and 
+servo-controlled tail elevator provide control in the yaw and pitch axes. The 
+on-board electronics package consists of a 40 MIPS microprocessor, 6 DOF IMU, 
+IEEE 802.15.4 radio, VGA camera, and motor drivers, all powered by a 90 mAh 
+lithium polymer battery. In routine flight, the H$^2$Bird averages 1.2 m/s 
+ground speed and can operate for approximately 10 minutes.
 %TODO footnote for Silverlit I-Bird
-%TODO measure wingspan
-%TODO ground speed
+%TODO footnote for ImageProc
 
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Computer Vision Platform}
@@ -213,20 +212,19 @@ averages [1.2 m/s] and can operate for approximately 10 minutes.
 \caption{H$^2$Bird Ornithopter with flight control axes}
 \label{fig:h2Bird_axes}
 \end{figure}
+%TODO label ibird drawing
 
 Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
 acceptable tracking performance. We estimate the vehicle pose by naively
-integrating the IMU, and use PID for controlling the vehicle. The simplistic 
-nature of our approach arises from the stringent resource constraints 
-of our platform, but nonetheless is not a completely trivial implementation.
+integrating the IMU, and use PID for controlling the vehicle.
 
 One characteristic of the H$^2$Bird that separates it from other MAVs is the
-high pitch angles experienced in routine flight. An Euler angle 
-parameterization of the vehicle orientation would suffer from singularities
+high pitch angles achieved in routine flight. An Euler angle 
+parametrization of the vehicle orientation suffers from singularities
 around these high pitch angles, so we instead represent the vehicle orientation
 with quaternions. An additional benefit of the quaternion representation is 
 the ability to represent relative body and world coordinate angular displacements 
-compactly with quaternion multiplication.%~\cite{bowman:reasoning} 
+compactly with quaternion multiplication
 
 Given a reference quaternion $q$, we define the error $q_e$ as the rotation 
 required to reach the reference pose from the measured pose. We then 
@@ -282,14 +280,14 @@ particles and state estimate}
 \caption{Conceptual sketch of experimental environment.}
 \label{fig:experiment_cartoon}
 \end{figure}
+%TODO label experiment cartoon
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Performance}
 %TODO cameron
-
-To judge the performance of our system described in the previous sections, we
+To bound the performance of our system described in the previous sections, we
 determined the feasible set of initial conditions that resulted in successful
 window traversal. We then conducted experiments to calculate the success rate
 both within the feasible region and on the edges of the feasible region. The
@@ -310,9 +308,9 @@ experimental trials.
 
 We determined the turning speed and turning radius of the H$^2$Bird
 experimentally using the response of the system to the step input of a
-clockwise 90 degree turn. The results of this experiment are depicted in
-Figure~\ref{fig:step_response}. The data for the experiment was gathered from
-the integration of the H$^2$Bird's on-board gyroscope data. We used Matlab to
+clockwise 90 degree turn. We depict the results of this experiment in
+Figure~\ref{fig:step_response}. We gathered the data for the experiment by 
+integrating the output of H$^2$Bird's on-board gyroscope data. We used MATLAB to
 fit a simple low-order model, $H(s) = \frac{0.94782}{1+0.61998s}$, of the
 turning behavior to the step response with the physical heading as the state
 and the heading set point as the input. This model serves as a simplification
@@ -320,12 +318,14 @@ of both the turning dynamics of the ornithopter and the on-board PID
 controller regulating the actuator inputs to reach the desired orientation. We
 use this model in Section~\ref{sec:visual_servoing} to determine the backwards
 reachable region for navigating through the window in simulation.
-\\
-The step response has a rise time of approximately 1.4 seconds. The H$^2$Bird
+
+The step response rise time is approximately 1.4 seconds. The H$^2$Bird
 flies at an average forward velocity of 1.2 m/s, so the estimated minimum
-turning radius of the robot is 1.07 meters. This flight speed is slower than
-the maximum speed of the ornithopter to facilitate more reliable tracking.
-\\
+turning radius of the robot is 1.07 meters. In experiments, we choose a flight
+speed lower thanthe maximum speed of the ornithopter, to facilitate more
+robust tracking.
+%TODO footnote for MATLAB
+
 %----------------------------------------------------------------------------%
 \subsection{Visual Servoing}
 \label{sec:visual_servoing}
