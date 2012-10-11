@@ -1,130 +1,254 @@
+% AAMAS 2013 Manuscript
+
+% This file should be compiled with "aamas2013.cls" 
+% ----------------------------------------------------------------------
+% REMEMBER: After having produced the .bbl file,
+% and prior to final submission, you *NEED* to 'insert'
+% your .bbl file into your source .tex file so as to provide
+% ONE 'self-contained' source file.
+% ----------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STYLE NOTES
 %
-% ICRA 2013 Paper Submission
-% created on Sep 5, 2012
+% TENSE AND VOICE
+% * Actual experimental events
+% 	We wrote descriptions of actual experimental events using past tense, in 
+%	active voice, as the first person plural.
 %
+% * All other contexts
+%	We write all other text using present tense, in active voices, as the
+%	the first person plural.  
+%
+% CONVENTIONS
+% flapping-wing, small-scale, lightweight, MAV
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SETUP
+\documentclass{aamas2013}
 
-%!TEX TS-program = latex
-%!TEX encoding = UTF-8 Unicode
-
-\documentclass[letterpaper, 10 pt, conference]{ieeeconf}
-\IEEEoverridecommandlockouts % for \thanks
-\overrideIEEEmargins % for \addtolength
-
-% Packages
+%----------------------------------------------------------------------------%
+% PACKAGES
 \usepackage{color}
-\usepackage[pdftex]{graphicx}
-\usepackage{subfig}
-\usepackage{multirow}
-\usepackage{rotating}
 \usepackage[pdftex]{hyperref}
 
-% hyperref setup
+%----------------------------------------------------------------------------%
+% METADATA
+\def \papertitle{Cooperative Control for Narrow Passage Traversal with an 
+Ornithopter Micro Air Vehicle and Lightweight Ground Station}
+\def \paperkeywords{AAMAS proceedings, multiagent systems, cooperative control, 
+particle filter, micro air vehicle, ground station, visual servoing, pose 
+estimation, flapping wing, ornithopter, biomimetic}
+\def \paperterms{Algorithms, Performance, Design, Experimentation}
+\def \paperauthors{Ryan C. Julian, Cameron J. Rose, Humphrey Hu, and Ronald S. Fearing}
+
+% Set title
+\title{\papertitle}
+
+% PDF bookmarks
 \definecolor{linkCol}{gray}{0.25}
 \hypersetup{
-    pdftitle={Multi-Camera Visual Servoing of a Flapping Wing Micro Air Vehicle},
-    pdfauthor={Ryan C. Julian, Cameron J. Rose, Humphrey Hu, and Ronald S. Fearing},
-    pdfsubject={},
-    pdfkeywords={},
+    pdftitle={\papertitle},
+    pdfauthor={\paperauthors},
+    pdfsubject={\paperterms},
+    pdfkeywords={\paperkeywords},
     pdfpagemode=UseOutlines, bookmarksopen, bookmarksnumbered,
     colorlinks, linkcolor=linkCol, citecolor=linkCol, urlcolor=linkCol
 }
 
-\title{\LARGE \bf Multi-Camera Visual Servoing of a Flapping Wing Micro Air Vehicle}
-
-\author{
-    Ryan C. Julian$^{*}$,
-    Cameron J. Rose$^{*}$,
-    Humphrey Hu$^{\dagger}$, and
-    Ronald S. Fearing$^{*}$
-    \thanks{$^{*}$
-    	R.C. Julian, C.J. Rose and R.S. Fearing are
-        with the Department of Electrical Engineering and Computer Sciences,
-        University of California, Berkeley, CA 94720 USA.
-        \href{mailto:ryanjulian@berkeley.edu}{\tt ryanjulian@berkeley.edu},
-        \href{mailto:c\_rose@eecs.berkeley.edu}{\tt c\_rose@eecs.berkeley.edu},
-        \href{mailto:ronf@eecs.berkeley.edu}{\tt ronf@eecs.berkeley.edu}
-    }
-    \thanks{$^{\dagger}$
-        H. Hu is with the Robotics Institute,
-        Carnegie Mellon University, Pittsburgh, PA 15213 USA.
-        \href{mailto:humphreh@andrew.cmu.edu.edu}{\tt humphreh@andrew.cmu.edu}
-    }
-    \thanks{
-        This material is based upon work supported by the National Science
-        Foundation under Grants No. CNS-0931463, and by the Army Research
-        Laboratory under the Micro Autonomous System and Technology
-        Collaborative Technology Alliance.
-    }
-}
+%----------------------------------------------------------------------------%
+% pdfLatex clean-up 
+\pdfpagewidth=8.5truein
+\pdfpageheight=11truein
 
 \begin{document}
 
-\maketitle
-\thispagestyle{empty}
-\pagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AUTHORS
+
+%% Paper number instead of authors
+%\numberofauthors{1}
+%\alignauthor Paper  XXX
+
+\numberofauthors{4}
+\author{
+\alignauthor Ryan C. Julian\\
+       \affaddr{Department of EECS}\\
+       \affaddr{Univ. of California, Berkeley}\\
+       \affaddr{Berkeley, CA 94720}\\
+       \email{ryanjulian@berkeley.edu}
+\alignauthor Cameron J. Rose\\
+       \affaddr{Department of EECS}\\
+       \affaddr{Univ. of California, Berkeley}\\
+       \affaddr{Berkeley, CA 94720}\\
+       \email{c\_rose@eecs.berkeley.edu}
+\alignauthor Humphrey Hu\\
+       \affaddr{Robotics Institute}\\
+       \affaddr{Carnegie Mellon University}\\
+       \affaddr{Pittsburgh, PA 15213}\\
+       \email{humhu@cmu.edu}
+\and
+\alignauthor Ronald S. Fearing\\
+       \affaddr{Department of EECS}\\
+       \affaddr{Univ. of California, Berkeley}\\
+       \affaddr{Berkeley, CA 94720}\\
+       \email{ronf@eecs.berkeley.edu}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT
 \begin{abstract}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+The power, size, and weight constraints of micro air vehicles (MAVs) limit 
+their on-board sensing and computational resources. Ground vehicles have 
+less mobility than MAVs, but relaxed size constraints and typically more 
+computing power, creating opportunities for cooperation. In this work, we 
+demonstrate cooperative target-seeking between a 13 gram ornithopter MAV 
+and a lightweight ground station using computer vision.
+
+We also introduce a new ornithopter MAV, the 13 gram H$^2$Bird. It 
+features clap and fling wings, improves upon a previous design by 
+utilizing a carbon fiber airframe, tail rotor, and elevator, and carries a 
+payload of 2.8 grams. We augment the ornithopter's built-in 
+gyroscope-based control with a ground station, which has power and weight 
+requirements appropriate for deployment on 30 gram a ground vehicle. The ground 
+station provides heading estimates to the ornithoper by running a 
+real-time motion tracking algorithm on a live video stream. This allows 
+the ornithopter to reliably negotiate flight through narrow openings.
+
+We demonstrate the performance of the location estimation and navigation 
+algorithms. We model the backwards-reachable region for successfully 
+navigating through narrow openings. Finally, we verify this model through 
+with collected in experiments with window traversal.
 \end{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACM METADATA
+
+% Note that the category section should be completed after reference to 
+% the ACM Computing Classification Scheme available at
+% http://www.acm.org/about/class/1998/.
+% A category including the fourth, optional field follows...
+%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, 
+% performance measures]
+\category{I.2.9}{Robotics}{Autonomous Vehicles}
+\category{I.2.9}{Robotics}{Distributed Artificial Intelligence}[Multiagent Systems]
+\category{I.2.9}{Robotics}{Vision and Scene Understanding}[Motion]
+
+% General terms should be selected from the following 16 terms: 
+% Algorithms, Management, Measurement, Documentation, Performance, 
+% Design, Economics, Reliability, Experimentation, Security, 
+% Human Factors, Standardization, Languages, Theory, Legal Aspects, 
+% Verification.
+\terms{\paperterms}
+
+% Keywords are your own choice of terms you would like the paper to be indexed 
+% by.
+\keywords{\paperkeywords}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 %TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+The power, size, and weight constraints of micro air vehicle (MAV) 
+platforms significantly limit on-board sensing and computational 
+resources, and thus the complexity of the control and state estimation 
+algorithms which can be executed on-board. These constraints are 
+particularly severe for flapping wing MAVs offer the promise of superior 
+safety, efficiency, and noise profile to rotor craft MAVs, but at the 
+expense of payload weight.
 
-\begin{figure}[tb]
+\begin{figure}[!tb]
 \centering
-\includegraphics[width=\linewidth]{figures/h2bird.jpg}
-\caption{H2Bird Ornithopter Platform}
-\label{fig:H2Bird}
+\includegraphics[width=\linewidth]{figures/h2bird.png}
+\caption{H$^2$Bird Ornithopter MAV}
+\label{fig:h2bird}
 \end{figure}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+%TODO ryan
 
 %----------------------------------------------------------------------------%
-\subsection{Flapping Wing Micro Air Vehicle}
+\subsection{H$^2$Bird Ornithoper MAV}
 %TODO(humphrey)
-The flying platform used in this experiment is the H2Bird flapping wing MAV. Built around the Silverlit I-Bird RC flyer powertrain and clap-fling wings, the H2Bird has a wingspan of [40?] cm and weighs [14?] grams fully loaded. A tail propeller and servo-controlled tail elevator provide control in the yaw and pitch axes. An onboard electronics package combines a 40 MIPS microprocessor, 6 DoF IMU, 802.15.4 radio, VGA camera, and motor drivers with a 90 mAh lithium polymer battery for autonomous flight. In routine flight, the H2Bird averages [insert speed] m/s ground speed and can operate for approximately [10] minutes.
+The flying platform used in this experiment is the H$^2$Bird flapping wing 
+MAV. Built around the Silverlit I-Bird RC flyer power train and clap-fling 
+wings, the H$^2$Bird has a wingspan of [40?] cm and has a flight weight of 
+13 grams. A tail propeller and servo-controlled tail elevator provide 
+control in the yaw and pitch axes. An on-board electronics package comprises 
+a 40 MIPS microprocessor, 6 DOF IMU, IEEE 802.15.4 radio, VGA camera, and motor 
+drivers with a 90 mAh lithium polymer battery for autonomous flight. In 
+routine flight, the H$^2$Bird averages [insert speed] m/s ground speed and 
+can operate for approximately 10 minutes.
+
+%TODO footnote for Silverlit I-Bird
+%TODO measure wingspan
+%TODO ground speed
 
 %----------------------------------------------------------------------------%
-\subsection{Computer Vision Platform}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+\subsection{Ground Station Computer Vision Platform}
+%TODO ryan
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Concept and Algorithms}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+%TODO ryan
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/process_flow.pdf}
+\caption{Process flow diagram for the cooperative control system.}
+\label{fig:process_flow}
+\end{figure}
 
 %----------------------------------------------------------------------------%
-\subsection{MAV Onboard Control}
-%TODO(humphrey)
-Rudimentary attitude control for the H2Bird runs onboard, estimating pose by naively integrating the IMU and depending on PID for control. The simplistic nature of our state estimation and control is due to the stringent resource constraints applied by the platform.
+\subsection{Ornithoper Flight Control}
 
-A quaternion representation of vehicle pose was chosen to avoid Euler angle singularities. This choice of pose representation also lends itself well to remote guidance, as relative body and world coordinate angular displacements can be represented compactly with quaternion multiplication. 
+\begin{figure}[tb]
+\centering
+\includegraphics[height=150pt]{figures/h2bird_axes.pdf}
+\caption{H$^2$Bird Ornithopter with flight control axes}
+\label{fig:h2Bird_axes}
+\end{figure}
 
-Given a reference attitude $q$, the error $q_e$ is defined as the rotation required to reach the reference from the current pose. The components of the error quaternion are then linearized to produce body axis angular errors. Control of the pitch and yaw axes is handled by three PID loops commanding the wing thrust, elevator, and tail prop.
+Rudimentary attitude control for the H$^2$Bird runs on-board. It estimates 
+pose by naively integrating the IMU and depending on PID for control. The 
+simplistic nature of our state estimation and control is due to the 
+stringent resource constraints applied by the platform.
+
+We use simple controllers to actuate the H$^2$Bird's wing beat frequency, 
+tail rotor, and tail elevator, which we designed to actuate thrust, yaw, 
+and pitch respectively.
+
+Due to the high pitch angles experienced by the H$^2$Bird, we use a 
+quaternion representation of vehicle pose to avoid the numerical 
+instabilities of Euler angle representations. This choice of pose 
+representation also lends itself well to remote guidance, as relative body 
+and world coordinate angular displacements can be represented compactly 
+with quaternion multiplication.~\cite{bowman:reasoning} 
+
+Given a reference pose $q$, we define the error $q_e$ as the rotation 
+required to reach the reference pose from the measured pose. We then 
+linearise the error quaternion to produce body axis angular errors as as 
+inputs to the attitude controllers. 
+
+Three independent proportional-integral-derivative controllers commanding 
+the wing thrust, elevator, and tail propeller. We use this independent PID 
+controller architecture for simplicity in tuning and implementation, and 
+because it demonstrates acceptable performance in the absence of a system 
+model.
 
 \begin{equation}
 \label{quat_error}
 q_e = q'\otimes q_r
 \end{equation}
-
 \begin{equation}
 \label{quat_angle}
 \alpha = 2acos(q_{e,w})
 \end{equation}
-
 \begin{equation}
 \label{quat_linearize}
 Q_e = \alpha*q_e/sin(\alpha /2)
@@ -132,75 +256,149 @@ Q_e = \alpha*q_e/sin(\alpha /2)
 
 %----------------------------------------------------------------------------%
 \subsection{Pose Estimation}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+%TODO ryan
 
 %----------------------------------------------------------------------------%
 \subsection{Visual Servoing}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+%TODO ryan
+
+%TODO trim PDF
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/block_diagrams.pdf}
+\caption{Overall block diagram of cooperative control}
+\label{fig:block_diagram}
+\end{figure}
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/pf_screencap.pdf}
+\caption{Frame sequence from video feed used for tracking, showing 
+particles and state estimate}
+\label{fig:pf_screencap}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiments}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+%TODO ryan
 
-%----------------------------------------------------------------------------%
-\subsection{Window Seeking}
-%TODO(cameron)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
-%----------------------------------------------------------------------------%
-\subsection{Orbiting}
-%TODO(cameron)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/experiment_cartoon.pdf}
+\caption{Conceptual sketch of experimental environment.}
+\label{fig:experiment_cartoon}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Performance}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+%TODO cameron
 
 %----------------------------------------------------------------------------%
-\subsection{MAV Internal Control}
-%TODO(cameron)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+\subsection{Ornithopter Flight Control}
+\label{sec:flight_control}
+%TODO cameron
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\linewidth]{figures/step_response_total.pdf}
+\caption{H$^2$Bird step response}
+\label{fig:step_response}
+\end{figure}
 
-%----------------------------------------------------------------------------%
-\subsection{Pose Estimation}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
+We determined the turning speed and turning radius of the H$^2$Bird
+experimentally using the response of the system to the step input of a
+clockwise 90 degree turn. The results of this experiment are depicted in
+Figure~\ref{fig:step_response}. The data for the experiment was gathered from
+the integration of the H$^2$Bird's built in gyroscope data. We used Matlab to
+fit a simple low-order model, $H(s) = \frac{0.94782}{1+0.61998s}$, of the
+turning behavior to the step response with the physical heading as the state
+and the heading set point as the input. This model serves as a simplification
+of both the turning dynamics of the ornithopter and the on-board PID
+controller regulating the actuator inputs to reach the desired orientation. We
+use this model in Section~\ref{sec:visual_servoing} to determine the backwards
+reachable region for navigating through the window in simulation.
+\\
+The step response has a rise time of approximately 1.4 seconds. The H$^2$Bird
+flies at an average forward velocity of 1.2 m/s, so the estimated minimum
+turning radius of the robot is 1.07 meters. This flight speed is slower than
+the maximum speed of the ornithopter to facilitate more reliable tracking.
 %----------------------------------------------------------------------------%
 \subsection{Visual Servoing}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+\label{sec:visual_servoing}
+%TODO cameron
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\addtolength{\textheight}{-0cm}
-                        % This command serves to balance the column lengths
-                        % on the last page of the document manually. It shortens
-                        % the textheight of the last page by a suitable amount.
-                        % This command does not take effect until the next page
-                        % so it should come on the page before the last. Make
-                        % sure that you do not shorten the textheight too much.
+%TODO make these span the page, with identical scales/style
+\begin{figure*}[h]
 
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{figures/feasible_set.pdf}
+\caption{Plot of backwards reachable set for successful window traversal.}
+\label{fig:feasible_set}
+\end{minipage}
 
+\hspace{0.5cm}
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{figures/flight_paths.pdf}
+\caption{Plot of camera field-of-view and H$^2$Bird minimum turning radius 
+cone, with experimental trials overlayed.}
+\label{fig:flight_paths}
+\end{minipage}
+
+\end{figure*}
+
+We determined the backwards reachable set of initial states for successful
+window traversal both geometrically and in simulation. The results are shown
+in Figure~\ref{fig:feasible_set}. The initial conditions that we chose are
+spatially gridded in the camera viewing region at 0.05 meter increments and an
+initial angular position perpendicular to the window plane. The geometrically
+infeasible region is indicated in blue and was computed using the minimum
+turning radius and simple geometry. Both the regions in red and blue indicate
+the infeasible region determined in simulation. We simulated the turning model
+described in Section~\ref{sec:flight_control}, with a PID controller steering
+the system to the center of the window as the input. The infeasible region
+calculated in simulation is a superset of the geometrically infeasible region.
+The simulation is more realistic as the rotational damping during the turn and
+the on-board PID controller cause the real system to react to inputs at a
+non-constant angular velocity.
+\\
+To verify the feasible region experimentally, we conducted trials at initial
+distances in X meter increments from the window along the edges of the image
+frame of the camera. We started each trial with an initial heading
+perpendicular to the window plane. The results of the experiments are shown in
+Figure~\ref{fig:flight_paths}.
+\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
-
+%TODO ryan
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Acknowledgements}
-%TODO(ryan)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt erat et dolor commodo varius. Integer arcu metus, egestas vel tincidunt a, tincidunt quis massa. Aliquam sit amet felis nibh, in bibendum est. Ut augue tortor, elementum vel bibendum ac, faucibus at est. Etiam lacus libero, aliquet id eleifend vitae, sollicitudin et nunc. Sed condimentum, lacus nec ullamcorper vestibulum, elit quam eleifend augue, id iaculis est elit at tortor. Donec ac nulla tellus. Aenean viverra rhoncus odio a sagittis. Quisque gravida imperdiet lorem ut condimentum. Pellentesque eget quam dolor. Vestibulum a eros nisl, quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum diam augue, ultrices et consectetur ut, fringilla egestas magna. Etiam consequat molestie massa, a pellentesque magna tincidunt non. Nullam aliquet augue et risus hendrerit facilisis.
+The authors would like to thank Fernando Garcia Bermudez for his 
+assistance with the Vicon motion capture system, Andrew Pullin for his 
+help with robot photography, and the members of the Biomimetic 
+Millisystems Laboratory and the EECS community at the University of 
+California, Berkeley for their advice and support.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibliographystyle{IEEEtranS}
-\bibliography{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{abbrv}
+\bibliography{manuscript}
+
+% ACM needs 'a single self-contained file'!
+%\subsection{References}
+% Generated by bibtex from your ~.bib file.  Run latex,
+% then bibtex, then latex twice (to resolve references)
+% to create the ~.bbl file.  Insert that ~.bbl file into
+% the .tex source file and comment out
+% the command \texttt{{\char'134}thebibliography}.
 \end{document}
