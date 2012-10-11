@@ -155,7 +155,7 @@ The power, size, and weight constraints of micro air vehicle (MAV)
 platforms significantly limit on-board sensing and computational 
 resources, and thus the complexity of the control and state estimation 
 algorithms which can be executed on-board. These constraints are 
-particularly severe for flapping wing MAVs offer the promise of superior 
+particularly severe for flapping wing MAVs, a class of MAVs that have inherently superior 
 safety, efficiency, and noise profile to rotor craft MAVs, but at the 
 expense of payload weight.
 
@@ -177,11 +177,10 @@ The flying platform used in this experiment is the H$^2$Bird flapping wing
 MAV. Built around the Silverlit I-Bird RC flyer power train and clap-fling 
 wings, the H$^2$Bird has a wingspan of [40?] cm and has a flight weight of 
 13 grams. A tail propeller and servo-controlled tail elevator provide 
-control in the yaw and pitch axes. An on-board electronics package comprises 
+control in the yaw and pitch axes. The on-board electronics package consists of 
 a 40 MIPS microprocessor, 6 DOF IMU, IEEE 802.15.4 radio, VGA camera, and motor 
-drivers with a 90 mAh lithium polymer battery for autonomous flight. In 
-routine flight, the H$^2$Bird averages [insert speed] m/s ground speed and 
-can operate for approximately 10 minutes.
+drivers with a 90 mAh lithium polymer battery. In routine flight, the H$^2$Bird 
+averages [1.2 m/s] and can operate for approximately 10 minutes.
 
 %TODO footnote for Silverlit I-Bird
 %TODO measure wingspan
@@ -214,32 +213,24 @@ can operate for approximately 10 minutes.
 \label{fig:h2Bird_axes}
 \end{figure}
 
-Rudimentary attitude control for the H$^2$Bird runs on-board. It estimates 
-pose by naively integrating the IMU and depending on PID for control. The 
-simplistic nature of our state estimation and control is due to the 
-stringent resource constraints applied by the platform.
+Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
+acceptable tracking performance. We estimate the vehicle pose by naively
+integrating the IMU, and use PID for controlling the vehicle. The simplistic 
+nature of our approach arises from the stringent resource constraints 
+of our platform, but nonetheless is not a completely trivial implementation.
 
-We use simple controllers to actuate the H$^2$Bird's wing beat frequency, 
-tail rotor, and tail elevator, which we designed to actuate thrust, yaw, 
-and pitch respectively.
+One characteristic of the H$^2$Bird that separates it from other MAVs is the
+high pitch angles experienced in routine flight. An Euler angle 
+parameterization of the vehicle orientation would suffer from singularities
+around these high pitch angles, so we instead represent the vehicle orientation
+with quaternions. An additional benefit of the quaternion representation is 
+the ability to represent relative body and world coordinate angular displacements 
+compactly with quaternion multiplication.~\cite{bowman:reasoning} 
 
-Due to the high pitch angles experienced by the H$^2$Bird, we use a 
-quaternion representation of vehicle pose to avoid the numerical 
-instabilities of Euler angle representations. This choice of pose 
-representation also lends itself well to remote guidance, as relative body 
-and world coordinate angular displacements can be represented compactly 
-with quaternion multiplication.~\cite{bowman:reasoning} 
-
-Given a reference pose $q$, we define the error $q_e$ as the rotation 
+Given a reference quaternion $q$, we define the error $q_e$ as the rotation 
 required to reach the reference pose from the measured pose. We then 
-linearise the error quaternion to produce body axis angular errors as as 
-inputs to the attitude controllers. 
-
-Three independent proportional-integral-derivative controllers commanding 
-the wing thrust, elevator, and tail propeller. We use this independent PID 
-controller architecture for simplicity in tuning and implementation, and 
-because it demonstrates acceptable performance in the absence of a system 
-model.
+convert this error quaternion to an angle axis representation which is given
+as an input to the PID controller. 
 
 \begin{equation}
 \label{quat_error}
