@@ -203,7 +203,7 @@ computationally intensive method of control for negotiating narrow passages.
 %TODO ryan
 
 %----------------------------------------------------------------------------%
-\subsection{H$^2$Bird Ornithoper MAV}
+\subsection{H$^2$Bird Ornithoper}
 % humphrey
 In order to conduct these experiments on cooperation, we designed a new
 flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit I-Bird 
@@ -304,7 +304,7 @@ Q_e = \alpha*q_e/\sin(\alpha /2)
 \end{equation}
 
 %----------------------------------------------------------------------------%
-\subsection{Pose Estimation}
+\subsection{Ground Station Pose Estimation}
 %TODO ryan
 The ground station performs simple two-dimensional pose estimation on the H$^2$Bird using 
 a particle filter-based motion tracking algorithm. This pose estimate is 
@@ -318,7 +318,7 @@ and similarly millirobotic ground vehicles.
 ~\cite{thrun2005probabilistic}
 
 %----------------------------------------------------------------------------%
-\subsection{Visual Servoing}
+\subsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing_concept}
 %TODO ryan
 
@@ -346,10 +346,35 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{System Model}
+
+%----------------------------------------------------------------------------%
+\subsection{Ornithopter Attitude Control}
+
+%----------------------------------------------------------------------------%
+\subsection{Ground Station Pose Estimation}
+
+%----------------------------------------------------------------------------%
+\subsection{Cooperative Visual Servoing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiments}
-%TODO ryan
+
+%----------------------------------------------------------------------------%
+\subsection{System Identification}
+
+%............................................................................%
+\subsubsection{Ornithoper Attitude Control}
+
+%............................................................................%
+\subsubsection{Ground Station Pose Estimation}
+
+%............................................................................%
+\subsubsection{Cooperative Visual Servoing}
+
+%----------------------------------------------------------------------------%
+\subsection{Model Verification}
+
 The task we chose to test our cooperative visual servoing system with is a 
 simple target seeking one: the H$^2$Bird must fly through a specified obstacle,
 in this case, a wooden frame meant to simulate a window. As the H$^2$Bird does
@@ -385,7 +410,7 @@ these noisy factors is considered in Section ~\ref{sec:performance}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Performance}
+\section{Results and Performance}
 \label{sec:performance}
 %TODO cameron
 To bound the performance of the cooperative control system, we determine 
@@ -398,7 +423,10 @@ regions using system identification and present the results of our
 experimental trials.
 
 %----------------------------------------------------------------------------%
-\subsection{Ornithopter Attitude Control}
+\subsection{System Identification}
+
+%............................................................................%
+\subsubsection{Ornithoper Attitude Control}
 \label{sec:flight_control}
 %TODO cameron
 \begin{figure}[tb]
@@ -439,12 +467,14 @@ robust tracking.
 %TODO equation(s) for how you arrive at the minimum turning radius
 %TODO footnote for MATLAB
 
-%----------------------------------------------------------------------------%
-\subsection{Visual Servoing}
+%............................................................................%
+\subsubsection{Ground Station Pose Estimation}
+
+%............................................................................%
+\subsubsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing}
 %TODO cameron
 
-\subsubsection{Reachability Model}
 %TODO make these span the page, with identical scales/style
 
 \begin{figure*}[tb]
@@ -500,7 +530,6 @@ The simulation is more realistic as the rotational damping during the turn and
 the on-board PID controller cause the real system to react to inputs at a
 non-constant angular velocity.
 
-\subsubsection{Experimental Validation}
 To verify the feasible region experimentally, we conducted trials at initial
 distances in approximately 0.4 meter increments from a window along the
 edges of the camera image frame. We began each trial with an initial heading
@@ -520,6 +549,9 @@ large changes in heading are necessary. Due to this phenomenon, the controller
 often over- or under-compensates in certain regions, depending upon the PID
 tuning and the distance from the camera. Tracking noise can also cause passage
 negotiation to fail.
+
+%----------------------------------------------------------------------------%
+\subsection{Model Verification}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
