@@ -175,28 +175,35 @@ camera~\cite{baek:altitude}. de Croon et al. demonstrated obstacle avoidance
 with an onboard camera and offboard processing~\cite{delfly:avoid}. 
 %[However, these papers do not study the system blah blah blah.]
 
-Autonomous control of flapping winged MAVs is a complex undertaking because
-of the non-linear flight dynamics and underactuation of the system due to size
-constraints. Many of the methods for controlling these platforms make
-extensive use of GPS in outdoor environments [CITATIONS] and extensive motion
-capture systems in indoor environments. While operating indoors, using GPS to 
-estimate the pose of the MAV is not possible, and motion capture requires expensive
-and stationary modification of the environment. The power and payload limits on MAVs
-make on-board sensing difficult, so multi-agent cooperative control schemes are 
-apt solutions.
+Autonomous control of flapping winged MAVs is a complex undertaking because of
+the non-linear flight dynamics as presented
+in~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. Although the dynamics of
+flapping-winged flight can be averaged with respect to the wingbeat period as
+presented in~\cite{Schenato:flightcontrol}\cite{cheng:tandrdamping}, we develop a
+linear, one-dimensional model to predict the behavior of the system, similar
+to~\cite{Shigeoka:ornithopter}. In addition to the nonlinearities, the system
+is underactuated due to size constraints. Many of the methods for controlling
+these platforms make extensive use of GPS in outdoor
+environments~\cite{kingston:timeattitude, kanade:3dvision} and expansive
+motion capture systems in indoor environments. While operating indoors, using
+GPS to estimate the pose of the MAV is not possible, and motion capture
+requires expensive and stationary modification of the environment. The power
+and payload limits on MAVs make on-board sensing difficult, so multi-agent
+cooperative control schemes are apt solutions.
 
-Many of the control laws that previous researches have developed from the 
-dynamic models of flapping-winged flight are computationally complex and 
-require powerful on-board computing [CITATIONS]. In our work, we develop a 
-simpler, less computationally intensive method of control for negotiating 
-narrow passages similar to the method presented in [Velocity and Altitude Control of An Ornithopter Micro Aerial Vehicle].  
+Many of the control laws that previous researches have developed from the
+dynamic models of flapping-winged flight, such as periodic forcing and other
+control methods as described %TODO you need to use real names, it's not kosher to refer to citation numbers directly
+in~\cite{doman:dynamics}\cite{khan:longitudinal_control}\cite{leonard:averaging}, are computationally complex and
+require powerful on-board computing. In our work, we develop a simpler, less
+computationally intensive method of control for negotiating narrow passages.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
 %TODO ryan
 
 %----------------------------------------------------------------------------%
-\subsection{H$^2$Bird Ornithoper MAV}
+\subsection{H$^2$Bird Ornithoper}
 % humphrey
 In order to conduct these experiments on cooperation, we designed a new
 flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit I-Bird 
@@ -297,12 +304,22 @@ Q_e = \alpha*q_e/\sin(\alpha /2)
 \end{equation}
 
 %----------------------------------------------------------------------------%
-\subsection{Pose Estimation}
+\subsection{Ground Station Pose Estimation}
 %TODO ryan
+The ground station performs simple two-dimensional pose estimation on the H$^2$Bird using 
+a particle filter-based motion tracking algorithm. This pose estimate is 
+the feedback input to the cooperative visual servoing feedback loop (Sec. \ref{sec:visual_servoing_concept}).
+
+We limit our pose estimation approach to monocular two-dimensional object 
+tracking in pixel-space. This allows us to perform high-rate video tracking 
+using the modest computational resources available on the ground station, 
+and similarly millirobotic ground vehicles.
+
 ~\cite{thrun2005probabilistic}
 
 %----------------------------------------------------------------------------%
-\subsection{Visual Servoing}
+\subsection{Cooperative Visual Servoing}
+\label{sec:visual_servoing_concept}
 %TODO ryan
 
 \begin{figure}[tb]
@@ -329,10 +346,35 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{System Model}
+
+%----------------------------------------------------------------------------%
+\subsection{Ornithopter Attitude Control}
+
+%----------------------------------------------------------------------------%
+\subsection{Ground Station Pose Estimation}
+
+%----------------------------------------------------------------------------%
+\subsection{Cooperative Visual Servoing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiments}
-%TODO ryan
+
+%----------------------------------------------------------------------------%
+\subsection{System Identification}
+
+%............................................................................%
+\subsubsection{Ornithoper Attitude Control}
+
+%............................................................................%
+\subsubsection{Ground Station Pose Estimation}
+
+%............................................................................%
+\subsubsection{Cooperative Visual Servoing}
+
+%----------------------------------------------------------------------------%
+\subsection{Model Verification}
+
 The task we chose to test our cooperative visual servoing system with is a 
 simple target seeking one: the H$^2$Bird must fly through a specified obstacle,
 in this case, a wooden frame meant to simulate a window. As the H$^2$Bird does
@@ -368,7 +410,7 @@ these noisy factors is considered in Section ~\ref{sec:performance}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Performance}
+\section{Results and Performance}
 \label{sec:performance}
 %TODO cameron
 To bound the performance of the cooperative control system, we determine 
@@ -381,7 +423,10 @@ regions using system identification and present the results of our
 experimental trials.
 
 %----------------------------------------------------------------------------%
-\subsection{Ornithopter Attitude Control}
+\subsection{System Identification}
+
+%............................................................................%
+\subsubsection{Ornithoper Attitude Control}
 \label{sec:flight_control}
 %TODO cameron
 \begin{figure}[tb]
@@ -397,14 +442,20 @@ experimentally using the response of the system to the step input of a
 clockwise 90 degree turn. We depict the results of this experiment in
 Figure~\ref{fig:step_response}. 
 
-We gathered the data for the experiment by integrating the output of 
-H$^2$Bird's on-board gyroscope data. We then used MATLAB [FOOTNOTE] to fit a 
-simple low-order model, $H(s) = \frac{0.94782}{1+0.61998s}$, of the turning 
-behavior to the step response with the physical heading as the state and the 
-heading set point as the input. This model serves as a simplification of 
-both the turning dynamics of the ornithopter and the on-board PID-based 
-attitude controller. We use this model in Section~\ref{sec:visual_servoing} 
-to determine the backwards reachable region for navigating through narrow passages.
+We gathered the data for the experiment by integrating the output of
+H$^2$Bird's on-board gyroscope data. We then used
+MATLAB\footnote{\url{http://www.mathworks.com/products/matlab/}} to fit a
+simple low-order model (Eq.~\ref{eq:transfer_func}) of the turning
+behavior to the step response with the physical heading as the state and the
+heading set point as the input. This model serves as a simplification of both
+the turning dynamics of the ornithopter and the on-board PID-based attitude
+controller. We use this model in Section~\ref{sec:visual_servoing} to
+determine the backwards reachable region for navigating through narrow
+passages.
+\begin{equation}
+\label{eq:transfer_func}
+H(s) = \frac{0.94782}{1+0.61998s}
+\end{equation}
 %TODO H(s) in a labeled equation
 %TODO footnote for MATLAB
 
@@ -416,13 +467,14 @@ robust tracking.
 %TODO equation(s) for how you arrive at the minimum turning radius
 %TODO footnote for MATLAB
 
-%----------------------------------------------------------------------------%
-\subsection{Visual Servoing}
+%............................................................................%
+\subsubsection{Ground Station Pose Estimation}
+
+%............................................................................%
+\subsubsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing}
 %TODO cameron
 
-\subsubsection{Reachability Model}
-\label{sec:visual_servoing}
 %TODO make these span the page, with identical scales/style
 
 \begin{figure*}[tb]
@@ -478,7 +530,6 @@ The simulation is more realistic as the rotational damping during the turn and
 the on-board PID controller cause the real system to react to inputs at a
 non-constant angular velocity.
 
-\subsubsection{Experimental Validation}
 To verify the feasible region experimentally, we conducted trials at initial
 distances in approximately 0.4 meter increments from a window along the
 edges of the camera image frame. We began each trial with an initial heading
@@ -498,6 +549,9 @@ large changes in heading are necessary. Due to this phenomenon, the controller
 often over- or under-compensates in certain regions, depending upon the PID
 tuning and the distance from the camera. Tracking noise can also cause passage
 negotiation to fail.
+
+%----------------------------------------------------------------------------%
+\subsection{Model Verification}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
