@@ -31,6 +31,16 @@
 % PACKAGES
 \usepackage{color}
 \usepackage[pdftex]{hyperref}
+\usepackage{amsmath}
+
+\newlength\eqnindent
+\newlength\eqncolwid
+\newcommand\eqntext[2][0pt]{%
+  \setlength\parindent{0pt}%
+      \setlength\eqnindent{#1}\setlength\eqncolwid{\linewidth}%
+  \setlength\eqncolwid{\dimexpr\linewidth-\eqnindent}%
+  \hspace*{\eqnindent}\parbox{\eqncolwid}{#2}%
+}
 
 %----------------------------------------------------------------------------%
 % METADATA
@@ -306,21 +316,51 @@ Q_e = \alpha*q_e/\sin(\alpha /2)
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Pose Estimation}
 %TODO ryan
-The ground station performs simple two-dimensional pose estimation on the H$^2$Bird using 
-a particle filter-based motion tracking algorithm. This pose estimate is 
-the feedback input to the cooperative visual servoing feedback loop (Sec. \ref{sec:visual_servoing_concept}).
+The ground station performs simple two-dimensional pose estimation on 
+H$^2$Bird using a particle filter-based motion tracking algorithm. This pose 
+estimate is the feedback input to the cooperative visual servoing feedback 
+loop (Sec. \ref{sec:visual_servoing_concept}). We limit our pose estimation 
+approach to monocular two-dimensional object tracking in pixel space. This 
+allows us to perform real-time video tracking using the modest computational 
+resources available on the ground station, and similarly millirobotic ground 
+vehicles.
 
-We limit our pose estimation approach to monocular two-dimensional object 
-tracking in pixel-space. This allows us to perform high-rate video tracking 
-using the modest computational resources available on the ground station, 
-and similarly millirobotic ground vehicles.
+Our pose estimation algorithm tracks H$^2$Bird motion in the frame using a 
+particle filter~\cite[96-114]{thrun2005probabilistic}. We initialze particles 
+uniformly across the frame. To improve numerical stability, we  normalize the 
+weights of all particles on each iteration, and only resample the particle 
+population when the mean particle weight falls below a pre-determined 
+threshold.
 
-~\cite{thrun2005probabilistic}
+%............................................................................%
+\subsubsection{Motion Model}
+Our motion model (Eq.~\ref{eq:motion_model}) is a simple Gaussian transition 
+centered around each particle's current position, augmented with an 
+$\epsilon$-random uniform sampling strategy. In Eq.~\ref{eq:motion_model}, 
+$x^{[i]}_t$ is the state of the $i^\text{th}$ particle at time $t$, $\Sigma$ 
+is a chosen covariance matrix, and $b$ is vector of the height and width of 
+the camera frame.
+\begin{equation}
+\label{eq:motion_model}
+x^{[i]}_t \sim \begin{cases}
+\mathcal{N}(x^{[i]}_{t-1}, \Sigma), &\text{with probability } 1-\epsilon \\
+\mathcal{U}(0,b),& \text{with probability } \epsilon \\
+\end{cases}\\
+\end{equation}
+The experiments presented in this paper used a diagonal covariance matrix 
+with variance 256, and an $\epsilon$ of 0.3. We find that the Gaussian 
+transition model is sufficient for tracking motion in which frame-to-frame 
+position changes are relatively small. The $\epsilon$-random uniform 
+transitions increase tracking robustness, by forcing the filter to always 
+sample all of the pixel space. This prevents overconfidence and collapse, 
+and decreases reacquisition delay. 
+
+%............................................................................%
+\subsubsection{Emission Model}
 
 %----------------------------------------------------------------------------%
 \subsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing_concept}
-%TODO ryan
 
 \begin{figure}[tb]
 \centering
