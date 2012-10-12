@@ -183,12 +183,13 @@ presented in~\cite{Schenato:flightcontrol,cheng:tandrdamping}, we develop a
 linear, one-dimensional model to predict the behavior of the system, similar
 to~\cite{Shigeoka:ornithopter}. In addition to the nonlinearities, the system
 is underactuated due to size constraints. Many of the methods for controlling
-these platforms make extensive use of GPS in outdoor environments [CITATIONS]
-and expansive motion capture systems in indoor environments. While operating
-indoors, using GPS to estimate the pose of the MAV is not possible, and motion
-capture requires expensive and stationary modification of the environment. The
-power and payload limits on MAVs make on-board sensing difficult, so
-multi-agent cooperative control schemes are apt solutions.
+these platforms make extensive use of GPS in outdoor
+environments~\cite{kingston:timeattitude, kanade:3dvision} and expansive
+motion capture systems in indoor environments. While operating indoors, using
+GPS to estimate the pose of the MAV is not possible, and motion capture
+requires expensive and stationary modification of the environment. The power
+and payload limits on MAVs make on-board sensing difficult, so multi-agent
+cooperative control schemes are apt solutions.
 
 Many of the control laws that previous researches have developed from the
 dynamic models of flapping-winged flight, such as periodic forcing and other
@@ -403,14 +404,20 @@ experimentally using the response of the system to the step input of a
 clockwise 90 degree turn. We depict the results of this experiment in
 Figure~\ref{fig:step_response}. 
 
-We gathered the data for the experiment by integrating the output of 
-H$^2$Bird's on-board gyroscope data. We then used MATLAB [FOOTNOTE] to fit a 
-simple low-order model, $H(s) = \frac{0.94782}{1+0.61998s}$, of the turning 
-behavior to the step response with the physical heading as the state and the 
-heading set point as the input. This model serves as a simplification of 
-both the turning dynamics of the ornithopter and the on-board PID-based 
-attitude controller. We use this model in Section~\ref{sec:visual_servoing} 
-to determine the backwards reachable region for navigating through narrow passages.
+We gathered the data for the experiment by integrating the output of
+H$^2$Bird's on-board gyroscope data. We then used
+MATLAB\footnote{\url{http://www.mathworks.com/products/matlab/}} to fit a
+simple low-order model (Eq.~\ref{eq:transfer_func}) of the turning
+behavior to the step response with the physical heading as the state and the
+heading set point as the input. This model serves as a simplification of both
+the turning dynamics of the ornithopter and the on-board PID-based attitude
+controller. We use this model in Section~\ref{sec:visual_servoing} to
+determine the backwards reachable region for navigating through narrow
+passages.
+\begin{equation}
+\label{eq:transfer_func}
+H(s) = \frac{0.94782}{1+0.61998s}
+\end{equation}
 %TODO H(s) in a labeled equation
 %TODO footnote for MATLAB
 
