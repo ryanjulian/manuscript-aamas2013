@@ -114,7 +114,7 @@ features clap and fling wings, improves upon a previous design by
 utilizing a carbon fiber airframe, tail rotor, and elevator, and carries a 
 payload of 2.8 grams. We augment the ornithopter's built-in 
 gyroscope-based control with a ground station, which has power and weight 
-requirements appropriate for deployment on 30 gram a ground vehicle. The ground 
+requirements appropriate for deployment on a 30 gram ground vehicle. The ground 
 station provides heading estimates to the ornithoper by running a 
 real-time motion tracking algorithm on a live video stream. This allows 
 the ornithopter to reliably negotiate flight through narrow openings.
@@ -158,10 +158,19 @@ algorithms which can be executed on-board. These constraints are
 particularly severe for flapping wing MAVs, a class of MAVs that have inherently superior 
 safety, efficiency, and noise profile to rotor craft MAVs, but at the 
 expense of payload weight.
-%Intro portion about previous works in ornithopter coorperative control/
+%Intro portion about previous works in ornithopter cooperative control/
 %modeling ( won't necessarily stay in this spot)
+Modeling and control of flapping wing MAVs is a well studied subject. 
+Shigeoka discusses velocity and altitude control in \cite{Shigeoka:ornithopter}. In 
+\cite{delfly:design} deCroon et al. 
 
-Autonomous control of flapping winged MAVs is a complex undertaking, because
+Due to restrictive payload weights, much previous work on guidance of flapping wing 
+with cameras depends on powerful offboard processing. Baek demonstrated altitude control 
+with an external camera\cite{baek:altitude}. de Croon et al. demonstrated obstacle 
+avoidance with an onboard camera\cite{delfly:avoid}. [However, these papers have not studied
+the system blah blah blah.]
+
+Autonomous control of flapping winged MAVs is a complex undertaking because
 of the non-linear flight dynamics and underactuation of the system due to size
 constraints. Many of the methods for controlling these platforms make
 extensive use of GPS in outdoor environments [CITATIONS] and extensive motion
@@ -313,8 +322,9 @@ the base station.
 \end{enumerate}
 
 % TODO Fill in test # per battery
-Variations in the H$^2$Bird hand launch cause the system to respond differently 
-for otherwise identical initial initial conditions. In addition, the H$^2$Bird 
+In total, [50+] good trials were run over a variety of starting positions. 
+Variations in the H$^2$Bird hand launch caused the system to respond very 
+differently for similar initial conditions. In addition, the H$^2$Bird 
 battery was changed approximately every [10] tests, adding more variation to
 the H$^2$Bird performance by affecting the motor power output. The effects of 
 these noisy factors is considered in Section ~\ref{sec:performance}.
@@ -322,7 +332,7 @@ these noisy factors is considered in Section ~\ref{sec:performance}.
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/experiment_cartoon.pdf}
-\caption{Conceptual sketch of experimental environment.}
+\caption{Conceptual sketch of experimental environment. Dimensions are in meters.}
 \label{fig:experiment_cartoon}
 \end{figure}
 %TODO label experiment cartoon
