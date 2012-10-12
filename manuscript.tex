@@ -268,9 +268,9 @@ maintain high-rate attitude control. We estimate the vehicle pose by naively
 integrating the IMU, and use PID for controlling the vehicle.
 
 The high pitch angles H$^2$Bird achieves in routine flight distinguishes it 
-from other MAVs. Baek~\cite{baek:tracking} 
+from other MAVs. Baek 
 demonstrated control on a similar vehicle using PID and an Euler angle
-parameterization of orientation. However, Euler angle parameterizations of the vehicle orientation 
+parameterization of orientation~\cite{baek:tracking}. However, Euler angle parameterizations of the vehicle orientation 
 suffer from singularities around these high pitch angles, so we instead 
 represent the vehicle orientation with quaternions. An additional benefit of 
 the quaternion representation its ability to represent relative body and 
