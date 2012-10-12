@@ -189,13 +189,13 @@ Many of the control laws that previous researches have developed from the dynami
 % humphrey
 In order to conduct these experiments on cooperation we designed a new
 flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit I-Bird 
-RC flyer power train and clap-fling wings [FOOTNOTE], the H$^2$Bird's wingspan is 26.5 
-cm and it has a flight weight of 13 grams. A tail propeller and 
+RC flyer power train and clap-fling wings\footnote{\url{http://www.silverlit-flyingclub.com/wingsmaster/}}, 
+the H$^2$Bird's wingspan is 26.5 cm and it has a flight weight of 13 grams. A tail propeller and 
 servo-controlled tail elevator provide control in the yaw and pitch axes. The 
-on-board electronics package consists of a 40 MIPS microprocessor, 6 DOF IMU, 
-IEEE 802.15.4 radio, VGA camera, and motor drivers, all powered by a 90 mAh 
-lithium polymer battery [FOOTNOTE]. In routine flight, the H$^2$Bird averages 1.2 m/s 
-ground speed and can operate for approximately 10 minutes.
+on-board ImageProc 2.4 electronics package consists of a 40 MIPS microprocessor, 
+6 DOF IMU, IEEE 802.15.4 radio, VGA camera, and motor drivers, all powered by 
+a 90 mAh lithium polymer battery\footnote{Expand! Accredit it to Stan Baek!}. In routine flight, the H$^2$Bird 
+averages 1.2 m/s ground speed and can operate for approximately 10 minutes.
 %TODO footnote for Silverlit I-Bird
 %TODO footnote for ImageProc
 
@@ -223,20 +223,22 @@ ground speed and can operate for approximately 10 minutes.
 \caption{H$^2$Bird Ornithopter with flight control axes}
 \label{fig:h2Bird_axes}
 \end{figure}
-%TODO label ibird drawing
+%TODO check ibird labels
 
 Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
 acceptable tracking performance. We estimate the vehicle pose by naively
 integrating the IMU, and use PID for controlling the vehicle.
-
-One characteristic of the H$^2$Bird that separates it from other MAVs is the
-high pitch angles achieved in routine flight. An Euler angle 
-parametrization of the vehicle orientation suffers from singularities
-around these high pitch angles, so we instead represent the vehicle orientation
+%TODO Cite Stan paper
+One behavior of the H$^2$Bird that separates it from other MAVs is the
+high pitch angles achieved in routine flight. Baek\cite{baek:tracking} 
+demonstrated control on a similar vehicle using PID and an Euler angle
+parameterization of orientation. However, Euler angles suffer from singularities
+around high pitch angles, so we instead represent the vehicle orientation
 with quaternions. An additional benefit of the quaternion representation is 
 the ability to represent relative body and world coordinate angular displacements 
 compactly with quaternion multiplication
 
+Our implementation of quaternion-based control is similar to Knoebe's\cite{knoebe:quatcontrol}: 
 Given a reference quaternion $q$, we define the error $q_e$ as the rotation 
 required to reach the reference pose from the measured pose. We then 
 convert this error quaternion to an angle axis representation which is given
@@ -293,6 +295,29 @@ the window.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiments}
 %TODO ryan
+The task we chose to test our cooperative visual servoing system with is a 
+simple target seeking one: the H$^2$Bird must fly through a specified obstacle,
+in this case, a wooden frame meant to simulate a window. As the H$^2$Bird does
+cannot detect the target on its own, it depends on remote guidance from the
+base station. Ground truth data was collected via a motion capture system in
+the test room. A sketch of the experimental setup is shown below in Figure 
+~\ref{fig:experiment_cartoon}.
+
+% TODO clarify or roll into paragraph
+Trials were run as follows:
+\begin{enumerate}
+\item The window is identified by a user. 
+\item The H$^2$Bird is released in view of the camera by hand.
+\item The H$^2$Bird attempts to fly to the window with remote guidance from
+the base station.
+\end{enumerate}
+
+% TODO Fill in test # per battery
+Variations in the H$^2$Bird hand launch cause the system to respond differently 
+for otherwise identical initial initial conditions. In addition, the H$^2$Bird 
+battery was changed approximately every [10] tests, adding more variation to
+the H$^2$Bird performance by affecting the motor power output. The effects of 
+these noisy factors is considered in Section ~\ref{sec:performance}.
 
 \begin{figure}[tb]
 \centering
@@ -306,6 +331,7 @@ the window.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Performance}
+\label{sec:performance}
 %TODO cameron
 To bound the performance of our system described in the previous sections, we
 determined the feasible set of initial conditions that resulted in successful
