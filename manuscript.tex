@@ -189,7 +189,7 @@ Many of the control laws that previous researches have developed from the
 dynamic models of flapping-winged flight are computationally complex and 
 require powerful on-board computing [CITATIONS]. In our work, we develop a 
 simpler, less computationally intensive method of control for negotiating 
-narrow passages.
+narrow passages similar to the method presented in [Velocity and Altitude Control of An Ornithopter Micro Aerial Vehicle].  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
@@ -369,6 +369,7 @@ these noisy factors is considered in Section ~\ref{sec:performance}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Performance}
+\label{sec:performance}
 %TODO cameron
 To bound the performance of the cooperative control system, we determine 
 the feasible set of initial conditions that result in successful narrow 
@@ -423,12 +424,29 @@ robust tracking.
 \subsubsection{Reachability Model}
 \label{sec:visual_servoing}
 %TODO make these span the page, with identical scales/style
+
 \begin{figure*}[tb]
 \begin{minipage}[b]{0.45\linewidth}
-\centering
 \includegraphics[width=\textwidth]{figures/feasible_set.pdf}
 \caption{Plot of backwards reachable set for successful window traversal.}
 \label{fig:feasible_set}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\centering
+\includegraphics[width=\textwidth]{figures/heat_map.pdf}
+\caption{CAPTION.}
+\label{fig:heat_map}
+\end{minipage}
+\end{figure*}
+
+\begin{figure*}[tb]
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/flight_paths_feasible.pdf}
+\caption{Plot of camera field of view and experimental trials within the feasible region.}
+\label{fig:flight_paths_feasible}
 \end{minipage}
 \hfill
 \begin{minipage}[b]{0.45\linewidth}
@@ -438,13 +456,6 @@ robust tracking.
 \label{fig:flight_paths}
 \end{minipage}
 \end{figure*}
-
-\begin{figure}[tb]
-\centering
-\includegraphics[width=\linewidth]{figures/flight_paths_feasible.pdf}
-\caption{Plot of camera field of view and experimental trials within the feasible region.}
-\label{fig:flight_paths_feasible}
-\end{figure}
 
 We determine the backwards reachable set of initial states for successful
 narrow passage traversal both geometrically and in simulation 
