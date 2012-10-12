@@ -1,5 +1,5 @@
 % AAMAS 2013 Manuscript
-
+%
 % This file should be compiled with "aamas2013.cls" 
 % ----------------------------------------------------------------------
 % REMEMBER: After having produced the .bbl file,
@@ -68,7 +68,7 @@ estimation, flapping wing, ornithopter, biomimetic}
 
 %% Paper number instead of authors
 %\numberofauthors{1}
-%\alignauthor Paper  XXX
+%\alignauthor Paper  580
 
 \numberofauthors{4}
 \author{
@@ -160,17 +160,19 @@ safety, efficiency, and noise profile to rotor craft MAVs, but at the
 expense of payload weight.
 %Intro portion about previous works in ornithopter coorperative control/
 %modeling ( won't necessarily stay in this spot)
-\\
+
 Autonomous control of flapping winged MAVs is a complex undertaking, because
-of the nonlinear flight dynamics and underactuation of the system due to size
+of the non-linear flight dynamics and underactuation of the system due to size
 constraints. Many of the methods for controlling these platforms make
-extensive use of GPS in outdoor environments [CITATIONS]. When operating
-indoors, using GPS to estimate the pose of the MAV is not reliable. The
-periodic motion and payload limits on MAVs make on-board sensing difficult, so
-external sensing and multi-agent cooperative control schemes are apt
-solutions.
-\\
-Many of the control laws that previous researches have developed from the dynamic models of flapping-winged flight are computationally complex and require powerful on-board computing [CITATIONS]. In our work, we develop a simpler, less computationally intensive method of control for accomplishing navigation through a narrow passage.
+extensive use of GPS in outdoor environments [CITATIONS] and extensive motion
+capture systems in indoor environments. While operating indoors, using GPS to 
+estimate the pose of the MAV is not possible, and motion capture requires expensive
+and stationary modification of the environment. The power and payload limits on MAVs
+make on-board sensing difficult, so multi-agent cooperative control schemes are 
+apt solutions.
+
+Many of the control laws that previous researches have developed from the dynamic models of flapping-winged flight are computationally complex and require powerful on-board computing [CITATIONS]. In our work, we develop a simpler, less computationally intensive method of control for negotiating narrow passages.
+
 \begin{figure}[!tb]
 \centering
 \includegraphics[width=\linewidth]{figures/h2bird.png}
@@ -187,12 +189,12 @@ Many of the control laws that previous researches have developed from the dynami
 % humphrey
 In order to conduct these experiments on cooperation we designed a new
 flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit I-Bird 
-RC flyer power train and clap-fling wings, the H$^2$Bird's wingspan is 26.5 
+RC flyer power train and clap-fling wings [FOOTNOTE], the H$^2$Bird's wingspan is 26.5 
 cm and it has a flight weight of 13 grams. A tail propeller and 
 servo-controlled tail elevator provide control in the yaw and pitch axes. The 
 on-board electronics package consists of a 40 MIPS microprocessor, 6 DOF IMU, 
 IEEE 802.15.4 radio, VGA camera, and motor drivers, all powered by a 90 mAh 
-lithium polymer battery. In routine flight, the H$^2$Bird averages 1.2 m/s 
+lithium polymer battery [FOOTNOTE]. In routine flight, the H$^2$Bird averages 1.2 m/s 
 ground speed and can operate for approximately 10 minutes.
 %TODO footnote for Silverlit I-Bird
 %TODO footnote for ImageProc
@@ -200,8 +202,6 @@ ground speed and can operate for approximately 10 minutes.
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Computer Vision Platform}
 %TODO ryan
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Concept and Algorithms}
@@ -274,8 +274,17 @@ Q_e = \alpha*q_e/sin(\alpha /2)
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/pf_screencap.pdf}
-\caption{Frame sequence from video feed used for tracking, showing 
-particles and state estimate}
+\caption{Frame sequence from video feed used for tracking. Particles 
+are shown in \textcolor{red}{red}, the current state estimate as a 
+\textcolor{blue}{blue} circle, the window bounding box in
+\textcolor{red}{red}, and the target location as a \textcolor{green}{green} 
+circle. 1.~Particles initialized uniformly across the frame; 2.~Human operator 
+dragging bounding box across the window; 3.~H$^2$Bird enters the frame. 
+Particles converge to its location immediately; 4.~Release H$^2$Bird, which 
+begins cooperative autonomous flight toward the target; 5.~Visual servoing 
+controller overshoots the window on the left, and commands H$^2$Bird with a 
+right-turn maneuver to recover; 6.~H$^2$Bird successfully navigates through 
+the window.}
 \label{fig:pf_screencap}
 \end{figure}
 
@@ -334,7 +343,7 @@ reachable region for navigating through the window in simulation.
 The step response rise time is approximately 1.4 seconds. The H$^2$Bird
 flies at an average forward velocity of 1.2 m/s, so the estimated minimum
 turning radius of the robot is 1.07 meters. In experiments, we choose a flight
-speed lower thanthe maximum speed of the ornithopter, to facilitate more
+speed lower than the maximum speed of the ornithopter, to facilitate more
 robust tracking.
 %TODO footnote for MATLAB
 
@@ -392,13 +401,13 @@ calculated in simulation is a superset of the geometrically infeasible region.
 The simulation is more realistic as the rotational damping during the turn and
 the on-board PID controller cause the real system to react to inputs at a
 non-constant angular velocity.
-\\
+
 To verify the feasible region experimentally, we conducted trials at initial
 distances in approximately 0.4 meter increments from the window along the
 edges of the camera image frame. We began each trial with an initial heading
 perpendicular to the window plane. The results of the experiments are shown in
 Figures~\ref{fig:flight_paths} and~\ref{fig:flight_paths_feasible}.
-\\
+
 For initial conditions in the middle of the feasible region and in front of
 the camera, we achieved a success rate of 79\%. This case is depicted in
 Figure~\ref{fig:flight_paths_feasible}. As we moved towards the edges of the
