@@ -188,7 +188,7 @@ Many of the control laws that previous researches have developed from the dynami
 %----------------------------------------------------------------------------%
 \subsection{H$^2$Bird Ornithoper MAV}
 % humphrey
-In order to conduct these experiments on cooperation we designed a new
+In order to conduct these experiments on cooperation, we designed a new
 flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit I-Bird 
 RC flyer power train and clap-fling wings [FOOTNOTE], the H$^2$Bird's wingspan
 is 26.5 cm and it has a flight weight of 13 grams. A tail propeller and 
@@ -202,8 +202,33 @@ a ground speed of 1.2 m/s and operates for approximately 10 minutes.
 
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Computer Vision Platform}
-%TODO ryan
+% ryan
+Cooperative behavior is a promising strategy for autonomous navigation of 
+unexplored and unstructured environments. We intend that this system will be 
+fully mobile in these environments, not tied to a static ground station or 
+motion capture laboratory. To demonstrate the feasibility of this approach, 
+we designed our ground station to conform to the power and weight 
+constraints of highly mobile millirobotic ground vehicles, such as 
+OctoRoACH, which can traverse rough terrains with speed and agility [CITATION]. 
+%TODO OctoRoACH citation
 
+Rather than power-intensive PC processors, we used the ARM-based 
+BeagleBoard single-board computer as reference computation platform. The
+BeagleBoard consumes approximately 1 watt while running our computer vision 
+and control algorithms. It uses the same processor as popular sub-10 gram 
+processor modules--such as the Gumstix Overo and LogicPD Torpedo--which are 
+light enough for deployment on millirobotic ground vehicles. We pair the 
+BeagleBoard with an off-the-shelf consumer USB web camera, for similar image 
+quality and resolution to the miniature camera modules available at 
+millirobot scale. The BeagleBoard communicates with the H$^2$Bird using a 
+USB radio module which implements the IEEE 802.15.4 wireless standard.
+%TODO footnotes: Gumstix, LogidPD
+
+Our ground station software is based on the Ubuntu Linux distribution, 
+modified with a custom version of the Linux kernel. We use the Python 
+programming language for control, robot communication, and telemetry, and 
+the OpenCV computer vision libraries for image capture and processing.
+%TODO footnotes: Ubuntu, Linux, Python, OpenCV
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Concept and Algorithms}
 %TODO ryan
@@ -214,6 +239,7 @@ a ground speed of 1.2 m/s and operates for approximately 10 minutes.
 \caption{Overview of the cooperative control system.}
 \label{fig:process_flow}
 \end{figure}
+%TODO h2bird label in diagram should have superscript
 
 %----------------------------------------------------------------------------%
 \subsection{Ornithoper Attitude Control}
@@ -227,33 +253,33 @@ a ground speed of 1.2 m/s and operates for approximately 10 minutes.
 %TODO label h2bird drawing
 
 Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
-acceptable tracking performance. We estimate the vehicle pose by naively
+maintain high-rate attitude control. We estimate the vehicle pose by naively
 integrating the IMU, and use PID for controlling the vehicle.
 
-One characteristic of the H$^2$Bird that separates it from other MAVs is the
-high pitch angles achieved in routine flight. An Euler angle 
-parametrization of the vehicle orientation suffers from singularities
-around these high pitch angles, so we instead represent the vehicle orientation
-with quaternions. An additional benefit of the quaternion representation is 
-the ability to represent relative body and world coordinate angular
-displacements compactly with quaternion multiplication
+The high pitch angles H$^2$Bird achieves in routine flight distinguishes it 
+from other MAVs. Euler angle parametrizations of the vehicle orientation 
+suffer from singularities around these high pitch angles, so we instead 
+represent the vehicle orientation with quaternions. An additional benefit of 
+the quaternion representation its ability to represent relative body and 
+world coordinate angular displacements compactly with quaternion 
+multiplication.
 
 Given a reference quaternion $q$, we define the error $q_e$ as the rotation 
-required to reach the reference pose from the measured pose. We then 
-convert this error quaternion to an angle axis representation which is given
-as an input to the PID controller. 
-
+required to reach the reference pose from the measured pose (Eq.~\ref{eq:quat_error}). 
 \begin{equation}
-\label{quat_error}
+\label{eq:quat_error}
 q_e = q'\otimes q_r
 \end{equation}
+We then convert this error quaternion to an angle axis, and use this 
+representation as input to the PID controller 
+(Eqs.~\ref{eq:quat_angle} and~\ref{eq:quat_linearize}). 
 \begin{equation}
-\label{quat_angle}
-\alpha = 2acos(q_{e,w})
+\label{eq:quat_angle}
+\alpha = 2\arccos(q_{e,w})
 \end{equation}
 \begin{equation}
-\label{quat_linearize}
-Q_e = \alpha*q_e/sin(\alpha /2)
+\label{eq:quat_linearize}
+Q_e = \alpha*q_e/\sin(\alpha /2)
 \end{equation}
 
 %----------------------------------------------------------------------------%
