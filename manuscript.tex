@@ -299,10 +299,20 @@ Q_e = \alpha*q_e/\sin(\alpha /2)
 %----------------------------------------------------------------------------%
 \subsection{Pose Estimation}
 %TODO ryan
+The ground station performs simple two-dimensional pose estimation on the H$^2$Bird using 
+a particle filter-based motion tracking algorithm. This pose estimate is 
+the feedback input to the cooperative visual servoing feedback loop (Sec. \ref{sec:visual_servoing_concept}).
+
+We limit our pose estimation approach to monocular two-dimensional object 
+tracking in pixel-space. This allows us to perform high-rate video tracking 
+using the modest computational resources available on the ground station, 
+and similarly millirobotic ground vehicles.
+
 ~\cite{thrun2005probabilistic}
 
 %----------------------------------------------------------------------------%
 \subsection{Visual Servoing}
+\label{sec:visual_servoing_concept}
 %TODO ryan
 
 \begin{figure}[tb]
