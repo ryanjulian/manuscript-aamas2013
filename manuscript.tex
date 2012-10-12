@@ -1,5 +1,5 @@
 % AAMAS 2013 Manuscript
-%
+
 % This file should be compiled with "aamas2013.cls" 
 % ----------------------------------------------------------------------
 % REMEMBER: After having produced the .bbl file,
@@ -114,7 +114,7 @@ features clap and fling wings, improves upon a previous design by
 utilizing a carbon fiber airframe, tail rotor, and elevator, and carries a 
 payload of 2.8 grams. We augment the ornithopter's built-in 
 gyroscope-based control with a ground station, which has power and weight 
-requirements appropriate for deployment on a 30 gram ground vehicle. The ground 
+requirements appropriate for deployment on 30 gram a ground vehicle. The ground 
 station provides heading estimates to the ornithoper by running a 
 real-time motion tracking algorithm on a live video stream. This allows 
 the ornithopter to reliably negotiate flight through narrow openings.
@@ -122,7 +122,7 @@ the ornithopter to reliably negotiate flight through narrow openings.
 We demonstrate the performance of the location estimation and navigation 
 algorithms. We model the backwards-reachable region for successfully 
 navigating through narrow openings. Finally, we verify this model through 
-with collected in experiments with window traversal.
+with collected in experiments with narrow passage traversal.
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACM METADATA
@@ -150,7 +150,13 @@ with collected in experiments with window traversal.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-%TODO(ryan)
+%TODO ryan
+\begin{figure}[!tb]
+\centering
+\includegraphics[width=\linewidth]{figures/h2bird.png}
+\caption{H$^2$Bird ornithopter MAV}
+\label{fig:h2bird}
+\end{figure}
 The power, size, and weight constraints of micro air vehicle (MAV) 
 platforms significantly limit on-board sensing and computational 
 resources, and thus the complexity of the control and state estimation 
@@ -158,16 +164,16 @@ algorithms which can be executed on-board. These constraints are
 particularly severe for flapping wing MAVs, a class of MAVs that have inherently superior 
 safety, efficiency, and noise profile to rotor craft MAVs, but at the 
 expense of payload weight.
-%Intro portion about previous works in ornithopter cooperative control/
+%Intro portion about previous works in ornithopter coorperative control/
 %modeling ( won't necessarily stay in this spot)
 Modeling and control of flapping wing MAVs is a well studied subject. 
-Shigeoka discusses velocity and altitude control in \cite{Shigeoka:ornithopter}. In 
-\cite{delfly:design} deCroon et al. 
-
-In contrast, there is little previous work on guidance of flapping wing MAVs. Baek demonstrated 
-altitude control with an external camera\cite{baek:altitude}. de Croon et al. demonstrated obstacle 
-avoidance with an onboard camera and offboard processing\cite{delfly:avoid}. [However, these papers 
-do not study the system blah blah blah.]
+Shigeoka discusses velocity and altitude control in
+~\cite{Shigeoka:ornithopter}. In~\cite{delfly:design} deCroon et al. %TODO sentence fragment
+In contrast, there is little previous work on guidance of flapping wing 
+MAVs. Baek demonstrated altitude control with an external 
+camera~\cite{baek:altitude}. de Croon et al. demonstrated obstacle avoidance 
+with an onboard camera and offboard processing~\cite{delfly:avoid}. 
+%[However, these papers do not study the system blah blah blah.]
 
 Autonomous control of flapping winged MAVs is a complex undertaking because
 of the non-linear flight dynamics and underactuation of the system due to size
@@ -179,14 +185,11 @@ and stationary modification of the environment. The power and payload limits on 
 make on-board sensing difficult, so multi-agent cooperative control schemes are 
 apt solutions.
 
-Many of the control laws that previous researches have developed from the dynamic models of flapping-winged flight are computationally complex and require powerful on-board computing [CITATIONS]. In our work, we develop a simpler, less computationally intensive method of control for negotiating narrow passages.
-
-\begin{figure}[!tb]
-\centering
-\includegraphics[width=\linewidth]{figures/h2bird.png}
-\caption{H$^2$Bird Ornithopter MAV}
-\label{fig:h2bird}
-\end{figure}
+Many of the control laws that previous researches have developed from the 
+dynamic models of flapping-winged flight are computationally complex and 
+require powerful on-board computing [CITATIONS]. In our work, we develop a 
+simpler, less computationally intensive method of control for negotiating 
+narrow passages similar to the method presented in [Velocity and Altitude Control of An Ornithopter Micro Aerial Vehicle].  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
@@ -195,22 +198,48 @@ Many of the control laws that previous researches have developed from the dynami
 %----------------------------------------------------------------------------%
 \subsection{H$^2$Bird Ornithoper MAV}
 % humphrey
-In order to conduct these experiments on cooperation we designed a new
+In order to conduct these experiments on cooperation, we designed a new
 flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit I-Bird 
-RC flyer power train and clap-fling wings\footnote{\url{http://www.silverlit-flyingclub.com/wingsmaster/}}, 
-the H$^2$Bird's wingspan is 26.5 cm and it has a flight weight of 13 grams. A tail propeller and 
-servo-controlled tail elevator provide control in the yaw and pitch axes. The 
-on-board ImageProc 2.4 electronics package consists of a 40 MIPS microprocessor, 
-6 DOF IMU, IEEE 802.15.4 radio, VGA camera, and motor drivers, all powered by 
-a 90 mAh lithium polymer battery\footnote{Expand! Accredit it to Stan Baek!}. In routine flight, the H$^2$Bird 
-averages 1.2 m/s ground speed and can operate for approximately 10 minutes.
-%TODO footnote for Silverlit I-Bird
+RC flyer power train and clap-fling 
+wings\footnote{\url{http://www.silverlit-flyingclub.com/wingsmaster/}}, 
+the H$^2$Bird's wingspan is 26.5 cm and it has a flight weight of 13 grams. A 
+tail propeller and servo-controlled tail elevator provide control in the yaw 
+and pitch axes. The on-board ImageProc 2.4\footnote{Expand! Accredit it to Stan Baek!} 
+electronics package consists of a 40 MIPS microprocessor, 6 DOF IMU, 
+IEEE 802.15.4 radio, VGA camera, and motor drivers, all powered by a 90 mAh 
+lithium polymer battery. In routine flight, the H$^2$Bird averages 1.2 m/s 
+ground speed, and can operate for approximately 10 minutes.
 %TODO footnote for ImageProc
 
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Computer Vision Platform}
-%TODO ryan
+% ryan
+Cooperative behavior is a promising strategy for autonomous navigation of 
+unexplored and unstructured environments. We intend that this system will be 
+fully mobile in these environments, not tied to a static ground station or 
+motion capture laboratory. To demonstrate the feasibility of this approach, 
+we designed our ground station to conform to the power and weight 
+constraints of highly mobile millirobotic ground vehicles, such as 
+OctoRoACH, which can traverse rough terrains with speed and agility [CITATION]. 
+%TODO OctoRoACH citation
 
+Rather than power-intensive PC processors, we used the ARM-based 
+BeagleBoard single-board computer as reference computation platform. The
+BeagleBoard consumes approximately 1 watt while running our computer vision 
+and control algorithms. It uses the same processor as popular sub-10 gram 
+processor modules--such as the Gumstix Overo and LogicPD Torpedo--which are 
+light enough for deployment on millirobotic ground vehicles. We pair the 
+BeagleBoard with an off-the-shelf consumer USB web camera, for similar image 
+quality and resolution to the miniature camera modules available at 
+millirobot scale. The BeagleBoard communicates with the H$^2$Bird using a 
+USB radio module which implements the IEEE 802.15.4 wireless standard.
+%TODO footnotes: Gumstix, LogidPD
+
+Our ground station software is based on the Ubuntu Linux distribution, 
+modified with a custom version of the Linux kernel. We use the Python 
+programming language for control, robot communication, and telemetry, and 
+the OpenCV computer vision libraries for image capture and processing.
+%TODO footnotes: Ubuntu, Linux, Python, OpenCV
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Concept and Algorithms}
 %TODO ryan
@@ -221,63 +250,65 @@ averages 1.2 m/s ground speed and can operate for approximately 10 minutes.
 \caption{Overview of the cooperative control system.}
 \label{fig:process_flow}
 \end{figure}
+%TODO h2bird label in diagram should have superscript
 
 %----------------------------------------------------------------------------%
-\subsection{Ornithoper Flight Control}
+\subsection{Ornithoper Attitude Control}
 
-\begin{figure}[tb]
+\begin{figure}[!tb]
 \centering
 \includegraphics[height=150pt]{figures/h2bird_axes.pdf}
-\caption{H$^2$Bird Ornithopter with flight control axes}
+\caption{H$^2$Bird ornithopter with attitude control axes and labeled control surfaces.}
 \label{fig:h2Bird_axes}
 \end{figure}
-%TODO check ibird labels
+%TODO label h2bird drawing
 
 Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
-acceptable tracking performance. We estimate the vehicle pose by naively
+maintain high-rate attitude control. We estimate the vehicle pose by naively
 integrating the IMU, and use PID for controlling the vehicle.
-%TODO Cite Stan paper
-One behavior of the H$^2$Bird that separates it from other MAVs is the
-high pitch angles achieved in routine flight. Baek\cite{baek:tracking} 
+
+The high pitch angles H$^2$Bird achieves in routine flight distinguishes it 
+from other MAVs. Baek 
 demonstrated control on a similar vehicle using PID and an Euler angle
-parameterization of orientation. However, Euler angles suffer from singularities
-around high pitch angles, so we instead represent the vehicle orientation
-with quaternions. An additional benefit of the quaternion representation is 
-the ability to represent relative body and world coordinate angular displacements 
-compactly with quaternion multiplication
+parameterization of orientation~\cite{baek:tracking}. However, Euler angle parameterizations of the vehicle orientation 
+suffer from singularities around these high pitch angles, so we instead 
+represent the vehicle orientation with quaternions. An additional benefit of 
+the quaternion representation its ability to represent relative body and 
+world coordinate angular displacements compactly with quaternion 
+multiplication.
 
-Our implementation of quaternion-based control is similar to Knoebe's\cite{knoebe:quatcontrol}: 
+Our implementation of quaternion-based control is similar to Knoebe's~\cite{knoebe:quatcontrol}:
 Given a reference quaternion $q$, we define the error $q_e$ as the rotation 
-required to reach the reference pose from the measured pose. We then 
-convert this error quaternion to an angle axis representation which is given
-as an input to the PID controller. 
-
+required to reach the reference pose from the measured pose (Eq.~\ref{eq:quat_error}). 
 \begin{equation}
-\label{quat_error}
+\label{eq:quat_error}
 q_e = q'\otimes q_r
 \end{equation}
+We then convert this error quaternion to an angle axis, and use this 
+representation as input to the PID controller 
+(Eqs.~\ref{eq:quat_angle} and~\ref{eq:quat_linearize}). 
 \begin{equation}
-\label{quat_angle}
-\alpha = 2acos(q_{e,w})
+\label{eq:quat_angle}
+\alpha = 2\arccos(q_{e,w})
 \end{equation}
 \begin{equation}
-\label{quat_linearize}
-Q_e = \alpha*q_e/sin(\alpha /2)
+\label{eq:quat_linearize}
+Q_e = \alpha*q_e/\sin(\alpha /2)
 \end{equation}
 
 %----------------------------------------------------------------------------%
 \subsection{Pose Estimation}
 %TODO ryan
+~\cite{thrun2005probabilistic}
 
 %----------------------------------------------------------------------------%
 \subsection{Visual Servoing}
 %TODO ryan
 
-%TODO trim PDF
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/block_diagrams.pdf}
-\caption{Overall block diagram of cooperative control}
+\caption{Overall block diagram of the cooperative control system.}
 \label{fig:block_diagram}
 \end{figure}
 
@@ -290,11 +321,10 @@ are shown in \textcolor{red}{red}, the current state estimate as a
 \textcolor{red}{red}, and the target location as a \textcolor{green}{green} 
 circle. 1.~Particles initialized uniformly across the frame; 2.~Human operator 
 dragging bounding box across the window; 3.~H$^2$Bird enters the frame. 
-Particles converge to its location immediately; 4.~Release H$^2$Bird, which 
+Particles converge on its location; 4.~Release H$^2$Bird, which 
 begins cooperative autonomous flight toward the target; 5.~Visual servoing 
-controller overshoots the window on the left, and commands H$^2$Bird with a 
-right-turn maneuver to recover; 6.~H$^2$Bird successfully navigates through 
-the window.}
+controller overshoots the window on the left, and commands a right-turn 
+maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \label{fig:pf_screencap}
 \end{figure}
 
@@ -308,8 +338,7 @@ simple target seeking one: the H$^2$Bird must fly through a specified obstacle,
 in this case, a wooden frame meant to simulate a window. As the H$^2$Bird does
 cannot detect the target on its own, it depends on remote guidance from the
 base station. Ground truth data was collected via a motion capture system in
-the test room. A sketch of the experimental setup is shown below in Figure 
-~\ref{fig:experiment_cartoon}.
+the test room. A sketch of the experimental setup is shown below in Fig.~\ref{fig:experiment_cartoon}.
 
 % TODO clarify or roll into paragraph
 Trials were run as follows:
@@ -331,7 +360,7 @@ these noisy factors is considered in Section ~\ref{sec:performance}.
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/experiment_cartoon.pdf}
-\caption{Conceptual sketch of experimental environment. Dimensions are in meters.}
+\caption{Conceptual sketch of experimental environment.}
 \label{fig:experiment_cartoon}
 \end{figure}
 %TODO label experiment cartoon
@@ -342,16 +371,17 @@ these noisy factors is considered in Section ~\ref{sec:performance}.
 \section{Performance}
 \label{sec:performance}
 %TODO cameron
-To bound the performance of our system described in the previous sections, we
-determined the feasible set of initial conditions that resulted in successful
-window traversal. We then conducted experiments to calculate the success rate
-both within the feasible region and on the edges of the feasible region. The
-following sections detail how we calculated the feasible and infeasible
+To bound the performance of the cooperative control system, we determine 
+the feasible set of initial conditions that result in successful narrow 
+passage traversal using both analytical and empirical methods. We conducted 
+experiments to validate this model.
+
+The following sections detail how we calculated the feasible and infeasible
 regions using system identification and present the results of our
 experimental trials.
 
 %----------------------------------------------------------------------------%
-\subsection{Ornithopter Flight Control}
+\subsection{Ornithopter Attitude Control}
 \label{sec:flight_control}
 %TODO cameron
 \begin{figure}[tb]
@@ -365,21 +395,25 @@ experimental trials.
 We determined the turning speed and turning radius of the H$^2$Bird
 experimentally using the response of the system to the step input of a
 clockwise 90 degree turn. We depict the results of this experiment in
-Figure~\ref{fig:step_response}. We gathered the data for the experiment by 
-integrating the output of H$^2$Bird's on-board gyroscope data. We used MATLAB to
-fit a simple low-order model, $H(s) = \frac{0.94782}{1+0.61998s}$, of the
-turning behavior to the step response with the physical heading as the state
-and the heading set point as the input. This model serves as a simplification
-of both the turning dynamics of the ornithopter and the on-board PID
-controller regulating the actuator inputs to reach the desired orientation. We
-use this model in Section~\ref{sec:visual_servoing} to determine the backwards
-reachable region for navigating through the window in simulation.
+Figure~\ref{fig:step_response}. 
+
+We gathered the data for the experiment by integrating the output of 
+H$^2$Bird's on-board gyroscope data. We then used MATLAB [FOOTNOTE] to fit a 
+simple low-order model, $H(s) = \frac{0.94782}{1+0.61998s}$, of the turning 
+behavior to the step response with the physical heading as the state and the 
+heading set point as the input. This model serves as a simplification of 
+both the turning dynamics of the ornithopter and the on-board PID-based 
+attitude controller. We use this model in Section~\ref{sec:visual_servoing} 
+to determine the backwards reachable region for navigating through narrow passages.
+%TODO H(s) in a labeled equation
+%TODO footnote for MATLAB
 
 The step response rise time is approximately 1.4 seconds. The H$^2$Bird
 flies at an average forward velocity of 1.2 m/s, so the estimated minimum
 turning radius of the robot is 1.07 meters. In experiments, we choose a flight
 speed lower than the maximum speed of the ornithopter, to facilitate more
 robust tracking.
+%TODO equation(s) for how you arrive at the minimum turning radius
 %TODO footnote for MATLAB
 
 %----------------------------------------------------------------------------%
@@ -387,19 +421,32 @@ robust tracking.
 \label{sec:visual_servoing}
 %TODO cameron
 
+\subsubsection{Reachability Model}
+\label{sec:visual_servoing}
 %TODO make these span the page, with identical scales/style
-\begin{figure*}[tb]
 
-\begin{minipage}{\linewidth}
-\centering
-\includegraphics[width=0.45\textwidth]{figures/feasible_set.pdf}
-\caption{Plot of camera field-of-view and backwards reachable set for successful window traversal.}
+\begin{figure*}[tb]
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=\textwidth]{figures/feasible_set.pdf}
+\caption{Plot of backwards reachable set for successful window traversal.}
 \label{fig:feasible_set}
 \end{minipage}
-\vspace{1em}
+\hfill
 \begin{minipage}[b]{0.45\linewidth}
 \centering
-\includegraphics[width=\textwidth]{figures/flight_paths_feasible.pdf}
+\centering
+\includegraphics[width=\textwidth]{figures/heat_map.pdf}
+\caption{Probability of success for all starting locations. This graphic is 
+a result of a Monte Carlo simulation of the reachable set model, in which the 
+initial heading of the H$^2$Bird is chosen uniformly at random from $(-90,90)$.}
+\label{fig:heat_map}
+\end{minipage}
+\end{figure*}
+
+\begin{figure*}[tb]
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figures/flight_paths_feasible.pdf}
 \caption{Plot of camera field of view and experimental trials within the feasible region.}
 \label{fig:flight_paths_feasible}
 \end{minipage}
@@ -412,33 +459,28 @@ robust tracking.
 \end{minipage}
 \end{figure*}
 
-\begin{figure}[tb]
-\centering
-\includegraphics[width=\linewidth]{figures/flight_paths_feasible.pdf}
-\caption{Plot of camera field of view and experimental trials within the feasible region.}
-\label{fig:flight_paths_feasible}
-\end{figure}
+We determine the backwards reachable set of initial states for successful
+narrow passage traversal both geometrically and in simulation 
+(Fig.~\ref{fig:feasible_set}). For the initial conditions, we use a uniform 
+grid of 0.05 meter increments within the camera viewing region, and an 
+initial angular position perpendicular to the narrow passage plane. 
 
-We determined the backwards reachable set of initial states for successful
-window traversal both geometrically and in simulation. The results are shown
-in Figure~\ref{fig:feasible_set}. For the initial conditions, we used a
-spatial grid of 0.05 meter increments within the camera viewing region and an
-initial angular position perpendicular to the window plane. The geometrically
-infeasible region is indicated in blue and was computed using the minimum
-turning radius and simple geometry. Both the regions in red and blue indicate
-the infeasible region determined in simulation. We ran a simulation on a
-motion model similar to Dubin's car in ~\cite{lavalle:planning}, with the
+The geometrically infeasible region is computed using the minimum
+turning radius and the geometry of the camera's field-of-view. Both the 
+regions in red and blue indicate the infeasible region determined in simulation. 
+We ran a simulation on a motion model similar to Dubin's car in ~\cite{lavalle:planning}, with the
 angular heading as the input rather than the angular velocity. We used the
 turning model, described in Section~\ref{sec:flight_control}, as the input to
 the motion model, with a PID controller steering the entire system to the
-center of the window as the input to the tuning model. The infeasible region
+center of the passage as the input to the tuning model. The infeasible region
 calculated in simulation is a superset of the geometrically infeasible region.
 The simulation is more realistic as the rotational damping during the turn and
 the on-board PID controller cause the real system to react to inputs at a
 non-constant angular velocity.
 
+\subsubsection{Experimental Validation}
 To verify the feasible region experimentally, we conducted trials at initial
-distances in approximately 0.4 meter increments from the window along the
+distances in approximately 0.4 meter increments from a window along the
 edges of the camera image frame. We began each trial with an initial heading
 perpendicular to the window plane. The results of the experiments are shown in
 Figures~\ref{fig:flight_paths} and~\ref{fig:flight_paths_feasible}.
@@ -454,13 +496,12 @@ the same control input whether the ornithopter is close to the camera, where
 small changes in heading are adequate, or far away from the camera, where
 large changes in heading are necessary. Due to this phenomenon, the controller
 often over- or under-compensates in certain regions, depending upon the PID
-tuning and the distance from the camera. Tracking noise can also cause the
-window navigation to fail.
+tuning and the distance from the camera. Tracking noise can also cause passage
+negotiation to fail.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
 %TODO ryan
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Acknowledgements}
 The authors would like to thank Fernando Garcia Bermudez for his 
@@ -468,6 +509,8 @@ assistance with the Vicon motion capture system, Andrew Pullin for his
 help with robot photography, and the members of the Biomimetic 
 Millisystems Laboratory and the EECS community at the University of 
 California, Berkeley for their advice and support.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BIBLIOGRAPHY
