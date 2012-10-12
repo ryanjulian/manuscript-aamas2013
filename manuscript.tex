@@ -1,5 +1,5 @@
 % AAMAS 2013 Manuscript
-%
+
 % This file should be compiled with "aamas2013.cls" 
 % ----------------------------------------------------------------------
 % REMEMBER: After having produced the .bbl file,
@@ -150,15 +150,7 @@ with collected in experiments with narrow passage traversal.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-
-\begin{figure}[!tb]
-\centering
-\includegraphics[width=\linewidth]{figures/h2bird.png}
-\caption{H$^2$Bird Ornithopter MAV}
-\label{fig:h2bird}
-\end{figure}
-
-%TODO all
+%TODO(ryan)
 The power, size, and weight constraints of micro air vehicle (MAV) 
 platforms significantly limit on-board sensing and computational 
 resources, and thus the complexity of the control and state estimation 
@@ -166,7 +158,6 @@ algorithms which can be executed on-board. These constraints are
 particularly severe for flapping wing MAVs, a class of MAVs that have inherently superior 
 safety, efficiency, and noise profile to rotor craft MAVs, but at the 
 expense of payload weight.
-
 %Intro portion about previous works in ornithopter coorperative control/
 %modeling ( won't necessarily stay in this spot)
 Modeling and control of flapping wing MAVs is a well studied subject. 
@@ -426,20 +417,12 @@ robust tracking.
 \subsubsection{Reachability Model}
 \label{sec:visual_servoing}
 %TODO make these span the page, with identical scales/style
-\begin{figure*}[tb!]
-
-\begin{minipage}{\linewidth}
-\centering
-\includegraphics[width=0.45\textwidth]{figures/feasible_set.pdf}
-\caption{Plot of camera field-of-view and backwards reachable set for successful window traversal.}
-\label{fig:feasible_set}
-\end{minipage}
-\vspace{1em}
+\begin{figure*}[tb]
 \begin{minipage}[b]{0.45\linewidth}
 \centering
-\includegraphics[width=\textwidth]{figures/flight_paths_feasible.pdf}
-\caption{Plot of camera field of view and experimental trials within the feasible region.}
-\label{fig:flight_paths_feasible}
+\includegraphics[width=\textwidth]{figures/feasible_set.pdf}
+\caption{Plot of backwards reachable set for successful window traversal.}
+\label{fig:feasible_set}
 \end{minipage}
 \hfill
 \begin{minipage}[b]{0.45\linewidth}
@@ -500,7 +483,6 @@ negotiation to fail.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
 %TODO ryan
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Acknowledgements}
 The authors would like to thank Fernando Garcia Bermudez for his 
@@ -508,6 +490,8 @@ assistance with the Vicon motion capture system, Andrew Pullin for his
 help with robot photography, and the members of the Biomimetic 
 Millisystems Laboratory and the EECS community at the University of 
 California, Berkeley for their advice and support.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BIBLIOGRAPHY
