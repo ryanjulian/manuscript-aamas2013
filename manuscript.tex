@@ -132,7 +132,7 @@ the ornithopter to reliably negotiate flight through narrow openings.
 We demonstrate the performance of the location estimation and navigation 
 algorithms. We model the backwards-reachable region for successfully 
 navigating through narrow openings. Finally, we verify this model through 
-with collected in experiments with narrow passage traversal.
+with experiments with narrow passage traversal.
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACM METADATA
@@ -172,17 +172,20 @@ platforms significantly limit on-board sensing and computational
 resources, and thus the complexity of the control and state estimation 
 algorithms which can be executed on-board. These constraints are 
 particularly severe for flapping wing MAVs, a class of MAVs that have inherently superior 
-safety, efficiency, and noise profile to rotor craft MAVs, but at the 
+safety, and noise profile to rotor craft MAVs, but at the 
 expense of payload weight.
 %Intro portion about previous works in ornithopter coorperative control/
 %modeling ( won't necessarily stay in this spot)
-Modeling and control of flapping wing MAVs is a well studied subject. 
+Modeling and control of flapping wing MAVs is becominga well studied subject\cite{floreano:flying}. 
 Shigeoka discusses velocity and altitude control in
-~\cite{Shigeoka:ornithopter}. In~\cite{delfly:design} deCroon et al. %TODO sentence fragment
+~\cite{Shigeoka:ornithopter}. Design and control of the sub 15 gram DelFly
+ornithopter is described by deCroon et al.~\cite{delfly:design}.
 In contrast, there is little previous work on guidance of flapping wing 
 MAVs. Baek demonstrated altitude control with an external 
 camera~\cite{baek:altitude}. de Croon et al. demonstrated obstacle avoidance 
-with an onboard camera and offboard processing~\cite{delfly:avoid}. 
+with an onboard camera and offboard processing~\cite{delfly:avoid}. For sub 20 gram
+ornithopters, Baek et al. \cite{baek:tracking} is one of the few examples of
+completely autonomous target seeking.
 %[However, these papers do not study the system blah blah blah.]
 
 Autonomous control of flapping winged MAVs is a complex undertaking because of
@@ -284,16 +287,16 @@ the OpenCV computer vision libraries for image capture and processing.
 %TODO label h2bird drawing
 
 Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
-maintain high-rate attitude control. We estimate the vehicle pose by naively
-integrating the IMU, and use PID for controlling the vehicle.
+maintain high-sample-rate attitude control. We estimate the vehicle pose by naively
+integrating the IMU, and use a proportional plus integral plus derivative (PID) 
+controller for controlling the vehicle.
 
-The high pitch angles H$^2$Bird achieves in routine flight distinguishes it 
-from other MAVs. Baek 
-demonstrated control on a similar vehicle using PID and an Euler angle
+The high pitch angles flapping wing flyers achieve in routine flight distinguish them 
+from other MAVs. Baek demonstrated control on a similar vehicle using PID and an Euler angle
 parameterization of orientation~\cite{baek:tracking}. However, Euler angle parameterizations of the vehicle orientation 
 suffer from singularities around these high pitch angles, so we instead 
 represent the vehicle orientation with quaternions. An additional benefit of 
-the quaternion representation its ability to represent relative body and 
+the quaternion representation is its ability to represent relative body and 
 world coordinate angular displacements compactly with quaternion 
 multiplication.
 
@@ -453,7 +456,7 @@ simple low-order model to the step response as discussed in Sec.~\ref{sec:model_
 We tested our cooperative visual servoing system with a simple target seeking
 experiment: the H$^2$Bird must fly through a specified obstacle, in this case,
 a wooden frame meant to simulate a window. As the H$^2$Bird cannot detect the
-target on its own,we used the ground station to provide remote headings for
+target on its own, we used the ground station to provide remote headings for
 navigation to the window. Ground truth data was collected via a motion capture
 system in the test room. A sketch of the experimental setup is shown in
 Fig.~\ref{fig:experiment_cartoon}.
@@ -479,7 +482,7 @@ we replaced the current battery with a fully charged one.
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/experiment_cartoon.pdf}
-\caption{Conceptual sketch of experimental environment.}
+\caption{Conceptual sketch of experimental setup.}
 \label{fig:experiment_cartoon}
 \end{figure}
 %TODO label experiment cartoon
