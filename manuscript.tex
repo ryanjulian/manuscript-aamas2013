@@ -157,35 +157,37 @@ with collected in experiments with narrow passage traversal.
 \caption{H$^2$Bird ornithopter MAV}
 \label{fig:h2bird}
 \end{figure}
-The power, size, and weight constraints of micro air vehicle (MAV) 
-platforms significantly limit on-board sensing and computational 
-resources, and thus the complexity of the control and state estimation 
-algorithms which can be executed on-board. These constraints are 
-particularly severe for flapping wing MAVs, a class of MAVs that have inherently superior 
-safety, efficiency, and noise profile to rotor craft MAVs, but at the 
-expense of payload weight.
+The power, size, and weight constraints of micro air vehicle (MAV) platforms
+significantly limit on-board sensing and computational resources, and thus the
+complexity of the control and state estimation algorithms which can be
+executed on-board. These constraints are particularly severe for flapping wing
+MAVs, a class of MAVs that have inherently superior safety, efficiency, and
+noise profile to rotor craft MAVs, but at the expense of payload weight.
 %Intro portion about previous works in ornithopter coorperative control/
-%modeling ( won't necessarily stay in this spot)
-Modeling and control of flapping wing MAVs is a well studied subject. 
-Shigeoka discusses velocity and altitude control in
-~\cite{Shigeoka:ornithopter}. In~\cite{delfly:design} deCroon et al. %TODO sentence fragment
-In contrast, there is little previous work on guidance of flapping wing 
-MAVs. Baek demonstrated altitude control with an external 
-camera~\cite{baek:altitude}. de Croon et al. demonstrated obstacle avoidance 
-with an onboard camera and offboard processing~\cite{delfly:avoid}. 
-%[However, these papers do not study the system blah blah blah.]
+%modeling ( won't necessarily stay in this spot) Modeling and control of
+flapping wing MAVs is a well studied subject. Shigeoka discusses velocity and
+altitude control in ~\cite{Shigeoka:ornithopter}. In~\cite{delfly:design}
+deCroon et al. %TODO sentence fragment In contrast, there is little previous
+work on guidance of flapping wing MAVs. Baek demonstrated altitude control
+with an external camera~\cite{baek:altitude}. de Croon et al. demonstrated
+obstacle avoidance with an onboard camera and offboard
+processing~\cite{delfly:avoid}. %[However, these papers do not study the system blah blah blah.]
 
 Autonomous control of flapping winged MAVs is a complex undertaking because of
-the non-linear flight dynamics as presented
-in~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. Although the dynamics of
-flapping-winged flight can be averaged with respect to the wingbeat period as
-presented in~\cite{Schenato:flightcontrol}\cite{cheng:tandrdamping}, we develop a
-linear, one-dimensional model to predict the behavior of the system, similar
-to~\cite{Shigeoka:ornithopter}. In addition to the nonlinearities, the system
-is underactuated due to size constraints. Many of the methods for controlling
-these platforms make extensive use of GPS in outdoor
-environments~\cite{kingston:timeattitude, kanade:3dvision} and expansive
-motion capture systems in indoor environments. While operating indoors, using
+the non-linear flight
+dynamics~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. One approach to
+simplify these dynamic models is to use averaging over the wingbeat
+period~\cite{Schenato:flightcontrol}\cite{cheng:tandrdamping}. We desire a
+simpler approach, so we develop a linear, one-dimensional model to predict the
+yaw behavior of the system, similar to the model that Shigeoka used
+in~\cite{Shigeoka:ornithopter} for simulating the velocity of a MAV in
+one-dimensionally. In addition to the nonlinearities, the system is
+underactuated (there is no roll control) due to size constraints.
+
+Many of the methods for
+controlling these platforms make extensive use of GPS in outdoor
+environments and expansive
+motion capture systems in indoor environments~\cite{kingston:timeattitude}\cite{kanade:3dvision}. While operating indoors, using
 GPS to estimate the pose of the MAV is not possible, and motion capture
 requires expensive and stationary modification of the environment. The power
 and payload limits on MAVs make on-board sensing difficult, so multi-agent
@@ -605,7 +607,9 @@ simulation of the model that we used. The trials that we conducted in
 Figure~\ref{fig:flight_paths_feasible} correspond to the circled region in
 Figure~\ref{heat_map}. The 80\% success rate that we experienced in the
 experiments corroborates our calculated probability of success of
-approximately 80\%. Additionally the diminished success rate of 50\% near the edges of the viewing triangle that we determined through experimentation supports the reduced probability of success calculated by the simulation.
+approximately 80\%. Additionally, the diminished success rate of 50\% near the
+edges of the viewing triangle that we determined through experimentation
+supports the reduced probability of success calculated by the simulation.
 
 
 
