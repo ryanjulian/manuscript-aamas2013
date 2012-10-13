@@ -108,24 +108,19 @@ estimation, flapping wing, ornithopter, biomimetic}
 The power, size, and weight constraints of micro air vehicles (MAVs) limit 
 their on-board sensing and computational resources. Ground vehicles have 
 less mobility than MAVs, but relaxed size constraints and typically more 
-computing power, creating opportunities for cooperation. In this work, we 
+computing power. These specializations present many opportunities for cooperation. In this work, we 
 demonstrate cooperative target-seeking between a 13 gram ornithopter MAV 
-and a lightweight ground station using computer vision.
+and a lightweight ground station using computer vision. We develop models for the ornithopter, ground station, and cooperative system dynamics. We determine model parameters of the real systems through experimental system identification. Finally, we verify those models using experiments on narrow passage traversal, and arrive at a cooperative system model which accurately predicts the backwards-reachable region for successfully negotiating ornithopther flight through narrow openings.
 
 We also introduce a new ornithopter MAV, the 13 gram H$^2$Bird. It 
 features clap and fling wings, improves upon a previous design by 
 utilizing a carbon fiber airframe, tail rotor, and elevator, and carries a 
 payload of 2.8 grams. We augment the ornithopter's built-in 
-gyroscope-based control with a ground station, which has power and weight 
+gyroscope-based control with a lightweight ground station design, which has power and weight 
 requirements appropriate for deployment on a millirobotic ground vehicle. The ground 
 station provides heading estimates to the ornithoper by running a 
 real-time motion tracking algorithm on a live video stream. This allows 
-the ornithopter to reliably negotiate flight through narrow openings.
-
-We demonstrate the performance of the location estimation and navigation 
-algorithms. We model the backwards-reachable region for successfully 
-navigating through narrow openings. Finally, we verify this model through 
-with experiments with narrow passage traversal.
+the ornithopter to reliably negotiate flight through narrow openings. We demonstrate the performance of the location estimation and navigation  algorithms.
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACM METADATA
@@ -159,44 +154,42 @@ with experiments with narrow passage traversal.
 \caption{H$^2$Bird ornithopter MAV}
 \label{fig:h2bird}
 \end{figure}
-Power, size, and weight constraints for micro air vehicle (MAV) 
-platforms are amongst the most restrictive of all robotic platforms. With
-significantly limited sensing and computing capabilities, only the most rudimentary
-control and state estimation algorithms can be executed on-board these platforms. 
-Even more restrictive are the constraints for flapping wing MAVs, 
-a class of MAVs that exhibit demonstrate safety and noise profiles superior to those
-of rotor craft MAVs, but at the expense of reduced payload weight.
+Power, size, and weight constraints on micro air vehicles (MAV) 
+significantly limit sensing their and computational capabilities. They can execute only the most rudimentary
+control and state estimation algorithms in real-time. 
+The constraints on flapping-wing MAVs are even more restrictive. 
+Though they exhibit demonstrate safety and noise profiles superior to those
+of rotor craft MAVs, this comes at the expense of reduced payload weight.
 
-Compounding these engineering restrictions are the many non-linear
-flight dynamics exhibited by flapping wing flight~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. 
-Much past research on flapping wing MAVs has been focused on overcoming the 
-difficulties associated with controlling and modeling in the face of these 
-non-linearities\cite{floreano:flying}. Common approaches to simplify these 
+The non-linear
+flight dynamics exhibited of flapping wing flight compounding constraints~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. 
+Much past research on flapping wing MAVs focused on overcoming the 
+difficulties associated with controlling and modeling flapping-wing vehicles in the face of this
+non-linearity\cite{floreano:flying}. Common approaches to simplify these 
 dynamic models include averaging over the wingbeat period~\cite{Schenato:flightcontrol}
-\cite{cheng:tandrdamping}, and using linear, low-dimensional models to predict the 
-behavior in flight~\cite{Shigeoka:ornithopter}. Advances have lead to the
+\cite{cheng:tandrdamping}, and using linear, low-dimensional models to predict flight behavior~\cite{Shigeoka:ornithopter}. These advances lead to the
 development of some high-performance platforms, such as the sub-15 gram DelFly 
-as described by deCroon et al.~\cite{delfly:design}. 
+described by deCroon et al.~\cite{delfly:design}. 
 
-Many of the control laws that previous researches have developed from the
+Many control laws that previous researchers developed from
 dynamic models of flapping-winged flight, such as periodic forcing and other
-control methods as described %TODO you need to use real names, it's not kosher to refer to citation numbers directly
-in~\cite{doman:dynamics}\cite{khan:longitudinal_control}\cite{leonard:averaging}, are computationally complex and
-require powerful on-board computing. In our work, we develop a simpler, less
-computationally intensive method of control for negotiating narrow passages.
+control methods described %TODO you need to use real names, it's not kosher to refer to citation numbers directly
+by~\cite{doman:dynamics}\cite{khan:longitudinal_control}\cite{leonard:averaging}, 
+require powerful on-board computing. In this work, we develop a simpler, less
+computationally intensive method of control for negotiating narrow passages, by exploiting cooperation between specialized robotic agents.
 
-In contrast, there is considerably less previous work on guidance of flapping wing MAVs. 
+In contrast to flight control, there is considerably less previous work on guidance and of flapping-wing MAVs. 
 Baek demonstrated altitude control with an external camera~\cite{baek:altitude}. 
 de Croon et al. demonstrated obstacle avoidance with an onboard camera and offboard 
 processing~\cite{delfly:avoid}. For sub-20 gram ornithopters, Baek et al. 
-\cite{baek:tracking} is one of the few examples of scompletely autonomous target seeking.
+\cite{baek:tracking} provides one of the few examples of completely autonomous target seeking for vehicles at this scale.
 
-There also exists a body of work on guidance and control for fixed wing and rotary wing 
+There also exists a body of work on the guidance and control of fixed- and rotary-wing 
 MAV platforms, but many of these methods make extensive use of GPS or motion capture systems
-~\cite{kingston:timeattitude}\cite{kanade:3dvision}. While operating indoors, using
-GPS to estimate the pose of the MAV is not possible, and motion capture
-requires expensive and stationary modification of the environment. The power
-and payload limits on flapping wing MAVs make on-board sensing difficult, so multi-agent
+~\cite{kingston:timeattitude}\cite{kanade:3dvision}. Indoors, using
+GPS to estimate the pose of an MAV is impossible, and motion capture
+requires extensive and stationary modification of the environment. The power
+and payload limits on flapping wing MAVs make complex on-board sensing difficult, so multi-agent
 cooperative control schemes are apt solutions.
 
 \cite{Jung1998Range}\cite{Hyams1999Cooperative}\cite{Mehta2006Adaptive}
@@ -209,22 +202,20 @@ cooperative control schemes are apt solutions.
 %----------------------------------------------------------------------------%
 \subsection{H$^2$Bird Ornithoper}
 % humphrey
-To fulfill the need for a lightweight, autonomous flapping wing MAV platform, 
-we designed the H$^2$Bird. Built around the Silverlit i-Bird 
+To explore these cooperative control concepts, we designed a new flapping-wing MAV, known as the H$^2$Bird (Fig.~\ref{h2bird}). Built around the Silverlit i-Bird 
 RC flyer power train and clap-fling 
 wings\footnote{\raggedright Silverlit Toys Manufactory Ltd.: i-Bird RC Flyer
 \href{http://www.silverlit-flyingclub.com/wingsmaster/}
      {http://www.silverlit-flyingclub.com/wingsmaster/}}, 
 the H$^2$Bird has a wingspan of 26.5 cm and a flight weight of 13 grams. A 
 tail propeller and servo-controlled tail elevator provide control in the yaw 
-and pitch axes. The on-board ImageProc 2.4\footnote{ImageProc 2.4: \\
+and pitch axes (Fig.~\ref{h2Bird_axes}. The on-board ImageProc 2.4\footnote{ImageProc 2.4: \\
 \href{https://github.com/biomimetics/imageproc\_pcb}
      {https://github.com/biomimetics/imageproc\_pcb}} 
-electronics package consists of a 40 MIPS microprocessor, 6 DOF IMU, 
+controller consists of a 40 MIPS microprocessor, 6 DOF IMU, 
 IEEE 802.15.4 radio, VGA camera, and motor drivers, all powered by a 90 mAh 
 lithium polymer battery. In routine flight, the H$^2$Bird averages 1.2 m/s 
-ground speed, and can operate for approximately 10 minutes.
-%TODO footnote for ImageProc
+ground speed, and operates for approximately 10 minutes.
 
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Computer Vision Platform}
@@ -239,20 +230,19 @@ OctoRoACH, which can traverse rough terrains with speed and agility~\cite{Pullin
 
 Rather than power-intensive PC processors, we used the ARM-based 
 BeagleBoard single-board computer as reference computation platform. The
-BeagleBoard consumes approximately 1 watt while running our computer vision 
+BeagleBoard consumes approximately one watt while running our computer vision 
 and control algorithms. It uses the same processor as popular sub-10 gram 
 processor modules---such as the Gumstix Overo and LogicPD Torpedo---which are 
 light enough for deployment on millirobotic ground vehicles. We pair the 
 BeagleBoard with an off-the-shelf consumer USB web camera, for similar image 
 quality and resolution to the miniature camera modules available at 
-millirobot scale. The BeagleBoard communicates with the H$^2$Bird using a 
+millirobot scale. The BeagleBoard communicates with the H$^2$Bird with a
 USB radio module which implements the IEEE 802.15.4 wireless standard.
 %TODO footnotes: Gumstix, LogidPD
 
 Our ground station software is based on the Ubuntu Linux\footnote{\raggedright Ubuntu: 
 Canonical Ltd., \href{http://www.ubuntu.com/}{http://www.ubuntu.com/}} distribution
-modified with a custom version of the Linux kernel. We use the Python
-\footnote{\raggedright Python: Python Software Federation, \href{http://www.python.org/}
+modified with a custom version of the Linux kernel. We use the Python\footnote{\raggedright Python: Python Software Federation, \href{http://www.python.org/}
 {http://www.python.org/}} programming language for control, robot communication, 
 and telemetry, and the OpenCV\footnote{\raggedright OpenCV: Willow Garage, 
 \href{http://opencv.willowgarage.com/wiki/}{http://opencv.willowgarage.com/wiki/}} 
@@ -280,15 +270,15 @@ computer vision libraries for image capture and processing.
 \end{figure}
 %TODO label h2bird drawing
 
-Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
-high sample rate attitude control. We estimate the vehicle pose by
-integrating the IMU, and use a proportional plus integral plus derivative (PID) 
-controller for controlling the vehicle.
+We implement attitude estimation and control of the H$^2$Bird on-board to achieve 
+high sample-rate attitude control. We estimate the vehicle pose by
+integrating the IMU, and use a proportional-integral-derivative (PID) 
+controller to feed these estimates back to the attitude control flight surfaces (Figs.\ref{process_flow} and~\ref{block_diagram}).
 
-The high pitch angles flapping wing flyers achieve in routine flight distinguish them 
+The high pitch angles flapping-wing MAVs regularly operate at distinguish them 
 from other MAVs. Baek demonstrated control on a similar vehicle using PID and an Euler angle
-parameterization of orientation~\cite{baek:tracking}. However, Euler angle parameterizations of the vehicle orientation 
-suffer from singularities around high pitch angles, so we instead 
+parameterization of orientation~\cite{baek:tracking}. However, Euler angle parameterizations of vehicle orientation 
+suffer from singularities around high pitch angles. So we instead 
 represent the vehicle orientation with quaternions. An additional benefit of 
 the quaternion representation is its ability to represent relative body and 
 world coordinate angular displacements compactly with quaternion multiplication.
@@ -301,9 +291,9 @@ required to reach the reference pose from the estimated pose $q$ (Eq.~\ref{eq:qu
 q_e &= q^{\prime}\cdot q_r \\
 		&= q_{e,w} + q_{e,x}\hat{i} + q_{e,y}\hat{j} + q_{e,z}\hat{k} \notag 
 \end{align}
-We then convert this error quaternion to an angle axis representation and use this 
+We then convert this error quaternion to an angle axis representation and use it 
 as input to the PID controller (Eqs.~\ref{eq:quat_linearize} and~\ref{eq:quat_angle}).
-These calculations are performed onboard with trigonometric lookup tables for speed.
+We perform these calculations on-board, with trigonometric lookup tables for real-time performance.
 \begin{align}
 \label{eq:quat_linearize}
 Q_e &= \alpha\cdot q_e/\sin(\alpha /2) \\
@@ -325,9 +315,8 @@ allows us to perform real-time video tracking using the modest computational
 resources available on the ground station, and similarly, millirobotic ground 
 vehicles.
 
-Motion of the H$^2$Bird in the frame is tracked using a particle filter
-with an approach similar to that employed by Thrun~\cite{thrun2005probabilistic}. 
-Particles are distributed uniformly across the frame on initialization. 
+Our pose estimation algorithm tracks H$^2$Bird's motion in the frame using a particle filter ~\cite{thrun2005probabilistic}. 
+We initialize the particles uniformly across the frame before tracking begins. 
 To improve numerical stability, we normalize the weights of all particles on 
 each iteration, and only resample the particle population when the mean particle 
 weight falls below a pre-determined threshold. 
@@ -337,9 +326,8 @@ weight falls below a pre-determined threshold.
 Our motion model (Eq.~\ref{eq:motion_model}) is a simple Gaussian transition 
 centered around each particle's current position, augmented with an 
 $\epsilon$-random uniform sampling strategy. In Eq.~\ref{eq:motion_model}, 
-$x^{[i]}_t$ is the state of the $i^\text{th}$ particle at time $t$, $\Sigma$ 
-is a chosen covariance matrix, and $b$ is vector of the height and width of 
-the camera frame.
+$x^{[i]}_t$ is the position of the $i^\text{th}$ particle in pixel space at time $t$, $\Sigma$ 
+is a chosen covariance matrix, and $b$ is vector of the bounds of the pixel space.
 \begin{equation}
 \label{eq:motion_model}
 x^{[i]}_t \sim \begin{cases}
@@ -347,56 +335,52 @@ x^{[i]}_t \sim \begin{cases}
 \mathcal{U}(0,b),& \text{with probability } \epsilon \\
 \end{cases}\\
 \end{equation}
-The experiments presented in this work use a diagonal covariance matrix 
-with a variance of 256, and an $\epsilon$ of 0.3. We find that the Gaussian 
+In the experiments we present in this work, we used a diagonal covariance matrix 
+with a uniform variance of 256, and an $\epsilon$ of 0.3. We find the Gaussian 
 transition model is sufficient for tracking motion in which frame-to-frame 
 position changes are relatively small. The $\epsilon$-random uniform 
 transitions increase tracking robustness, by forcing the filter to always 
-sample all of the pixel space. This prevents overconfidence and collapse, 
+sample broadly across of the pixel space. This helps prevent overconfidence and collapse, 
 and decreases reacquisition delay. 
 
 %............................................................................%
 \subsubsection{Emission Model}
 Our emission model (Eq.~\ref{eq:emission_model}) implements a sampling
-approach to motion tracking via na\"{i}ve background subtraction[CITATION].
+approach to motion tracking via na\"{i}ve background subtraction, e.g. frame differencing[CITATION].
+On each iteration, the system provides the emission model with $f_0$, the frame representing 
+the background and $f_t$, the most recent frame captured. The model assigns 
+a weight $w^{[i]}_t$ to each particle $x^{[i]}_t$, proportional to the color 
+distance in RGB space between the pixels of $f_0$ and $f_t$ at the location 
+$x^{[i]}_t$.
 \begin{equation}
 \label{eq:emission_model}
 w^{[i]}_t = 1 + \norm{f_0(x^{[i]}_t)-f_t(x^{[i]}_t)}^2
 \end{equation} 
-The system provides the emission model with $f_0$, the frame representing 
-the background and $f_t$, the most recent frame captured. The model assigns 
-a weight $w^{[i]}_t$ to each particle $x^{[i]}_t$, proportional to the color 
-distance in RGB space between the pixels of $f_0$ and $f_t$ at the location 
-$x^{[i]}_t$. Hence, particles are more likely to be resampled in portions of 
-the image which appear different from the background.
+Hence, particles are more likely to be resampled in regions of 
+the image which are dissimilar in color from the background.
 
-For the experiments presented in this work, we assumed that neither the bird 
-nor any other moving object were visible in the first frame captured on system 
+During experiments presented in this work, we assumed that neither the bird, 
+nor any other moving object, were visible in the frame on system 
 start. We saved the first frame captured by the system, and provided it as 
-the background frame $f_0$ for every iteration of the particle filter. This 
+the background frame $f_0$ for every iteration of the particle filter. This choice of $f_0$ 
 resulted in a sampling approach to na\"{i}ve background subtraction. 
 
 Na\"{i}ve background subtraction is known to be brittle to changes in the scene over 
-time[CITATION]. However, we found it very efficient and sufficiently reliable for the 
+time[CITATION]. However, we find it very efficient and sufficiently reliable for the 
 short time spans necessary for H$^2$Bird to successfully negotiate narrow 
 openings, which are typically less than five seconds. Substituting $f_0$ 
-with a more sophisticated extraction of the background would implement a 
-more sophisticated approach to background subtraction, with no changes to 
-the underlying motion tracking filter.
+with a more sophisticated background extraction would retrain the underlying motion tracking features of the filter, while providing it with a more robust way of differentiating subject motion from the background.
 
 %----------------------------------------------------------------------------%
 \subsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing_concept}
-The H$^2$Bird is remotely guided by commanding relative changes in its
-reference orientation. Using relative changes removes the need to estimate the relative
-orientation between the ground station and vehicle frames of reference. 
-With estimates of the vehicle pose, we calculate an altitude
-error and horizontal error. The ground station then commands incremental changes to 
-the H$^2$Bird pitch and yaw are according to a PID control law, with positive altitude error
-corresponding to negative pitch increments and positive horizontal error
-corresponding to negative yaw increments. We window the controller integrator term 
-to prevent windup when the bird is being launched, and tuned the derivative term
-to dampen oscillations associated with the system latency [?].
+The ground station guides the H$^2$Bird by commanding changes to its
+reference attitude, as governed by its on-board attitude controllers (Figs.\ref{process_flow} and~\ref{block_diagram}). 
+With the estimate of 2D vehicle pose from computer vision, we calculate an altitude
+error and horizontal error. The ground station then commands a reference attitude to 
+the H$^2$Bird pitch and yaw. according to a PID control law. We apply a fixed-lag window the PID controller integrator term 
+to prevent wind-up while we launch the ornithopter. We tuned the proportional and derivative terms of this outer controller 
+to dampen the overshoot and drift cause by the cooperative system latency.
 
 \begin{figure}[tb]
 \centering
@@ -404,6 +388,96 @@ to dampen oscillations associated with the system latency [?].
 \caption{Overall block diagram of the cooperative control system.}
 \label{fig:block_diagram}
 \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{System Model}
+\label{sec:system_model}
+
+%----------------------------------------------------------------------------%
+\subsection{Ornithopter Attitude Control}
+\label{sec:model_attitude}
+
+We divide our model of the vehicle pose into two independent models for simplicity: one for
+yaw motion, and one for translational motion.
+
+We approximate the yaw dynamics of the ornithopter with a one-dimensional model to limit complexity and because it matches our physical implementation. Likewise, we choose the reference heading angle as input to the model and model the dynamics of vehicle and on-board PID controller as one system, which outputs the physical heading angle. We show the resulting model form in Equation~\ref{eq:plain_model}.
+
+\begin{equation}
+\label{eq:plain_model}
+H(s) = \frac{K}{1 + Rs}
+\end{equation}
+
+To model the translational position of the ornithopter, we use a form of Dubin's car model (Eq.~\ref{eq:total_model_plain})~\cite{lavalle:planning}. 
+\begin{equation}
+\label{eq:total_model_plain}
+\begin{aligned}
+& \dot{x} = sin(\theta)\\
+& \dot{y} = cos(\theta)\\
+\end{aligned}
+\end{equation}
+Our form uses the angular position, $\theta$ as an input rather than a state. We model the overall motion of the system as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (Eq. \ref{eq:plain_model}) with the reference heading angle as the input.
+
+%----------------------------------------------------------------------------%
+\subsection{Ground Station Pose Estimation}
+
+Our model of the ground station comprises models of both the camera and the
+pose estimation computation. The camera model contains both a
+latency, which is in series with the path between the ``camera'' and ``ornithopter dynamics''
+ blocks in Fig.~\ref{fig:block_diagram}, and a model of the camera's viewing angle constraints. 
+ 
+ We model the 
+viewing angle of the camera as a pixel map from one edge of a
+63$^{\circ}$ viewing triangle to the other. The camera has an image width of
+640 pixels. We calculate the desired heading angle in degrees for a given distance from the
+camera according to Equation~\ref{eq:desired_heading}, where $d$
+is the distance between the ornithopter and the camera, and $x$ is the horizontal
+position of the robot relative to the center of the window in meters. This
+explicitly fact that the pose estimation algorithm does not estimate the depth of the
+robot.
+\begin{equation} \label{eq:desired_heading} \text{Desired heading} =
+\frac{640\text{px}}{2*\text{d}*\tan{\frac{63^{\circ}}{2}}}*\frac{63^{\circ}}{640\text{px}}*\text{x}
+\end{equation}
+
+We model the pose estimation computation by the by the latency of running 
+the particle filter, calculating a new reference attitude, and sending to the ornithopter via radio.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experiments}
+
+%----------------------------------------------------------------------------%
+\subsection{System Identification}
+
+%............................................................................%
+\subsubsection{Ornithoper Attitude Control}
+
+We determined the turning speed and turning radius of the H$^2$Bird
+experimentally, by measuring the response of the system to a step input of a
+clockwise 90$^{\circ}$ turn. We measured the response of the system by recording
+the attitude estimates calculated by the ornithopter using its on-board
+gyroscope. We then used
+MATLAB\footnote{The MathWorks, Inc. Matlab:
+\href{http://www.mathworks.com/products/matlab/}
+     {http://www.mathworks.com/products/matlab/}} to fit a
+simple low-order model to the step response, as discussed in Sec.~\ref{sec:model_attitude}.
+
+%............................................................................%
+\subsubsection{Ground Station Pose Estimation}
+
+To measure the capture latency of the camera, we wrote a simple test 
+application which changes a large colored rectangle on the ground station's screen, then uses the camera to detect that change. By noting the value of the system timer just before we change the screen, and just after the camera detects that change, the application arrives at an estimate of the video capture pipeline latency. We averaged these result over several hundred rapidly-executed trials to determine the capture latency we used to model the system..
+
+To compute the particle filter and controller latency, we again used system timers to determine the
+average time between the start and end of computation.
+
+%----------------------------------------------------------------------------%
+\subsection{Model Verification}
+
+We tested our cooperative visual servoing system with a simple target seeking
+experiment: the H$^2$Bird must fly through a specified obstacle, in this case,
+a wooden frame we used to simulate a window. As the H$^2$Bird cannot detect the
+target on its own, we used the cooperative control with the ground station, which to provided remote guidance to H$^2$Bird to allow it to navigate to the window.
+We used a motion capture system to record 
+ground truth data. We present a sketch of this experimental setup in
+Fig.~\ref{fig:experiment_cartoon}.
 
 \begin{figure}[tb]
 \centering
@@ -421,120 +495,21 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \label{fig:pf_screencap}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{System Model}
-\label{sec:system_model}
-
-%----------------------------------------------------------------------------%
-\subsection{Ornithopter Attitude Control}
-\label{sec:model_attitude}
-
-Modeling of the vehicle pose is divided into two independent models for simplicity: one for
-yaw motion, and one for translational motion.
-
-We model the yaw motion of the ornithopter with a one-dimensional model to reduce the complexity of the overall model. Matching our physical implementation, we choose the reference heading angle as an input and model the dynamics from the vehicle and on-board PID controller to output the physical heading angle. The model format is shown in Equation~\ref{eq:plain_model}.
-
-\begin{equation}
-\label{eq:plain_model}
-H(s) = \frac{K}{1 + Rs}
-\end{equation}
-
-To model the translational position of the ornithopter, we use a form of Dubin's car model~\cite{lavalle:planning} with the angular position, $\theta$ as an input rather than a state. The overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the reference heading angle as the input.
-
-\begin{equation}
-\label{eq:total_model_plain}
-\begin{aligned}
-& \dot{x} = sin(\theta)\\
-& \dot{y} = cos(\theta)\\
-\end{aligned}
-\end{equation}
-
-%----------------------------------------------------------------------------%
-\subsection{Ground Station Pose Estimation}
-
-The model of the ground station combines both the camera model and the
-computational model for pose estimation. The camera model contains both a
-latency, which would occur in between the "camera" and "ornithopter dynamics"
-in Fig.~\ref{fig:block_diagram}, and a model for the viewing angle. We model the 
-viewing angle for the camera as a pixel map from one edge of a
-63$^{\circ}$ viewing triangle to the other. The camera has an image width of
-640 pixels. The desired heading angle in degrees for a given distance from the
-camera is calculated according to Equation~\ref{eq:desired_heading}, where $d$
-is the distance of the robot in front of the camera and $x$ is the horizontal
-position of the robot relative to the center of the window in meters. This
-relation reflects the fact that the camera cannot determine the depth of the
-robot.
-
-\begin{equation} \label{eq:desired_heading} \text{Desired heading} =
-\frac{640\text{px}}{2*\text{d}*\tan{\frac{63^{\circ}}{2}}}*\frac{63^{\circ}}{640\text{px}}*\text{x}
-\end{equation}
-
-The computational model accounts for the latency added by the operations required to
-run the particle filter and calculate the input to send to the robot. 
-
-%----------------------------------------------------------------------------%
-\subsection{Cooperative Visual Servoing}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Experiments}
-
-%----------------------------------------------------------------------------%
-\subsection{System Identification}
-
-%............................................................................%
-\subsubsection{Ornithoper Attitude Control}
-
-We determined the turning speed and turning radius of the H$^2$Bird
-experimentally by measuring the response of the system to the step input of a
-clockwise 90 degree turn. To measure the response of the system, we recorded
-the angular position data of the ornithopter calculated from the on-board
-gyroscope data. We then used
-MATLAB\footnote{The MathWorks, Inc. Matlab:
-\href{http://www.mathworks.com/products/matlab/}
-     {http://www.mathworks.com/products/matlab/}} to fit a
-simple low-order model to the step response as discussed in Sec.~\ref{sec:model_attitude}.
-
-%............................................................................%
-\subsubsection{Ground Station Pose Estimation}
-
-To measure the capture latency of the camera, we alternatively flashed black
-and white color in front of the camera and measured the time lapse before it
-detected the color change. We averaged this result over 50 trials to determine
-the capture latency.
-
-To compute the particle filter latency, we used system timers to determine the
-average time from the start of computation to the end of computation.
-
-%----------------------------------------------------------------------------%
-\subsection{Model Verification}
-
-We tested our cooperative visual servoing system with a simple target seeking
-experiment: the H$^2$Bird must fly through a specified obstacle, in this case,
-a wooden frame meant to simulate a window. As the H$^2$Bird cannot detect the
-target on its own, we used the ground station to provide remote headings for
-navigation to the window. A motion capture system in the test room provided
-ground truth data. A sketch of the experimental setup is shown in
-Fig.~\ref{fig:experiment_cartoon}.
-
-% TODO clarify or roll into paragraph
-Each trial included the following steps:
+We performed each trial as follows (see Fig.~\ref{fig:pf_screencap}):
 \begin{enumerate}
 \item The window is identified by the user. 
-\item The H$^2$Bird is released in view of the camera by hand at the desired starting grid point.
-\item The H$^2$Bird attempts to fly to the window with remote guidance from
-the base station.
+\item We release H$^2$Bird by hand, in view of the camera at the desired starting grid point.
+\item The H$^2$Bird attempts to fly through the window with, with remote guidance from
+the ground station.
 \end{enumerate}
 
-In total, we ran 80 trials over a variety of starting positions. The goal of
-our experiments was to verify the model described in
+In total, we ran 80 trials over a variety of starting positions. Our goal for the experiments was to verify the model described in
 Secttion~\ref{sec:system_model}, so we conducted 60 of the 80 trials in a grid
-along the edges of the camera viewplane in 0.05 meter increments from the
-window to determine the success rate on the edges of the testing space. We
+along the edges of the camera view plane, and in 0.05 meter increments from the
+window, in an effort to determine the success rate on the edges of the testing space. We
 conducted 20 additional trials directly in front of the camera to determine
-the success rate near the center of the testing space. After every 5 trials,
-we replaced the current battery with a fully charged one.
+the success rate near the center of viewing plane. After every 5 trials,
+we replaced the ornithopter's battery with a fully charged one.
 
 \begin{figure}[tb]
 \centering
@@ -542,17 +517,15 @@ we replaced the current battery with a fully charged one.
 \caption{Conceptual sketch of experimental setup.}
 \label{fig:experiment_cartoon}
 \end{figure}
-%TODO label experiment cartoon
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results and Performance}
 \label{sec:performance}
-%TODO cameron
 To bound the performance of the cooperative control system, we determine 
 the feasible set of initial conditions that result in successful narrow 
-passage traversal using both analytical and empirical methods. We conducted 
+passage traversal, using both analytical and empirical methods. We then conducts 
 experiments to validate this model.
 
 The following sections detail how we calculated the feasible and infeasible
@@ -565,7 +538,6 @@ experimental trials.
 %............................................................................%
 \subsubsection{Ornithoper Attitude Control}
 \label{sec:flight_control}
-%TODO cameron
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/step_response_total.pdf}
@@ -584,12 +556,9 @@ H(s) = \frac{0.95}{1+0.62s}
 \end{equation}
 
 The step response rise time is 1.4 seconds. The H$^2$Bird flies
-at an average forward velocity of 1.2 m/s during our experiments, so the
-estimated minimum turning radius of the robot is 1.07 maters, as described in
-Equation~\ref{eq:min_radius}. In the experiments, we choose a flight speed
-lower than the maximum speed of the ornithopter, to facilitate more robust
-tracking.
-
+at an average forward velocity of 1.2 m/s during our experiments, so we
+estimate the minimum turning radius of the robot is 1.07 maters, as described in
+Equation~\ref{eq:min_radius}.
 \begin{equation}
 \label{eq:min_radius}
 \begin{aligned}
@@ -598,6 +567,9 @@ speed}}{\text{Final angle}*2*\pi}\\
 & = \frac{360^{\circ}*1.4s*1.2\frac{m}{s}}{90^{\circ}*2*\pi} = 1.07 m
 \end{aligned}
 \end{equation}
+In the experiments presented in this work, we choose a flight speed
+lower than the maximum speed of the ornithopter, to facilitate more robust
+tracking.
 
 %............................................................................%
 \subsubsection{Ground Station Pose Estimation}
@@ -625,7 +597,7 @@ partiicle filter computational latency was 12.5ms.
 \end{minipage}
 \end{figure*}
 
-The results of our experimental trials are shown in
+We present the results of our experimental trials in
 Figs.~\ref{fig:flight_paths} and~\ref{fig:flight_paths_feasible}. For
 initial conditions in the middle of the testing space and in front of the
 camera, we achieved a success rate of 80\%. This case is depicted in
@@ -665,11 +637,11 @@ initial heading of the H$^2$Bird is chosen uniformly at random from $(-90,90)$.}
 \end{minipage}
 \end{figure*}
 
-We simulated the motion of the ornithopter beginning from certain positional
+We simulated the motion of the ornithopter, beginning from certain positional
 and angular initial conditions using several components representing the
 experimental layout of our system described in Fig.~\ref{fig:block_diagram}.
-For the "ornithopter dynamics" block, we used the translational model
-described by~\ref{eq:total_model_plain} with the angular position model
+For the ``ornithopter dynamics'' block, we used the translational model
+described by~\ref{eq:total_model_plain}, with the angular position model
 described by~\ref{eq:transfer_func}. We tuned the PID controller for the
 simulation so that paths from known positions looked similar to the behavior
 we observed in the experimental data. We also account for the camera capture and
