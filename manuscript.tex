@@ -209,13 +209,13 @@ cooperative control schemes are apt solutions.
 %----------------------------------------------------------------------------%
 \subsection{H$^2$Bird Ornithoper}
 % humphrey
-In order to conduct these experiments on cooperation, we designed a new
-flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit i-Bird 
+To fulfill the need for a lightweight, autonomous flapping wing MAV platform, 
+we designed the H$^2$Bird. Built around the Silverlit i-Bird 
 RC flyer power train and clap-fling 
 wings\footnote{\raggedright Silverlit Toys Manufactory Ltd.: i-Bird RC Flyer
 \href{http://www.silverlit-flyingclub.com/wingsmaster/}
      {http://www.silverlit-flyingclub.com/wingsmaster/}}, 
-the H$^2$Bird's wingspan is 26.5 cm and it has a flight weight of 13 grams. A 
+the H$^2$Bird has a wingspan of 26.5 cm and a flight weight of 13 grams. A 
 tail propeller and servo-controlled tail elevator provide control in the yaw 
 and pitch axes. The on-board ImageProc 2.4\footnote{ImageProc 2.4: \\
 \href{https://github.com/biomimetics/imageproc\_pcb}
@@ -230,8 +230,8 @@ ground speed, and can operate for approximately 10 minutes.
 \subsection{Ground Station Computer Vision Platform}
 % ryan
 Cooperative behavior is a promising strategy for autonomous navigation of 
-unexplored and unstructured environments. We intend that this system will be 
-fully mobile in these environments, not tied to a static ground station or 
+unexplored and unstructured environments. However, to operate in these environments,
+a cooperative system must be fully mobile, not tied to a static ground station or 
 motion capture laboratory. To demonstrate the feasibility of this approach, 
 we designed our ground station to conform to the power and weight 
 constraints of highly mobile millirobotic ground vehicles, such as 
@@ -281,14 +281,14 @@ computer vision libraries for image capture and processing.
 %TODO label h2bird drawing
 
 Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
-maintain high sample rate attitude control. We estimate the vehicle pose by naively
+high sample rate attitude control. We estimate the vehicle pose by
 integrating the IMU, and use a proportional plus integral plus derivative (PID) 
 controller for controlling the vehicle.
 
 The high pitch angles flapping wing flyers achieve in routine flight distinguish them 
 from other MAVs. Baek demonstrated control on a similar vehicle using PID and an Euler angle
 parameterization of orientation~\cite{baek:tracking}. However, Euler angle parameterizations of the vehicle orientation 
-suffer from singularities around these high pitch angles, so we instead 
+suffer from singularities around high pitch angles, so we instead 
 represent the vehicle orientation with quaternions. An additional benefit of 
 the quaternion representation is its ability to represent relative body and 
 world coordinate angular displacements compactly with quaternion multiplication.
@@ -317,20 +317,20 @@ Q_e &= \alpha\cdot q_e/\sin(\alpha /2) \\
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Pose Estimation}
 The ground station performs simple two-dimensional pose estimation on 
-H$^2$Bird using a particle filter-based motion tracking algorithm. This pose 
-estimate is the feedback input to the cooperative visual servoing feedback 
+H$^2$Bird using a particle filter-based motion tracking algorithm.
+The produced pose estimate is the feedback input to the cooperative visual servoing feedback 
 loop (Sec. \ref{sec:visual_servoing_concept}). We limit our pose estimation 
 approach to monocular two-dimensional object tracking in pixel space. This 
 allows us to perform real-time video tracking using the modest computational 
-resources available on the ground station, and similarly millirobotic ground 
+resources available on the ground station, and similarly, millirobotic ground 
 vehicles.
 
-Our pose estimation algorithm tracks H$^2$Bird motion in the frame using a 
-particle filter~\cite{thrun2005probabilistic}. We initialze particles 
-uniformly across the frame. To improve numerical stability, we normalize the 
-weights of all particles on each iteration, and only resample the particle 
-population when the mean particle weight falls below a pre-determined 
-threshold.
+Motion of the H$^2$Bird in the frame is tracked using a particle filter
+with an approach similar to that employed by Thrun~\cite{thrun2005probabilistic}. 
+Particles are distributed uniformly across the frame on initialization. 
+To improve numerical stability, we normalize the weights of all particles on 
+each iteration, and only resample the particle population when the mean particle 
+weight falls below a pre-determined threshold. 
 
 %............................................................................%
 \subsubsection{Motion Model}
@@ -376,8 +376,8 @@ start. We saved the first frame captured by the system, and provided it as
 the background frame $f_0$ for every iteration of the particle filter. This 
 resulted in a sampling approach to na\"{i}ve background subtraction. 
 
-Na\"{i}ve background subtraction is brittle to changes in the scene over 
-time[CITATION]. However, we found it very efficient, and reliable enough for the 
+Na\"{i}ve background subtraction is known to be brittle to changes in the scene over 
+time[CITATION]. However, we found it very efficient and sufficiently reliable for the 
 short time spans necessary for H$^2$Bird to successfully negotiate narrow 
 openings, which are typically less than five seconds. Substituting $f_0$ 
 with a more sophisticated extraction of the background would implement a 
@@ -387,8 +387,10 @@ the underlying motion tracking filter.
 %----------------------------------------------------------------------------%
 \subsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing_concept}
-Remote guidance of the H$^2$Bird is performed by commanding relative changes in the
-reference orientation. With estimates of the vehicle pose, we calculate an altitude
+The H$^2$Bird is remotely guided by commanding relative changes in its
+reference orientation. Using relative changes removes the need to estimate the relative
+orientation between the ground station and vehicle frames of reference. 
+With estimates of the vehicle pose, we calculate an altitude
 error and horizontal error. The ground station then commands incremental changes to 
 the H$^2$Bird pitch and yaw are according to a PID control law, with positive altitude error
 corresponding to negative pitch increments and positive horizontal error
@@ -427,14 +429,17 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \subsection{Ornithopter Attitude Control}
 \label{sec:model_attitude}
 
-To model the yaw motion of the ornithopter, we developed a one-dimensional model using the physical heading angle as the output and the heading angle set by the ground station as the input. This model accounts for both the yaw dynamics of the ornithopter and the internal PID controller on the actuator inputs for the tail rotor. We decided upon a one-dimensional model to reduce the complexity of the overall model and enable simple angle inputs and outputs, which is similar to our methods during experimentation. The model format is shown in Equation~\ref{eq:plain_model}.
+Modeling of the vehicle pose is divided into two independent models for simplicity: one for
+yaw motion, and one for translational motion.
+
+We model the yaw motion of the ornithopter with a one-dimensional model to reduce the complexity of the overall model. Matching our physical implementation, we choose the reference heading angle as an input and model the dynamics from the vehicle and on-board PID controller to output the physical heading angle. The model format is shown in Equation~\ref{eq:plain_model}.
 
 \begin{equation}
 \label{eq:plain_model}
 H(s) = \frac{K}{1 + Rs}
 \end{equation}
 
-To model the translational position of the ornithopter, we used a form of Dubin's car model~\cite{lavalle:planning} with the angular position, $\theta$ as an input rather than a state. The overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the angular setpoint provided by the ground station as the input.
+To model the translational position of the ornithopter, we use a form of Dubin's car model~\cite{lavalle:planning} with the angular position, $\theta$ as an input rather than a state. The overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the reference heading angle as the input.
 
 \begin{equation}
 \label{eq:total_model_plain}
@@ -482,7 +487,7 @@ run the particle filter and calculate the input to send to the robot.
 \subsubsection{Ornithoper Attitude Control}
 
 We determined the turning speed and turning radius of the H$^2$Bird
-experimentally using the response of the system to the step input of a
+experimentally by measuring the response of the system to the step input of a
 clockwise 90 degree turn. To measure the response of the system, we recorded
 the angular position data of the ornithopter calculated from the on-board
 gyroscope data. We then used
@@ -509,8 +514,8 @@ We tested our cooperative visual servoing system with a simple target seeking
 experiment: the H$^2$Bird must fly through a specified obstacle, in this case,
 a wooden frame meant to simulate a window. As the H$^2$Bird cannot detect the
 target on its own, we used the ground station to provide remote headings for
-navigation to the window. Ground truth data was collected via a motion capture
-system in the test room. A sketch of the experimental setup is shown in
+navigation to the window. A motion capture system in the test room provided
+ground truth data. A sketch of the experimental setup is shown in
 Fig.~\ref{fig:experiment_cartoon}.
 
 % TODO clarify or roll into paragraph
@@ -667,7 +672,7 @@ For the "ornithopter dynamics" block, we used the translational model
 described by~\ref{eq:total_model_plain} with the angular position model
 described by~\ref{eq:transfer_func}. We tuned the PID controller for the
 simulation so that paths from known positions looked similar to the behavior
-we observed in the experimental data. We also inlcuded the camera capture and
+we observed in the experimental data. We also account for the camera capture and
 pose estimation delays, and the PID controller sampling rate in the
 simulation.
 
@@ -698,9 +703,9 @@ Along the edges of the camera viewing triangle, however, the probability of
 success decreases.
 
 The results of our experimental trials verify the results of the Monte Carlo
-simulation of the model that we used. The trials that we conducted in
+simulation of our model. The trials that we conducted in
 Fig.~\ref{fig:flight_paths_feasible} correspond to the circled region in
-Fig.~\ref{fig:heat_map}. The 80\% success rate that we experienced in the
+Fig.~\ref{fig:heat_map}. The 80\% success rate that we measured in the
 experiments corroborates our calculated probability of success of
 approximately 80\%. Additionally, the diminished success rate of 50\% near the
 edges of the viewing triangle that we determined through experimentation
