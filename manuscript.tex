@@ -429,14 +429,17 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \subsection{Ornithopter Attitude Control}
 \label{sec:model_attitude}
 
-To model the yaw motion of the ornithopter, we developed a one-dimensional model using the physical heading angle as the output and the heading angle set by the ground station as the input. This model accounts for both the yaw dynamics of the ornithopter and the internal PID controller on the actuator inputs for the tail rotor. We decided upon a one-dimensional model to reduce the complexity of the overall model and enable simple angle inputs and outputs, which is similar to our methods during experimentation. The model format is shown in Equation~\ref{eq:plain_model}.
+Modeling of the vehicle pose is divided into two independent models for simplicity: one for
+yaw motion, and one for translational motion.
+
+We model the yaw motion of the ornithopter with a one-dimensional model to reduce the complexity of the overall model. Matching our physical implementation, we choose the reference heading angle as an input and model the dynamics from the vehicle and on-board PID controller to output the physical heading angle. The model format is shown in Equation~\ref{eq:plain_model}.
 
 \begin{equation}
 \label{eq:plain_model}
 H(s) = \frac{K}{1 + Rs}
 \end{equation}
 
-To model the translational position of the ornithopter, we used a form of Dubin's car model~\cite{lavalle:planning} with the angular position, $\theta$ as an input rather than a state. The overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the angular setpoint provided by the ground station as the input.
+To model the translational position of the ornithopter, we use a form of Dubin's car model~\cite{lavalle:planning} with the angular position, $\theta$ as an input rather than a state. The overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the reference heading angle as the input.
 
 \begin{equation}
 \label{eq:total_model_plain}
@@ -484,7 +487,7 @@ run the particle filter and calculate the input to send to the robot.
 \subsubsection{Ornithoper Attitude Control}
 
 We determined the turning speed and turning radius of the H$^2$Bird
-experimentally using the response of the system to the step input of a
+experimentally by measuring the response of the system to the step input of a
 clockwise 90 degree turn. To measure the response of the system, we recorded
 the angular position data of the ornithopter calculated from the on-board
 gyroscope data. We then used
