@@ -170,11 +170,11 @@ expense of payload weight.
 %modeling ( won't necessarily stay in this spot)
 Modeling and control of flapping wing MAVs is becoming a well studied subject\cite{floreano:flying}. 
 Shigeoka discusses velocity and altitude control in ~\cite{Shigeoka:ornithopter}. 
-Design and control of the sub--15 gram DelFly ornithopter is described by 
+Design and control of the sub-15 gram DelFly ornithopter is described by 
 deCroon et al.~\cite{delfly:design}. In contrast, there is little previous work 
 on guidance of flapping wing MAVs. Baek demonstrated altitude control with an external 
 camera~\cite{baek:altitude}. de Croon et al. demonstrated obstacle avoidance 
-with an onboard camera and offboard processing~\cite{delfly:avoid}. For sub--20 gram
+with an onboard camera and offboard processing~\cite{delfly:avoid}. For sub-20 gram
 ornithopters, Baek et al. \cite{baek:tracking} is one of the few examples of
 completely autonomous target seeking.
 %[However, these papers do not study the system blah blah blah.]
@@ -243,8 +243,8 @@ OctoRoACH, which can traverse rough terrains with speed and agility~\cite{Pullin
 Rather than power-intensive PC processors, we used the ARM-based 
 BeagleBoard single-board computer as reference computation platform. The
 BeagleBoard consumes approximately 1 watt while running our computer vision 
-and control algorithms. It uses the same processor as popular sub--10 gram 
-processor modules--such as the Gumstix Overo and LogicPD Torpedo--which are 
+and control algorithms. It uses the same processor as popular sub-10 gram 
+processor modules---such as the Gumstix Overo and LogicPD Torpedo---which are 
 light enough for deployment on millirobotic ground vehicles. We pair the 
 BeagleBoard with an off-the-shelf consumer USB web camera, for similar image 
 quality and resolution to the miniature camera modules available at 
@@ -284,7 +284,7 @@ computer vision libraries for image capture and processing.
 %TODO label h2bird drawing
 
 Attitude estimation and control for the H$^2$Bird runs on-board to achieve 
-maintain high-sample-rate attitude control. We estimate the vehicle pose by naively
+maintain high sample rate attitude control. We estimate the vehicle pose by naively
 integrating the IMU, and use a proportional plus integral plus derivative (PID) 
 controller for controlling the vehicle.
 
@@ -638,7 +638,7 @@ cases. Since the control algorithm we are using has no notion of depth, it
 applies the same control input whether the ornithopter is close to the camera,
 where small changes in heading are adequate, or far away from the camera,
 where large changes in heading are necessary. Due to this phenomenon, the
-controller often over or under--compensates in certain regions, depending upon
+controller often over or under-compensates in certain regions, depending upon
 the PID tuning and the distance from the camera. Tracking noise can also cause
 passage negotiation to fail. Variations in the H$^2$Bird hand launch can cause
 the system to respond differently for similar initial conditions. In addition,
