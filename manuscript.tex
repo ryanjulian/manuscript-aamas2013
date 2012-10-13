@@ -205,11 +205,24 @@ The power and payload limits on flapping-wing MAVs make complex on-board
 sensing difficult, so multiagent cooperative control schemes are apt 
 solutions.
 
-%TODO Ryan's paragraph
-\cite{Jung1998Range}\cite{Hyams1999Cooperative}\cite{Mehta2006Adaptive}
-\cite{Rudol2008Micro}\cite{Luo2011Air}
+The literature on cooperative control of MAVs is similarly limited to larger
+vehicles and purely analytical explorations. Nebot, Hyams, and Jung all 
+demonstrated cooperative visual servoing for heterogeneous UGVs~\cite{Nebot2003Agents}\cite{Hyams1999Cooperative}\cite{Jung1998Range}. 
+Luo and Mehta analyze  UAV-UGV cooperation from a modeling perspective~\cite{Luo2011Air}\cite{Mehta2006Adaptive}. 
+Rudol demonstrated a cooperative visual servoing system similar with 
+UGVs and MAVs~\cite{Rudol2008Micro}, but the vehicles used were orders of 
+magnitude larger than the millirobotic systems we target, and so were able 
+to take advantage of high-performance processors and specialized cameras.
 
-%TODO Add in final paragraph to lead-in to our work
+The small size of millirobotic air and ground vehicles necessitates 
+specialization, but it also pays dividends agility. A group of specialized 
+heterogeneous millirobots can navigate more challenging terrains and 
+interact with their environments in ways that larger, monolithic vehicles 
+cannot. Despite this advantage, in order to collectively equal the sensing and 
+computational capabilities of larger robots, they will also have to interact 
+so that multiple robots can benefit from the specialized capabilities of 
+cooperating vehicles. Millirobotic systems will benefit from cooperation 
+even more than their larger counterparts. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
@@ -371,7 +384,7 @@ and collapse, and decreases reacquisition delay.
 \subsubsection{Emission Model}
 Our emission model (Eq.~\ref{eq:emission_model}) implements a sampling
 approach to motion tracking via na\"{i}ve background subtraction, e.g. frame 
-differencing[CITATION]. On each iteration, the system provides the emission 
+differencing~\cite{Ahad2011Computer}. On each iteration, the system provides the emission 
 model with $f_0$, the frame representing the background, and $f_t$, the most 
 recent frame captured. The model assigns a weight $w^{[i]}_t$ to each 
 particle $x^{[i]}_t$, proportional to the color distance in RGB space 
@@ -391,7 +404,7 @@ choice of $f_0$ resulted in a sampling approach to na\"{i}ve background
 subtraction. 
 
 Na\"{i}ve background subtraction is brittle to changes in a scene over 
-time [CITATION]. However, we find it very efficient, and sufficiently 
+time~\cite{Ahad2011Computer}. However, we find it very efficient, and sufficiently 
 reliable for the short time spans--less than five seconds--necessary for 
 H$^2$Bird to successfully negotiate narrow openings. Calculating $f_0$ 
 using a more sophisticated background extraction would retrain the 
