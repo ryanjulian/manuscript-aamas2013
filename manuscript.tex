@@ -181,16 +181,20 @@ completely autonomous target seeking.
 %[However, these papers do not study the system blah blah blah.]
 
 Autonomous control of flapping winged MAVs is a complex undertaking because of
-the non-linear flight dynamics as presented
-in~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. Although the dynamics of
-flapping-winged flight can be averaged with respect to the wingbeat period as
-presented in~\cite{Schenato:flightcontrol}\cite{cheng:tandrdamping}, we develop a
-linear, one-dimensional model to predict the behavior of the system, similar
-to~\cite{Shigeoka:ornithopter}. In addition to the nonlinearities, the system
-is underactuated due to size constraints. Many of the methods for controlling
-these platforms make extensive use of GPS in outdoor
-environments~\cite{kingston:timeattitude, kanade:3dvision} and expansive
-motion capture systems in indoor environments. While operating indoors, using
+the non-linear flight
+dynamics~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. One approach to
+simplify these dynamic models is to use averaging over the wingbeat
+period~\cite{Schenato:flightcontrol}\cite{cheng:tandrdamping}. We desire a
+simpler approach, so we develop a linear, one-dimensional model to predict the
+yaw behavior of the system, similar to the model that Shigeoka used
+in~\cite{Shigeoka:ornithopter} for simulating the velocity of a MAV in
+one-dimensionally. In addition to the nonlinearities, the system is
+underactuated (there is no roll control) due to size constraints.
+
+Many of the methods for
+controlling these platforms make extensive use of GPS in outdoor
+environments and expansive
+motion capture systems in indoor environments~\cite{kingston:timeattitude}\cite{kanade:3dvision}. While operating indoors, using
 GPS to estimate the pose of the MAV is not possible, and motion capture
 requires expensive and stationary modification of the environment. The power
 and payload limits on MAVs make on-board sensing difficult, so multi-agent
@@ -451,8 +455,30 @@ To model the translational position of the ornithopter, we used a form of Dubin'
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Pose Estimation}
 
+The model of the ground station combines both the camera model and the
+computational model for pose estimation. The camera model contains both a
+latency, which would occur in between the "camera" and "ornithopter dynamics"
+in Fig.~\ref{fig:block_diagram}, and a model for the viewing angle. The
+viewing angle for the camera is modeled as a pixel map from one edge of a
+63$^{\circ}$ viewing triangle to the other. The camera has an image width of
+640 pixels. The desired heading angle in degrees for a given distance from the
+camera is calculated according to Equation~\ref{eq:desired_heading}, where d
+is the distance of the robot in front of the camera and x is the horizontal
+position of the robot relative to the center of the window in meters. This
+formula models the fact that the camera cannot determine the depth of the
+robot.
+
+\begin{equation} \label{eq:desired_heading} \text{Desired heading} =
+\frac{640\text{px}}{2*\text{d}*\tan{\frac{63^{\circ}}{2}}}*\frac{63^{\circ}}{640\text{px}}*\text{x}
+\end{equation}
+
+The computational model consists of the latency for the operations required to
+run the particle filter and calculate the input to send to the robot. 
+
 %----------------------------------------------------------------------------%
 \subsection{Cooperative Visual Servoing}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiments}
@@ -476,9 +502,16 @@ simple low-order model to the step response as discussed in Sec.~\ref{sec:model_
 %............................................................................%
 \subsubsection{Ground Station Pose Estimation}
 
+To measure the capture latency of the camera, we alternatively flashed black
+and white color in front of the camera and measured the time lapse before it
+detected the color change. We averaged this result over 50 trials to determine
+the capture latency.
+
+To compute the particle filter latency, we used system timers to determine the
+average time from the start of computation to the end of computation.
+
 %............................................................................%
 \subsubsection{Cooperative Visual Servoing}
-
 
 %----------------------------------------------------------------------------%
 \subsection{Model Verification}
@@ -566,13 +599,17 @@ tracking.
 \begin{equation}
 \label{eq:min_radius}
 \begin{aligned}
-\text{Minimum radius} & = \frac{360^{\circ}*\text{Rise time}*\text{Flight speed}}{\text{Final angle}*2*\pi}\\
+\text{Minimum radius} & = \frac{360^{\circ}*\text{Rise time}*\text{Flight
+speed}}{\text{Final angle}*2*\pi}\\
 & = \frac{360^{\circ}*1.4s*1.2\frac{m}{s}}{90^{\circ}*2*\pi} = 1.07 m
 \end{aligned}
 \end{equation}
 
 %............................................................................%
 \subsubsection{Ground Station Pose Estimation}
+
+The latency that we measured for the camera was 25ms and the measured
+partiicle filter computational latency was 12.5ms.
 
 %............................................................................%
 \subsubsection{Cooperative Visual Servoing}
@@ -676,7 +713,9 @@ simulation of the model that we used. The trials that we conducted in
 Fig.~\ref{fig:flight_paths_feasible} correspond to the circled region in
 Fig.~\ref{fig:heat_map}. The 80\% success rate that we experienced in the
 experiments corroborates our calculated probability of success of
-approximately 80\%. Additionally the diminished success rate of 50\% near the edges of the viewing triangle that we determined through experimentation supports the reduced probability of success calculated by the simulation.
+approximately 80\%. Additionally, the diminished success rate of 50\% near the
+edges of the viewing triangle that we determined through experimentation
+supports the reduced probability of success calculated by the simulation.
 
 
 
