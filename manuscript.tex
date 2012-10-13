@@ -359,6 +359,7 @@ and decreases reacquisition delay.
 
 %............................................................................%
 \subsubsection{Emission Model}
+Our emission model (Eq.~\ref{eq:emission_model}) effectively performs \naive
 
 
 
@@ -393,13 +394,11 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \section{System Model}
 \label{sec:system_model}
 
-
-
 %----------------------------------------------------------------------------%
 \subsection{Ornithopter Attitude Control}
 \label{sec:model_attitude}
 
-To model the yaw motion of the ornithopter, we developed a one-dimensional model using the physical heading angle as the output and the heading angle set by the ground station as the input. This model accounts for both the yaw dynamics of the ornithopter and the internal PID controller on the actuator inputs for the tail rotor. We decided upon a one-dimensional model to reduce the complexity of the overall model and enable simple angle inputs and outputs, which is similar to our methods during experiementation. The format of the model we decided up on is shown in Equation~\ref{eq:plain_model}.
+To model the yaw motion of the ornithopter, we developed a one-dimensional model using the physical heading angle as the output and the heading angle set by the ground station as the input. This model accounts for both the yaw dynamics of the ornithopter and the internal PID controller on the actuator inputs for the tail rotor. We decided upon a one-dimensional model to reduce the complexity of the overall model and enable simple angle inputs and outputs, which is similar to our methods during experimentation. The format of the model we decided up on is shown in Equation~\ref{eq:plain_model}.
 
 \begin{equation}
 \label{eq:plain_model}
@@ -446,6 +445,7 @@ simple low-order model to the step response as discussed in Sec.~\ref{sec:model_
 
 %............................................................................%
 \subsubsection{Cooperative Visual Servoing}
+
 
 %----------------------------------------------------------------------------%
 \subsection{Model Verification}
@@ -651,7 +651,7 @@ approximately 80\%. Additionally the diminished success rate of 50\% near the ed
 \section{Conclusions and Future Work}
 %TODO 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Acknowledgements}
+\section{Acknowledgments}
 The authors would like to thank Fernando Garcia Bermudez for his 
 assistance with the Vicon motion capture system, Andrew Pullin for his 
 help with robot photography, and the members of the Biomimetic 
