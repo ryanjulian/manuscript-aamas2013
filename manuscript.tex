@@ -168,22 +168,20 @@ safety, and noise profile to rotor craft MAVs, but at the
 expense of payload weight.
 %Intro portion about previous works in ornithopter coorperative control/
 %modeling ( won't necessarily stay in this spot)
-Modeling and control of flapping wing MAVs is becominga well studied subject\cite{floreano:flying}. 
-Shigeoka discusses velocity and altitude control in
-~\cite{Shigeoka:ornithopter}. Design and control of the sub 15 gram DelFly
-ornithopter is described by deCroon et al.~\cite{delfly:design}.
-In contrast, there is little previous work on guidance of flapping wing 
-MAVs. Baek demonstrated altitude control with an external 
+Modeling and control of flapping wing MAVs is becoming a well studied subject\cite{floreano:flying}. 
+Shigeoka discusses velocity and altitude control in ~\cite{Shigeoka:ornithopter}. 
+Design and control of the sub--15 gram DelFly ornithopter is described by 
+deCroon et al.~\cite{delfly:design}. In contrast, there is little previous work 
+on guidance of flapping wing MAVs. Baek demonstrated altitude control with an external 
 camera~\cite{baek:altitude}. de Croon et al. demonstrated obstacle avoidance 
-with an onboard camera and offboard processing~\cite{delfly:avoid}. For sub 20 gram
+with an onboard camera and offboard processing~\cite{delfly:avoid}. For sub--20 gram
 ornithopters, Baek et al. \cite{baek:tracking} is one of the few examples of
 completely autonomous target seeking.
 %[However, these papers do not study the system blah blah blah.]
 
 Autonomous control of flapping winged MAVs is a complex undertaking because of
-the non-linear flight
-dynamics~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. One approach to
-simplify these dynamic models is to use averaging over the wingbeat
+the non-linear flight dynamics~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. 
+One approach to simplify these dynamic models is to use averaging over the wingbeat
 period~\cite{Schenato:flightcontrol}\cite{cheng:tandrdamping}. We desire a
 simpler approach, so we develop a linear, one-dimensional model to predict the
 yaw behavior of the system, similar to the model that Shigeoka used
@@ -191,10 +189,9 @@ in~\cite{Shigeoka:ornithopter} for simulating the velocity of a MAV in
 one-dimensionally. In addition to the nonlinearities, the system is
 underactuated (there is no roll control) due to size constraints.
 
-Many of the methods for
-controlling these platforms make extensive use of GPS in outdoor
-environments and expansive
-motion capture systems in indoor environments~\cite{kingston:timeattitude}\cite{kanade:3dvision}. While operating indoors, using
+Many of the methods for controlling these platforms make extensive use of GPS in outdoor
+environments and expansive motion capture systems in indoor environments
+~\cite{kingston:timeattitude}\cite{kanade:3dvision}. While operating indoors, using
 GPS to estimate the pose of the MAV is not possible, and motion capture
 requires expensive and stationary modification of the environment. The power
 and payload limits on MAVs make on-board sensing difficult, so multi-agent
@@ -246,7 +243,7 @@ OctoRoACH, which can traverse rough terrains with speed and agility~\cite{Pullin
 Rather than power-intensive PC processors, we used the ARM-based 
 BeagleBoard single-board computer as reference computation platform. The
 BeagleBoard consumes approximately 1 watt while running our computer vision 
-and control algorithms. It uses the same processor as popular sub-10 gram 
+and control algorithms. It uses the same processor as popular sub--10 gram 
 processor modules--such as the Gumstix Overo and LogicPD Torpedo--which are 
 light enough for deployment on millirobotic ground vehicles. We pair the 
 BeagleBoard with an off-the-shelf consumer USB web camera, for similar image 
@@ -263,7 +260,6 @@ modified with a custom version of the Linux kernel. We use the Python
 and telemetry, and the OpenCV\footnote{\raggedright OpenCV: Willow Garage, 
 \href{http://opencv.willowgarage.com/wiki/}{http://opencv.willowgarage.com/wiki/}} 
 computer vision libraries for image capture and processing.
-%TODO footnotes: Ubuntu, Linux, Python, OpenCV
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Concept and Algorithms}
 %TODO ryan
@@ -298,8 +294,7 @@ parameterization of orientation~\cite{baek:tracking}. However, Euler angle param
 suffer from singularities around these high pitch angles, so we instead 
 represent the vehicle orientation with quaternions. An additional benefit of 
 the quaternion representation is its ability to represent relative body and 
-world coordinate angular displacements compactly with quaternion 
-multiplication.
+world coordinate angular displacements compactly with quaternion multiplication.
 
 Our implementation of quaternion-based control is similar to Knoebe's~\cite{knoebe:quatcontrol}:
 Given a reference pose represented in quaternion form $q_r$, we define the error as the rotation $q_e$ 
@@ -335,7 +330,7 @@ vehicles.
 
 Our pose estimation algorithm tracks H$^2$Bird motion in the frame using a 
 particle filter~\cite{thrun2005probabilistic}. We initialze particles 
-uniformly across the frame. To improve numerical stability, we  normalize the 
+uniformly across the frame. To improve numerical stability, we normalize the 
 weights of all particles on each iteration, and only resample the particle 
 population when the mean particle weight falls below a pre-determined 
 threshold.
@@ -356,7 +351,7 @@ x^{[i]}_t \sim \begin{cases}
 \end{cases}\\
 \end{equation}
 The experiments presented in this work use a diagonal covariance matrix 
-with variance 256, and an $\epsilon$ of 0.3. We find that the Gaussian 
+with a variance of 256, and an $\epsilon$ of 0.3. We find that the Gaussian 
 transition model is sufficient for tracking motion in which frame-to-frame 
 position changes are relatively small. The $\epsilon$-random uniform 
 transitions increase tracking robustness, by forcing the filter to always 
@@ -397,12 +392,12 @@ the underlying motion tracking filter.
 \label{sec:visual_servoing_concept}
 Remote guidance of the H$^2$Bird is performed by commanding relative changes in the
 reference orientation. With estimates of the vehicle pose, we calculate an altitude
-error and horizontal error. Incremental changes to the H$^2$Bird pitch and yaw are
-then commanded according to a PID control law, with positive altitude error
-corresponding to negative incremental pitches and positive horizontal error
-corresponding to negative incremental yaw. The controller integrator term is windowed
-to prevent windup when the bird is being launched, and the derivative term was tuned
-by hand to dampen oscillations associated with the system latency [?].
+error and horizontal error. The ground station then commands incremental changes to 
+the H$^2$Bird pitch and yaw are according to a PID control law, with positive altitude error
+corresponding to negative pitch increments and positive horizontal error
+corresponding to negative yaw increments. We window the controller integrator term 
+to prevent windup when the bird is being launched, and tuned the derivative term
+to dampen oscillations associated with the system latency [?].
 
 \begin{figure}[tb]
 \centering
@@ -435,14 +430,14 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \subsection{Ornithopter Attitude Control}
 \label{sec:model_attitude}
 
-To model the yaw motion of the ornithopter, we developed a one-dimensional model using the physical heading angle as the output and the heading angle set by the ground station as the input. This model accounts for both the yaw dynamics of the ornithopter and the internal PID controller on the actuator inputs for the tail rotor. We decided upon a one-dimensional model to reduce the complexity of the overall model and enable simple angle inputs and outputs, which is similar to our methods during experimentation. The format of the model we decided up on is shown in Equation~\ref{eq:plain_model}.
+To model the yaw motion of the ornithopter, we developed a one-dimensional model using the physical heading angle as the output and the heading angle set by the ground station as the input. This model accounts for both the yaw dynamics of the ornithopter and the internal PID controller on the actuator inputs for the tail rotor. We decided upon a one-dimensional model to reduce the complexity of the overall model and enable simple angle inputs and outputs, which is similar to our methods during experimentation. The model format is shown in Equation~\ref{eq:plain_model}.
 
 \begin{equation}
 \label{eq:plain_model}
 H(s) = \frac{K}{1 + Rs}
 \end{equation}
 
-To model the translational position of the ornithopter, we used a form of Dubin's car model~\cite{lavalle:planning} with the angular position, $\theta$ as an input rather than a state. So the overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the angular setpoint provided by the ground station as the input.
+To model the translational position of the ornithopter, we used a form of Dubin's car model~\cite{lavalle:planning} with the angular position, $\theta$ as an input rather than a state. The overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the angular setpoint provided by the ground station as the input.
 
 \begin{equation}
 \label{eq:total_model_plain}
@@ -458,21 +453,21 @@ To model the translational position of the ornithopter, we used a form of Dubin'
 The model of the ground station combines both the camera model and the
 computational model for pose estimation. The camera model contains both a
 latency, which would occur in between the "camera" and "ornithopter dynamics"
-in Fig.~\ref{fig:block_diagram}, and a model for the viewing angle. The
-viewing angle for the camera is modeled as a pixel map from one edge of a
+in Fig.~\ref{fig:block_diagram}, and a model for the viewing angle. We model the 
+viewing angle for the camera as a pixel map from one edge of a
 63$^{\circ}$ viewing triangle to the other. The camera has an image width of
 640 pixels. The desired heading angle in degrees for a given distance from the
-camera is calculated according to Equation~\ref{eq:desired_heading}, where d
-is the distance of the robot in front of the camera and x is the horizontal
+camera is calculated according to Equation~\ref{eq:desired_heading}, where $d$
+is the distance of the robot in front of the camera and $x$ is the horizontal
 position of the robot relative to the center of the window in meters. This
-formula models the fact that the camera cannot determine the depth of the
+relation reflects the fact that the camera cannot determine the depth of the
 robot.
 
 \begin{equation} \label{eq:desired_heading} \text{Desired heading} =
 \frac{640\text{px}}{2*\text{d}*\tan{\frac{63^{\circ}}{2}}}*\frac{63^{\circ}}{640\text{px}}*\text{x}
 \end{equation}
 
-The computational model consists of the latency for the operations required to
+The computational model accounts for the latency added by the operations required to
 run the particle filter and calculate the input to send to the robot. 
 
 %----------------------------------------------------------------------------%
@@ -533,7 +528,7 @@ Each trial included the following steps:
 the base station.
 \end{enumerate}
 
-In total, 80 trials were run over a variety of starting positions. The goal of
+In total, we ran 80 trials over a variety of starting positions. The goal of
 our experiments was to verify the model described in
 Secttion~\ref{sec:system_model}, so we conducted 60 of the 80 trials in a grid
 along the edges of the camera viewplane in 0.05 meter increments from the
@@ -608,7 +603,7 @@ speed}}{\text{Final angle}*2*\pi}\\
 %............................................................................%
 \subsubsection{Ground Station Pose Estimation}
 
-The latency that we measured for the camera was 25ms and the measured
+The latency that we measured for the camera was 25ms, and the measured
 partiicle filter computational latency was 12.5ms.
 
 %............................................................................%
@@ -643,7 +638,7 @@ cases. Since the control algorithm we are using has no notion of depth, it
 applies the same control input whether the ornithopter is close to the camera,
 where small changes in heading are adequate, or far away from the camera,
 where large changes in heading are necessary. Due to this phenomenon, the
-controller often over- or under-compensates in certain regions, depending upon
+controller often over or under--compensates in certain regions, depending upon
 the PID tuning and the distance from the camera. Tracking noise can also cause
 passage negotiation to fail. Variations in the H$^2$Bird hand launch can cause
 the system to respond differently for similar initial conditions. In addition,
