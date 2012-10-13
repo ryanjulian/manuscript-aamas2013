@@ -517,8 +517,8 @@ We tested our cooperative visual servoing system with a simple target seeking
 experiment: the H$^2$Bird must fly through a specified obstacle, in this case,
 a wooden frame meant to simulate a window. As the H$^2$Bird cannot detect the
 target on its own, we used the ground station to provide remote headings for
-navigation to the window. Ground truth data was collected via a motion capture
-system in the test room. A sketch of the experimental setup is shown in
+navigation to the window. A motion capture system in the test room provided
+ground truth data. A sketch of the experimental setup is shown in
 Fig.~\ref{fig:experiment_cartoon}.
 
 % TODO clarify or roll into paragraph
@@ -675,7 +675,7 @@ For the "ornithopter dynamics" block, we used the translational model
 described by~\ref{eq:total_model_plain} with the angular position model
 described by~\ref{eq:transfer_func}. We tuned the PID controller for the
 simulation so that paths from known positions looked similar to the behavior
-we observed in the experimental data. We also inlcuded the camera capture and
+we observed in the experimental data. We also account for the camera capture and
 pose estimation delays, and the PID controller sampling rate in the
 simulation.
 
@@ -706,9 +706,9 @@ Along the edges of the camera viewing triangle, however, the probability of
 success decreases.
 
 The results of our experimental trials verify the results of the Monte Carlo
-simulation of the model that we used. The trials that we conducted in
+simulation of our model. The trials that we conducted in
 Fig.~\ref{fig:flight_paths_feasible} correspond to the circled region in
-Fig.~\ref{fig:heat_map}. The 80\% success rate that we experienced in the
+Fig.~\ref{fig:heat_map}. The 80\% success rate that we measured in the
 experiments corroborates our calculated probability of success of
 approximately 80\%. Additionally, the diminished success rate of 50\% near the
 edges of the viewing triangle that we determined through experimentation
