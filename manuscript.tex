@@ -159,43 +159,24 @@ with experiments with narrow passage traversal.
 \caption{H$^2$Bird ornithopter MAV}
 \label{fig:h2bird}
 \end{figure}
-The power, size, and weight constraints of micro air vehicle (MAV) 
-platforms significantly limit on-board sensing and computational 
-resources, and thus the complexity of the control and state estimation 
-algorithms which can be executed on-board. These constraints are 
-particularly severe for flapping wing MAVs, a class of MAVs that have inherently superior 
-safety, and noise profile to rotor craft MAVs, but at the 
-expense of payload weight.
-%Intro portion about previous works in ornithopter coorperative control/
-%modeling ( won't necessarily stay in this spot)
-Modeling and control of flapping wing MAVs is becoming a well studied subject\cite{floreano:flying}. 
-Shigeoka discusses velocity and altitude control in ~\cite{Shigeoka:ornithopter}. 
-Design and control of the sub-15 gram DelFly ornithopter is described by 
-deCroon et al.~\cite{delfly:design}. In contrast, there is little previous work 
-on guidance of flapping wing MAVs. Baek demonstrated altitude control with an external 
-camera~\cite{baek:altitude}. de Croon et al. demonstrated obstacle avoidance 
-with an onboard camera and offboard processing~\cite{delfly:avoid}. For sub-20 gram
-ornithopters, Baek et al. \cite{baek:tracking} is one of the few examples of
-completely autonomous target seeking.
-%[However, these papers do not study the system blah blah blah.]
+Power, size, and weight constraints for micro air vehicle (MAV) 
+platforms are amongst the most restrictive of all robotic platforms. With
+significantly limited sensing and computing capabilities, only the most rudimentary
+control and state estimation algorithms can be executed on-board these platforms. 
+Even more restrictive are the constraints for flapping wing MAVs, 
+a class of MAVs that exhibit demonstrate safety and noise profiles superior to those
+of rotor craft MAVs, but at the expense of reduced payload weight.
 
-Autonomous control of flapping winged MAVs is a complex undertaking because of
-the non-linear flight dynamics~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. 
-One approach to simplify these dynamic models is to use averaging over the wingbeat
-period~\cite{Schenato:flightcontrol}\cite{cheng:tandrdamping}. We desire a
-simpler approach, so we develop a linear, one-dimensional model to predict the
-yaw behavior of the system, similar to the model that Shigeoka used
-in~\cite{Shigeoka:ornithopter} for simulating the velocity of a MAV in
-one-dimensionally. In addition to the nonlinearities, the system is
-underactuated (there is no roll control) due to size constraints.
-
-Many of the methods for controlling these platforms make extensive use of GPS in outdoor
-environments and expansive motion capture systems in indoor environments
-~\cite{kingston:timeattitude}\cite{kanade:3dvision}. While operating indoors, using
-GPS to estimate the pose of the MAV is not possible, and motion capture
-requires expensive and stationary modification of the environment. The power
-and payload limits on MAVs make on-board sensing difficult, so multi-agent
-cooperative control schemes are apt solutions.
+Compounding these engineering restrictions are the many non-linear
+flight dynamics exhibited by flapping wing flight~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. 
+Much past research on flapping wing MAVs has been focused on overcoming the 
+difficulties associated with controlling and modeling in the face of these 
+non-linearities\cite{floreano:flying}. Common approaches to simplify these 
+dynamic models include averaging over the wingbeat period~\cite{Schenato:flightcontrol}
+\cite{cheng:tandrdamping}, and using linear, low-dimensional models to predict the 
+behavior in flight~\cite{Shigeoka:ornithopter}. Advances have lead to the
+development of some high-performance platforms, such as the sub-15 gram DelFly 
+as described by deCroon et al.~\cite{delfly:design}. 
 
 Many of the control laws that previous researches have developed from the
 dynamic models of flapping-winged flight, such as periodic forcing and other
@@ -204,8 +185,24 @@ in~\cite{doman:dynamics}\cite{khan:longitudinal_control}\cite{leonard:averaging}
 require powerful on-board computing. In our work, we develop a simpler, less
 computationally intensive method of control for negotiating narrow passages.
 
+In contrast, there is considerably less previous work on guidance of flapping wing MAVs. 
+Baek demonstrated altitude control with an external camera~\cite{baek:altitude}. 
+de Croon et al. demonstrated obstacle avoidance with an onboard camera and offboard 
+processing~\cite{delfly:avoid}. For sub-20 gram ornithopters, Baek et al. 
+\cite{baek:tracking} is one of the few examples of scompletely autonomous target seeking.
+
+There also exists a body of work on guidance and control for fixed wing and rotary wing 
+MAV platforms, but many of these methods make extensive use of GPS or motion capture systems
+~\cite{kingston:timeattitude}\cite{kanade:3dvision}. While operating indoors, using
+GPS to estimate the pose of the MAV is not possible, and motion capture
+requires expensive and stationary modification of the environment. The power
+and payload limits on flapping wing MAVs make on-board sensing difficult, so multi-agent
+cooperative control schemes are apt solutions.
+
 \cite{Jung1998Range}\cite{Hyams1999Cooperative}\cite{Mehta2006Adaptive}
 \cite{Rudol2008Micro}\cite{Luo2011Air}
+
+%TODO Add in final paragraph to lead-in to our work
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
