@@ -214,7 +214,7 @@ computationally intensive method of control for negotiating narrow passages.
 In order to conduct these experiments on cooperation, we designed a new
 flapping-wing MAV, known as the H$^2$Bird. Built around the Silverlit i-Bird 
 RC flyer power train and clap-fling 
-wings\footnote{Silverlit Toys Manufactory Ltd.: i-Bird RC Flyer
+wings\footnote{\raggedright Silverlit Toys Manufactory Ltd.: i-Bird RC Flyer
 \href{http://www.silverlit-flyingclub.com/wingsmaster/}
      {http://www.silverlit-flyingclub.com/wingsmaster/}}, 
 the H$^2$Bird's wingspan is 26.5 cm and it has a flight weight of 13 grams. A 
@@ -251,10 +251,14 @@ millirobot scale. The BeagleBoard communicates with the H$^2$Bird using a
 USB radio module which implements the IEEE 802.15.4 wireless standard.
 %TODO footnotes: Gumstix, LogidPD
 
-Our ground station software is based on the Ubuntu Linux distribution, 
-modified with a custom version of the Linux kernel. We use the Python 
-programming language for control, robot communication, and telemetry, and 
-the OpenCV computer vision libraries for image capture and processing.
+Our ground station software is based on the Ubuntu Linux\footnote{\raggedright Ubuntu: 
+Canonical Ltd., \href{http://www.ubuntu.com/}{http://www.ubuntu.com/}} distribution
+modified with a custom version of the Linux kernel. We use the Python
+\footnote{\raggedright Python: Python Software Federation, \href{http://www.python.org/}
+{http://www.python.org/}} programming language for control, robot communication, 
+and telemetry, and the OpenCV\footnote{\raggedright OpenCV: Willow Garage, 
+\href{http://opencv.willowgarage.com/wiki/}{http://opencv.willowgarage.com/wiki/}} 
+computer vision libraries for image capture and processing.
 %TODO footnotes: Ubuntu, Linux, Python, OpenCV
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Concept and Algorithms}
@@ -294,22 +298,24 @@ world coordinate angular displacements compactly with quaternion
 multiplication.
 
 Our implementation of quaternion-based control is similar to Knoebe's~\cite{knoebe:quatcontrol}:
-Given a reference quaternion $q$, we define the error $q_e$ as the rotation 
-required to reach the reference pose from the measured pose (Eq.~\ref{eq:quat_error}). 
-\begin{equation}
+Given a reference pose represented in quaternion form $q_r$, we define the error as the rotation $q_e$ 
+required to reach the reference pose from the estimated pose $q$ (Eq.~\ref{eq:quat_error}). 
+\begin{align}
 \label{eq:quat_error}
-q_e = q'\otimes q_r
-\end{equation}
-We then convert this error quaternion to an angle axis, and use this 
-representation as input to the PID controller 
-(Eqs.~\ref{eq:quat_angle} and~\ref{eq:quat_linearize}). 
+q_e &= q^{\prime}\cdot q_r \\
+		&= q_{e,w} + q_{e,x}\hat{i} + q_{e,y}\hat{j} + q_{e,z}\hat{k} \notag 
+\end{align}
+We then convert this error quaternion to an angle axis representation and use this 
+as input to the PID controller (Eqs.~\ref{eq:quat_linearize} and~\ref{eq:quat_angle}).
+These calculations are performed onboard with trigonometric lookup tables for speed.
+\begin{align}
+\label{eq:quat_linearize}
+Q_e &= \alpha\cdot q_e/\sin(\alpha /2) \\
+		&= \alpha_{x}\hat{i} + \alpha_{y}\hat{j} + \alpha_{z}\hat{k} \notag
+\end{align}
 \begin{equation}
 \label{eq:quat_angle}
 \alpha = 2\arccos(q_{e,w})
-\end{equation}
-\begin{equation}
-\label{eq:quat_linearize}
-Q_e = \alpha*q_e/\sin(\alpha /2)
 \end{equation}
 
 %----------------------------------------------------------------------------%
@@ -385,6 +391,14 @@ the underlying motion tracking filter.
 %----------------------------------------------------------------------------%
 \subsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing_concept}
+Remote guidance of the H$^2$Bird is performed by commanding relative changes in the
+reference orientation. With estimates of the vehicle pose, we calculate an altitude
+error and horizontal error. Incremental changes to the H$^2$Bird pitch and yaw are
+then commanded according to a PID control law, with positive altitude error
+corresponding to negative incremental pitches and positive horizontal error
+corresponding to negative incremental yaw. The controller integrator term is windowed
+to prevent windup when the bird is being launched, and the derivative term was tuned
+by hand to dampen oscillations associated with the system latency [?].
 
 \begin{figure}[tb]
 \centering
