@@ -32,15 +32,8 @@
 \usepackage{color}
 \usepackage[pdftex]{hyperref}
 \usepackage{amsmath}
-
-\newlength\eqnindent
-\newlength\eqncolwid
-\newcommand\eqntext[2][0pt]{%
-  \setlength\parindent{0pt}%
-      \setlength\eqnindent{#1}\setlength\eqncolwid{\linewidth}%
-  \setlength\eqncolwid{\dimexpr\linewidth-\eqnindent}%
-  \hspace*{\eqnindent}\parbox{\eqncolwid}{#2}%
-}
+\usepackage{amssymb}
+\providecommand{\norm}[1]{\lVert#1\rVert}
 
 %----------------------------------------------------------------------------%
 % METADATA
@@ -352,7 +345,7 @@ x^{[i]}_t \sim \begin{cases}
 \mathcal{U}(0,b),& \text{with probability } \epsilon \\
 \end{cases}\\
 \end{equation}
-The experiments presented in this paper used a diagonal covariance matrix 
+The experiments presented in this work use a diagonal covariance matrix 
 with variance 256, and an $\epsilon$ of 0.3. We find that the Gaussian 
 transition model is sufficient for tracking motion in which frame-to-frame 
 position changes are relatively small. The $\epsilon$-random uniform 
@@ -362,9 +355,32 @@ and decreases reacquisition delay.
 
 %............................................................................%
 \subsubsection{Emission Model}
-Our emission model (Eq.~\ref{eq:emission_model}) effectively performs.
+Our emission model (Eq.~\ref{eq:emission_model}) implements a sampling
+approach to motion tracking via na\"{i}ve background subtraction[CITATION].
+\begin{equation}
+\label{eq:emission_model}
+w^{[i]}_t = 1 + \norm{f_0(x^{[i]}_t)-f_t(x^{[i]}_t)}^2
+\end{equation} 
+The system provides the emission model with $f_0$, the frame representing 
+the background and $f_t$, the most recent frame captured. The model assigns 
+a weight $w^{[i]}_t$ to each particle $x^{[i]}_t$, proportional to the color 
+distance in RGB space between the pixels of $f_0$ and $f_t$ at the location 
+$x^{[i]}_t$. Hence, particles are more likely to be resampled in portions of 
+the image which appear different from the background.
 
+For the experiments presented in this work, we assumed that neither the bird 
+nor any other moving object were visible in the first frame captured on system 
+start. We saved the first frame captured by the system, and provided it as 
+the background frame $f_0$ for every iteration of the particle filter. This 
+resulted in a sampling approach to na\"{i}ve background subtraction. 
 
+Na\"{i}ve background subtraction is brittle to changes in the scene over 
+time[CITATION]. However, we found it very efficient, and reliable enough for the 
+short time spans necessary for H$^2$Bird to successfully negotiate narrow 
+openings, which are typically less than five seconds. Substituting $f_0$ 
+with a more sophisticated extraction of the background would implement a 
+more sophisticated approach to background subtraction, with no changes to 
+the underlying motion tracking filter.
 
 %----------------------------------------------------------------------------%
 \subsection{Cooperative Visual Servoing}
