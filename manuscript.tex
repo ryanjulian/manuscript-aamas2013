@@ -369,6 +369,14 @@ Our emission model (Eq.~\ref{eq:emission_model}) effectively performs.
 %----------------------------------------------------------------------------%
 \subsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing_concept}
+Remote guidance of the H$^2$Bird is performed by commanding relative changes in the
+reference orientation. With estimates of the vehicle pose, we calculate an altitude
+error and horizontal error. Incremental changes to the H$^2$Bird pitch and yaw are
+then commanded according to a PID control law, with positive altitude error
+corresponding to negative incremental pitches and positive horizontal error
+corresponding to negative incremental yaw. The controller integrator term is windowed
+to prevent windup when the bird is being launched, and the derivative term was tuned
+by hand to dampen oscillations associated with the system latency [?].
 
 \begin{figure}[tb]
 \centering
