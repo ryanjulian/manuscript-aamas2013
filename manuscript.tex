@@ -439,13 +439,23 @@ We model the yaw motion of the ornithopter with a one-dimensional model to reduc
 H(s) = \frac{K}{1 + Rs}
 \end{equation}
 
-To model the translational position of the ornithopter, we use a form of Dubin's car model~\cite{lavalle:planning} with the angular position, $\theta$ as an input rather than a state. The overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the reference heading angle as the input.
+\begin{equation}
+\label{eq:dubin_car}
+\begin{aligned}
+& \dot{x} = u_{s}sin(\theta)\\
+& \dot{y} = u_{s}cos(\theta)\\
+& \dot{\theta} = u\\
+& u \in U=[-\tan{\phi_{max}},\tan{\phi_{max}}]
+\end{aligned}
+\end{equation}
+
+To model the translational position of the ornithopter, we use a form of Dubin's car model (Eq. ~\ref{eq:dubin_car})~\cite{lavalle:planning}, where $\phi_{max}$ is the maximum steering angle and $u_{s}$ is the forward speed. We modify this model to treat the angular position $\theta$ as an input rather than a state. The overall motion of the system can be modeled as shown in Equation~\ref{eq:total_model_plain}, where $\theta$ is the time domain output of (\ref{eq:plain_model}) with the reference heading angle as the input.
 
 \begin{equation}
 \label{eq:total_model_plain}
 \begin{aligned}
 & \dot{x} = sin(\theta)\\
-& \dot{y} = cos(\theta)\\
+& \dot{y} = cos(\theta)
 \end{aligned}
 \end{equation}
 
@@ -463,7 +473,11 @@ camera is calculated according to Equation~\ref{eq:desired_heading}, where $d$
 is the distance of the robot in front of the camera and $x$ is the horizontal
 position of the robot relative to the center of the window in meters. This
 relation reflects the fact that the camera cannot determine the depth of the
-robot.
+robot. One example of why this is a problem is that if the robot stays at a
+constant horizontal distance from the window, but moves closer and closer to
+the camera, the directed heading steadily increases even though the robot has
+not actually moved farther from the window. This creates tracking problems in
+areas close to the camera.
 
 \begin{equation} \label{eq:desired_heading} \text{Desired heading} =
 \frac{640\text{px}}{2*\text{d}*\tan{\frac{63^{\circ}}{2}}}*\frac{63^{\circ}}{640\text{px}}*\text{x}
@@ -509,22 +523,23 @@ average time from the start of computation to the end of computation.
 
 %----------------------------------------------------------------------------%
 \subsection{Model Verification}
+\label{sec:experiments:verification}
 
 We tested our cooperative visual servoing system with a simple target seeking
-experiment: the H$^2$Bird must fly through a specified obstacle, in this case,
-a wooden frame meant to simulate a window. As the H$^2$Bird cannot detect the
+experiment: H$^2$Bird must fly through a specified obstacle, in this case,
+a wooden frame meant to simulate a window. As H$^2$Bird cannot detect the
 target on its own, we used the ground station to provide remote headings for
-navigation to the window. A motion capture system in the test room provided
+navigation to the window. A VICON~\footnote{Vicon:~\url{http://www.vicon.com/}} motion capture system in the test room provided
 ground truth data. A sketch of the experimental setup is shown in
-Fig.~\ref{fig:experiment_cartoon}.
+Fig.~\ref{fig:experiment_cartoon} and a screen capture from the camera perspective is in Fig.~\ref{fig:pf_screencap}, pane 1.
 
 % TODO clarify or roll into paragraph
 Each trial included the following steps:
 \begin{enumerate}
-\item The window is identified by the user. 
-\item The H$^2$Bird is released in view of the camera by hand at the desired starting grid point.
+\item The window is identified by the user (Fig.~\ref{fig:pf_screencap}, pane 2). 
+\item The H$^2$Bird is released in view of the camera by hand at the desired starting grid point (Fig.~\ref{fig:pf_screencap}, pane 3).
 \item The H$^2$Bird attempts to fly to the window with remote guidance from
-the base station.
+the base station (Fig.~\ref{fig:pf_screencap}, panes 4,5,6).
 \end{enumerate}
 
 In total, we ran 80 trials over a variety of starting positions. The goal of
@@ -550,14 +565,7 @@ we replaced the current battery with a fully charged one.
 \section{Results and Performance}
 \label{sec:performance}
 %TODO cameron
-To bound the performance of the cooperative control system, we determine 
-the feasible set of initial conditions that result in successful narrow 
-passage traversal using both analytical and empirical methods. We conducted 
-experiments to validate this model.
-
-The following sections detail how we calculated the feasible and infeasible
-regions using system identification and present the results of our
-experimental trials.
+The results of our system identification of the cooperative visual servoing model are detailed in the following sections. We use the model to empirically and analytically predict the feasibility of the cooperative control system for various initial conditions. Furthermore, we validate the model using experimental trials.
 
 %----------------------------------------------------------------------------%
 \subsection{System Identification}
@@ -574,20 +582,21 @@ experimental trials.
 \end{figure}
 %TODO reduce number of sig figs
 
-The results of the step response experiment are described in
-Fig.~\ref{fig:step_response}. The first-order model that we fit to the
-response is in Equation~\ref{eq:transfer_func}.
+The first-order model that we fit to the
+step response of the onrithopter yaw motion is in Equation~\ref{eq:transfer_func}. This model represents the tuning dynamics of the ornithopter as well as the PID controller providing inputs to the actuators.
+The results of the step response experiment along with the response of the fitted model are depicted in
+Fig.~\ref{fig:step_response}.
 
 \begin{equation}
 \label{eq:transfer_func}
 H(s) = \frac{0.95}{1+0.62s}
 \end{equation}
 
-The step response rise time is 1.4 seconds. The H$^2$Bird flies
+The step response rise time is 1.4 seconds. H$^2$Bird flies
 at an average forward velocity of 1.2 m/s during our experiments, so the
-estimated minimum turning radius of the robot is 1.07 maters, as described in
-Equation~\ref{eq:min_radius}. In the experiments, we choose a flight speed
-lower than the maximum speed of the ornithopter, to facilitate more robust
+estimated minimum turning radius of the robot is 1.07 meters, as described in
+Equation~\ref{eq:min_radius}. In the experiments, we choose a slower flight speed
+than the maximum speed of the ornithopter, to facilitate more robust
 tracking.
 
 \begin{equation}
@@ -625,13 +634,14 @@ partiicle filter computational latency was 12.5ms.
 \end{minipage}
 \end{figure*}
 
-The results of our experimental trials are shown in
-Figs.~\ref{fig:flight_paths} and~\ref{fig:flight_paths_feasible}. For
+Conducting the experimental trials as described in Section~\ref{sec:experiments:verification}, we achieved a success rate of 80\% for
 initial conditions in the middle of the testing space and in front of the
-camera, we achieved a success rate of 80\%. This case is depicted in
-Fig.~\ref{fig:flight_paths_feasible}. As we moved towards the edges of the
-feasible region in Fig.~\ref{fig:flight_paths}, the success rate diminishes
-to 50\% because of several factors. On the edges of the camera frame, the yaw
+camera. As we moved towards the edges of the
+feasible region in Fig.~\ref{fig:flight_paths}, the success rate diminished
+to 50\%. The results of our experimental trials are shown in
+Figs.~\ref{fig:flight_paths} and~\ref{fig:flight_paths_feasible}.
+
+The lower success rate on the edges of the camera frame can be explained by several factors. On the edges of the viewing triangle, the yaw
 control inputs are large in magnitude, although this is not necessary in all
 cases. Since the control algorithm we are using has no notion of depth, it
 applies the same control input whether the ornithopter is close to the camera,
@@ -665,38 +675,29 @@ initial heading of the H$^2$Bird is chosen uniformly at random from $(-90,90)$.}
 \end{minipage}
 \end{figure*}
 
-We simulated the motion of the ornithopter beginning from certain positional
-and angular initial conditions using several components representing the
-experimental layout of our system described in Fig.~\ref{fig:block_diagram}.
-For the "ornithopter dynamics" block, we used the translational model
-described by~\ref{eq:total_model_plain} with the angular position model
-described by~\ref{eq:transfer_func}. We tuned the PID controller for the
-simulation so that paths from known positions looked similar to the behavior
-we observed in the experimental data. We also account for the camera capture and
-pose estimation delays, and the PID controller sampling rate in the
-simulation.
+We simulated the motion of the ornithopter beginning from various positional
+and angular heading initial conditions.
+We used the model that we determined through system identification (Sec.~\ref{sec:system_model}) using the cooperative control method in Fig.~\ref{fig:block_diagram}.
 
-We determine the backwards reachable set of initial states for successful
+We determined the backwards reachable set of initial states for successful
 narrow passage traversal both geometrically and in simulation
-(Fig.~\ref{fig:feasible_set}). For the initial conditions, we use a uniform
-grid of 0.05 meter increments within the camera viewing region, and an initial
-angular position perpendicular to the narrow passage plane. The geometrically
-infeasible region is computed using the minimum turning radius and the
-geometry of the camera's field-of-view and is indicated in blue. Both the
-regions in red and blue indicate the infeasible region determined in
-simulation. The feasible region is highlighted in green. A success consisted
+(Fig.~\ref{fig:feasible_set}). In the figure, the blue lines represent the camera viewing triangle, the black line
+represents the window, and the black dot represents the camera. For the initial conditions, we used a uniform
+grid of 5 cm increments within the camera viewing region, and an initial
+angular heading perpendicular to the window plane. A success, or feasible initial condition, consists
 of a path that intersects the window at some point and does not leave the
-camera viewing triangle. Fig.~\ref{fig:feasible_set} is validated by our
-experimental data, as there are no successes within the geometrically
-infeasible region. There are a few successes near the boundary of the
-infeasible region determined in simulation, but this phenomenon can be
-explained by the results in Fig.~\ref{fig:heat_map}.
+camera viewing triangle, and is indicated in green. The geometrically
+infeasible region is computed using the minimum turning radius and the
+geometry of the camera's field-of-view and is indicated in blue. The region in red is not geometrically feasible, but is infeasible as a result of the cooperative control simulation dynamics.
 
-Fig.~\ref{fig:heat_map} depicts the results of a Monte Carlo method of
-simulating possible paths of the H$^2$Bird during our experiments. For each
-point within a 0.2 meter grid within the camera viewing triangle, we simulated
-10 trials using an initial heading randomly sampled from a uniform
-distribution between -90$^{\circ}$ and 90$^{\circ}$. As shown in the figure,
+Our experimental data validates Fig.~\ref{fig:feasible_set}, as there are no successes within the geometrically
+infeasible region. There are a few successes near the boundary of the
+infeasible region determined in simulation. While there are successes along the boundary of the camera viewing triangle, there are also many failures. We further explore this behavior using Monte Carlo simulation.
+
+We conducted a Monte Carlo simulation to determine the probability of successful window navigation for a given point within the testing area. Using this information we can make assumptions about ideal starting positions for coopertive control. For each point within a 0.1 meter grid within the camera viewing triangle, we simulated
+40 trials using an initial heading randomly sampled from a uniform
+distribution between -90$^{\circ}$ and 90$^{\circ}$.
+Fig.~\ref{fig:heat_map} depicts the results of the Monte Carlo simulation. As shown in the figure,
 there is a region in the middle with a 100\% probability of success, which is
 a subset of the feasible region presented in Fig.~\ref{fig:feasible_set}.
 Along the edges of the camera viewing triangle, however, the probability of
