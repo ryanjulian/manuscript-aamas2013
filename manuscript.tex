@@ -301,22 +301,24 @@ world coordinate angular displacements compactly with quaternion
 multiplication.
 
 Our implementation of quaternion-based control is similar to Knoebe's~\cite{knoebe:quatcontrol}:
-Given a reference quaternion $q$, we define the error $q_e$ as the rotation 
-required to reach the reference pose from the measured pose (Eq.~\ref{eq:quat_error}). 
-\begin{equation}
+Given a reference pose represented in quaternion form $q_r$, we define the error as the rotation $q_e$ 
+required to reach the reference pose from the estimated pose $q$ (Eq.~\ref{eq:quat_error}). 
+\begin{align}
 \label{eq:quat_error}
-q_e = q'\otimes q_r
-\end{equation}
-We then convert this error quaternion to an angle axis, and use this 
-representation as input to the PID controller 
-(Eqs.~\ref{eq:quat_angle} and~\ref{eq:quat_linearize}). 
+q_e &= q^{\prime}\cdot q_r \\
+		&= q_{e,w} + q_{e,x}\hat{i} + q_{e,y}\hat{j} + q_{e,z}\hat{k} \notag 
+\end{align}
+We then convert this error quaternion to an angle axis representation and use this 
+as input to the PID controller (Eqs.~\ref{eq:quat_linearize} and~\ref{eq:quat_angle}).
+These calculations are performed onboard with trigonometric lookup tables for speed.
+\begin{align}
+\label{eq:quat_linearize}
+Q_e &= \alpha\cdot q_e/\sin(\alpha /2) \\
+		&= \alpha_{x}\hat{i} + \alpha_{y}\hat{j} + \alpha_{z}\hat{k} \notag
+\end{align}
 \begin{equation}
 \label{eq:quat_angle}
 \alpha = 2\arccos(q_{e,w})
-\end{equation}
-\begin{equation}
-\label{eq:quat_linearize}
-Q_e = \alpha*q_e/\sin(\alpha /2)
 \end{equation}
 
 %----------------------------------------------------------------------------%
