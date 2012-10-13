@@ -37,13 +37,14 @@
 
 %----------------------------------------------------------------------------%
 % METADATA
-\def \papertitle{Cooperative Control for Narrow Passage Traversal with an 
-Ornithopter Micro Air Vehicle and Lightweight Ground Station}
+\def \papertitle{Cooperative Control and Modeling for Narrow Passage Traversal with an 
+Ornithopter MAV and Lightweight Ground Station}
 \def \paperkeywords{AAMAS proceedings, multiagent systems, cooperative control, 
 particle filter, micro air vehicle, ground station, visual servoing, pose 
 estimation, flapping wing, ornithopter, biomimetic}
 \def \paperterms{Algorithms, Performance, Design, Experimentation}
-\def \paperauthors{Ryan C. Julian, Cameron J. Rose, Humphrey Hu, and Ronald S. Fearing}
+%\def \paperauthors{Ryan C. Julian, Cameron J. Rose, Humphrey Hu, and Ronald S. Fearing}
+\def \paperauthors{Paper 580}
 
 % Set title
 \title{\papertitle}
@@ -70,33 +71,35 @@ estimation, flapping wing, ornithopter, biomimetic}
 % AUTHORS
 
 %% Paper number instead of authors
-%\numberofauthors{1}
-%\alignauthor Paper  580
-
-\numberofauthors{4}
+\numberofauthors{1}
 \author{
-\alignauthor Ryan C. Julian\\
-       \affaddr{Department of EECS}\\
-       \affaddr{Univ. of California, Berkeley}\\
-       \affaddr{Berkeley, CA 94720}\\
-       \email{ryanjulian@berkeley.edu}
-\alignauthor Cameron J. Rose\\
-       \affaddr{Department of EECS}\\
-       \affaddr{Univ. of California, Berkeley}\\
-       \affaddr{Berkeley, CA 94720}\\
-       \email{c\_rose@eecs.berkeley.edu}
-\alignauthor Humphrey Hu\\
-       \affaddr{Robotics Institute}\\
-       \affaddr{Carnegie Mellon University}\\
-       \affaddr{Pittsburgh, PA 15213}\\
-       \email{humhu@cmu.edu}
-\and
-\alignauthor Ronald S. Fearing\\
-       \affaddr{Department of EECS}\\
-       \affaddr{Univ. of California, Berkeley}\\
-       \affaddr{Berkeley, CA 94720}\\
-       \email{ronf@eecs.berkeley.edu}
+\alignauthor Paper  580
 }
+
+%\numberofauthors{4}
+%\author{
+%\alignauthor Ryan C. Julian\\
+%       \affaddr{Department of EECS}\\
+%       \affaddr{Univ. of California, Berkeley}\\
+%       \affaddr{Berkeley, CA 94720}\\
+%       \email{ryanjulian@berkeley.edu}
+%\alignauthor Cameron J. Rose\\
+%       \affaddr{Department of EECS}\\
+%       \affaddr{Univ. of California, Berkeley}\\
+%       \affaddr{Berkeley, CA 94720}\\
+%       \email{c\_rose@eecs.berkeley.edu}
+%\alignauthor Humphrey Hu\\
+%       \affaddr{Robotics Institute}\\
+%       \affaddr{Carnegie Mellon University}\\
+%       \affaddr{Pittsburgh, PA 15213}\\
+%       \email{humhu@cmu.edu}
+%\and
+%\alignauthor Ronald S. Fearing\\
+%       \affaddr{Department of EECS}\\
+%       \affaddr{Univ. of California, Berkeley}\\
+%       \affaddr{Berkeley, CA 94720}\\
+%       \email{ronf@eecs.berkeley.edu}
+%}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TITLE
@@ -108,19 +111,24 @@ estimation, flapping wing, ornithopter, biomimetic}
 The power, size, and weight constraints of micro air vehicles (MAVs) limit 
 their on-board sensing and computational resources. Ground vehicles have 
 less mobility than MAVs, but relaxed size constraints, and typically more 
-computing power. These specializations present many opportunities for cooperation. In this work, we 
-demonstrate cooperative target-seeking between a 13 gram ornithopter MAV 
-and a lightweight ground station using computer vision. We demonstrate the performance of the location estimation and navigation algorithms. We develop models for the ornithopter, ground station, and cooperative system dynamics. We determine model parameters of the real systems through experimental system identification. Finally, we verify those models using experiments on narrow passage traversal, and arrive at a cooperative system model which accurately predicts the backwards-reachable region for successfully negotiating ornithopther flight through narrow openings.
+computing power. These specializations present many opportunities for cooperation. 
+In this work, we demonstrate cooperative target-seeking between a 13 gram 
+ornithopter MAV and a lightweight ground station using computer vision. We 
+develop models for the ornithopter, ground station, and cooperative system 
+dynamics. We determine model parameters of the real systems through experimental 
+system identification. Finally, we verify those models using experiments on 
+narrow passage traversal, and arrive at a cooperative system model which 
+accurately predicts the backwards-reachable region for successfully 
+negotiating ornithopther flight through narrow openings.
 
-We also introduce a new ornithopter MAV, the 13 gram H$^2$Bird. It 
-features clap and fling wings, improves upon a previous design by 
+We introduce a new ornithopter MAV, the 13 gram H$^2$Bird. It 
+features clap and fling wings, improves upon previous designs by 
 utilizing a carbon fiber airframe, tail rotor, and elevator, and carries a 
-payload of 2.8 grams. We augment the ornithopter's built-in 
-gyroscope-based control with a lightweight ground station design, which has power and weight 
+2.8 gram payload. We augment the ornithopter's built-in gyroscope-based 
+control with a lightweight ground station design, which has power and weight 
 requirements appropriate for deployment on a millirobotic ground vehicle. The ground 
-station provides heading estimates to the ornithoper by running a 
-real-time motion tracking algorithm on a live video stream. This allows 
-the ornithopter to reliably negotiate flight through narrow openings.
+station provides heading estimates to the ornithoper by running a real-time 
+motion tracking algorithm on a live video stream.
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACM METADATA
@@ -758,12 +766,12 @@ approach, when applied to more complex systems with more interactions and
 agents is also an future area of interest. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Acknowledgments}
-The authors would like to thank Fernando Garcia Bermudez for his 
-assistance with the Vicon motion capture system, Andrew Pullin for his 
-help with robot photography, and the members of the Biomimetic 
-Millisystems Laboratory and the EECS community at the University of 
-California, Berkeley for their advice and support.
+%\section{Acknowledgments}
+%The authors would like to thank Fernando Garcia Bermudez for his 
+%assistance with the Vicon motion capture system, Andrew Pullin for his 
+%help with robot photography, and the members of the Biomimetic 
+%Millisystems Laboratory and the EECS community at the University of 
+%California, Berkeley for their advice and support.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
