@@ -435,6 +435,11 @@ dampen the overshoot and drift caused by the cooperative system latency.
 \section{System Model}
 \label{sec:system_model}
 
+In this section, we describe the models that we developed to simulate the
+behaviors of the ornithopter and the ground station. We use these models to
+determine the set of initial conditions that are most likely to result in
+successful window traversal.
+
 %----------------------------------------------------------------------------%
 \subsection{Ornithopter Attitude Control}
 \label{sec:model_attitude}
@@ -444,9 +449,7 @@ simplicity: one for yaw motion, and one for translational motion.
 
 We approximate the yaw dynamics of the ornithopter with a one-dimensional 
 model to limit complexity, and because it matches our physical 
-implementation. Likewise, we choose the reference heading angle as the input to 
-the model, and model the dynamics of vehicle and on-board PID controller as 
-one system, whose output is the physical heading angle:
+implementation:
 \begin{equation}
 \label{eq:plain_model}
 \begin{aligned}
@@ -454,8 +457,10 @@ one system, whose output is the physical heading angle:
 & \text{where }H(s) = \frac{\theta(s)}{u(s)}
 \end{aligned}
 \end{equation}
-To model the translational position of the ornithopter, we use a form of 
-Dubin's car model~\cite{lavalle:planning}: 
+We choose the reference heading angle as the input to the model, $u(s)$, and
+model the dynamics of vehicle and on-board PID controller as one system, whose
+output is the physical heading angle, $\theta(s)$. To model the translational position of
+the ornithopter, we use a form of Dubin's car model~\cite{lavalle:planning}:
 \begin{equation}
 \label{eq:dubin_car}
 \begin{aligned}
@@ -469,8 +474,7 @@ In the car model, $\phi_{max}$ is the maximum steering angle and $u_{s}$ is
 the forward speed. We modify this model to treat the angular position $\theta$
 as an input rather than a state. The overall motion of the system can be
 modeled as shown in Equation~\ref{eq:dubin_car}, where $\theta$ is the
-time-domain output of Equation~\ref{eq:plain_model}, $\theta(t)$, with the
-reference heading angle, $u(t)$, as input.
+time-domain output of Equation~\ref{eq:plain_model}, $\theta(t)$.
 
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Pose Estimation}
@@ -484,7 +488,7 @@ model of the camera's viewing angle constraints.
 We model the viewing angle of the camera as a pixel map from one edge of a 
 63$^{\circ}$ viewing triangle to the other. The camera has an image width of 
 640 pixels. We calculate the desired heading angle in degrees, for a given 
-distance from the camera, according to Equation~\ref{eq:desired_heading}.
+distance from the camera:
 \begin{equation} 
 \label{eq:desired_heading} 
 \text{Desired heading} = \frac{640\,\text{px}}{2d\tan{\frac{63^{\circ}}{2}}}{\times\frac{63^{\circ}}{640\,\text{px}}\times x}
