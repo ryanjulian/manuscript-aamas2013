@@ -479,7 +479,7 @@ time-domain output of Equation~\ref{eq:plain_model}, $\theta(t)$.
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Pose Estimation}
 
-Our model of the ground station comprises models of both the camera and the
+Our model of the ground station includes models for both the camera and the
 pose estimation computation. The camera model contains both a latency, which 
 is in series with the path between the ``Camera'' and 
 ``Ornithopter Dynamics'' blocks in Figure~\ref{fig:block_diagram}, and a 
@@ -556,7 +556,7 @@ in Figure~\ref{fig:step_response}.
 
 The step response rise time is 1.4 seconds. The H$^2$Bird flies at an 
 average forward velocity of 1.2 m/s during our experiments, so we estimate 
-the minimum turning radius of the robot is 1.07 meters:
+the minimum turning radius of the robot to be 1.07 meters:
 \begin{equation}
 \label{eq:min_radius}
 \begin{aligned}
@@ -571,14 +571,14 @@ tracking.
 
 %............................................................................%
 \subsubsection{Ground Station Pose Estimation}
-To measure the capture latency of the camera, we wrote a simple test 
-application which draws a large colored rectangle on the ground station's 
-screen, then uses the camera to detect that changes in that rectangle's 
-color. By noting the value of the system timer just before it changes the 
-rectangle, and just after the camera detects that change, the application 
-arrives at an estimate of the video capture pipeline latency. We averaged 
-these result over several hundred rapidly-executed trials to determine the 
-capture latency we used to model the system.
+To measure the capture latency of the camera, we wrote a simple test
+application which draws a large colored rectangle on the ground station's
+screen, then uses the camera to detect the changes in the rectangle's color.
+By noting the value of the system timer just before the rectangle changes
+color and just after the camera detects the change, the application records
+the estimate of the video capture pipeline latency. We averaged the result
+over several hundred rapidly-executed trials to determine the capture latency
+we used to model the system.
 
 To compute the particle filter and controller latency, we again used system 
 timers to determine the average time between the start and end of computation.
@@ -609,9 +609,16 @@ initial heading of the H$^2$Bird is chosen uniformly at random from $(-90^{\circ
 \end{minipage}
 \end{figure*}
 
-We determine the backwards reachable set of initial states for successful 
-narrow passage traversal both geometrically and using Monte Carlo simulation. 
-(Figs.~\ref{fig:feasible_set} and~\ref{fig:heat_map}) In Figure ~\ref{fig:feasible_set}, 
+We determine the backwards reachable set of initial states for successful
+narrow passage traversal both geometrically and using Monte Carlo simulation.
+We simulate the motion of the ornithopter beginning from various positional
+and angular heading initial conditions. We use our model, as determined
+through system identification as described in Section~\ref{sec:system_model},
+using the cooperative control method in Figure~\ref{fig:block_diagram}. The
+results are presented in Figures~\ref{fig:feasible_set}
+and~\ref{fig:heat_map}.
+
+In Figure ~\ref{fig:feasible_set}, 
 the blue lines represent the camera viewing triangle, the black line represents the window, and the black 
 dot represents the camera. For the initial conditions, we used a uniform
 grid of 5 cm increments within the camera viewing region, and an initial
@@ -623,19 +630,14 @@ turning radius and the geometry of the camera's field-of-view and is
 indicated in blue. The region in red is not geometrically feasible, but is 
 infeasible as a result of the cooperative control simulation dynamics.
 
-We simulate the motion of the ornithopter beginning from various positional 
-and angular heading initial conditions. We use this model, as determined 
-through system identification (Sec.~\ref{sec:system_model}) using the 
-cooperative control method in Figure~\ref{fig:block_diagram}.
-
-We conducted a Monte Carlo simulation to determine the probability of 
-successful window navigation for a given point within the testing area. 
-Using this information we can make assumptions about ideal starting 
-positions for cooperative control. For each point within a 10 cm grid within 
-the camera viewing triangle, we simulated 40 trials using an initial heading 
-randomly sampled from a uniform distribution between -90$^{\circ}$ and 
-90$^{\circ}$. Figure~\ref{fig:heat_map} depicts the results of the Monte 
-Carlo simulation.
+We conducted a Monte Carlo simulation to determine the probability of
+successful window navigation for a given point within the testing area. Using
+this information we can make assumptions about ideal starting positions for
+cooperative control. For each point within a 10 cm grid within the camera
+viewing triangle, we simulated 40 trials using an initial heading randomly
+sampled from a uniform distribution between -90$^{\circ}$ and 90$^{\circ}$,
+with the 0$^{\circ}$ heading perpendicular to the window.
+Figure~\ref{fig:heat_map} depicts the results of the Monte Carlo simulation.
 
 As shown in the figure, there is a region in the middle where we had success
 in all 40 of the trials, which is a subset of the feasible region presented in
@@ -658,8 +660,8 @@ case, a wooden frame we used to simulate a window.
 \end{figure}
 
 As the H$^2$Bird cannot detect the target on its own, we used cooperative 
-control with the ground station, which to provided remote guidance to 
-H$^2$Bird to allow it to navigate to the window. We used a motion capture 
+control with the ground station, which provided remote guidance to 
+H$^2$Bird to allow it to navigate through the window. We used a motion capture 
 system to record ground truth data. We present a sketch of this experimental 
 setup in Figure~\ref{fig:experiment_cartoon}.
 
@@ -682,21 +684,21 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 Each trial included the following steps (see Fig.~\ref{fig:pf_screencap}):
 \begin{enumerate}
 \item We identify the window to the ground station by dragging a bounding 
-box over it using the mouse. 
+box over it using a mouse. 
 \item We release H$^2$Bird by hand, in view of the camera at the desired 
 starting grid point.
-\item The H$^2$Bird attempts to fly through the window with, with remote 
+\item The H$^2$Bird attempts to fly through the window, with remote 
 guidance from the ground station.
 \end{enumerate}
 
-After every 5 trials, we replaced the ornithopter's battery with a fully 
+Every 5 trials, we replaced the ornithopter's battery with a fully 
 charged one.
 
-In total, we collected 80 trials over a variety of starting positions. Our 
+We collected 80 trials over a variety of starting positions. Our 
 goal for these experiments was to verify the model described in 
 Section~\ref{sec:system_model}, so we conducted 60 of the 80 trials in a 
-grid along the edges of the camera view plane, and in 5 cm meter increments 
-from the window, in an effort to determine the success rate on the edges of 
+grid along the edges of the camera view plane, and in 5 cm increments 
+from the window plane, in an effort to determine the success rate on the edges of 
 the testing space. We conducted 20 additional trials directly in front of 
 the camera, to determine the success rate near the center of viewing plane.
 
@@ -720,11 +722,9 @@ Conducting the experimental trials as described in
 Section~\ref{sec:experiments_verification}, we achieved a success rate of 
 80\% for initial conditions in the middle of the testing space and in front 
 of the camera. As we moved towards the edges of the feasible region in 
-Figure~\ref{fig:flight_paths}, the success rate diminished to 50\%. We 
-present the results of our experimental trials in Figures~\ref{fig:flight_paths} 
-and~\ref{fig:flight_paths_feasible}.
+Figure~\ref{fig:flight_paths}, the success rate diminished to 50\%.
 
-The lower success rate on the edges of the camera frame is explained by 
+The lower success rate on the edges of the camera frame can be explained by 
 several factors. On the edges of the viewing triangle, the yaw control 
 inputs are large in magnitude, although this is not necessary in all cases. 
 Since the control algorithm we are using has no notion of depth, it applies 
