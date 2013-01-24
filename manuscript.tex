@@ -110,7 +110,8 @@ estimation, flapping wing, ornithopter, biomimetic}
 The power, size, and weight constraints of micro air vehicles (MAVs) limit 
 their on-board sensing and computational resources. Ground vehicles have 
 less mobility than MAVs, but relaxed size constraints, and typically more 
-computing power. These specializations present many opportunities for cooperation. 
+computing power. These specializations present many opportunities for 
+robot-robot cooperation. 
 In this work, we demonstrate cooperative target-seeking between a 13 gram 
 ornithopter MAV and a lightweight ground station using computer vision. We 
 develop models for the ornithopter, ground station, and cooperative system 
@@ -118,16 +119,16 @@ dynamics. We determine model parameters of the real systems through experimental
 system identification. Finally, we verify those models using experiments on 
 narrow passage traversal, and arrive at a cooperative system model which 
 accurately predicts the backwards-reachable region for successfully 
-negotiating ornithopther flight through narrow openings.
+negotiating ornithopther flight through narrow passages.
 
-We introduce a new ornithopter MAV, the 13 gram H$^2$Bird. It 
+We also introduce a new ornithopter MAV, the 13 gram H$^2$Bird. It 
 features clap and fling wings, improves upon previous designs by 
 utilizing a carbon fiber airframe, tail rotor, and elevator, and carries a 
 2.8 gram payload. We augment the ornithopter's built-in gyroscope-based 
-control with a lightweight ground station design, which has power and weight 
-requirements appropriate for deployment on a millirobotic ground vehicle. The ground 
-station provides heading estimates to the ornithopter by running a real-time 
-motion tracking algorithm on a live video stream.
+control with a lightweight ground station, which has power and weight 
+requirements appropriate for deployment on a ground vehicles with 10 gram 
+payloads. The ground station provides heading estimates to the ornithopter by 
+running a real-time motion tracking algorithm over a live video stream.
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACM METADATA
@@ -162,30 +163,31 @@ motion tracking algorithm on a live video stream.
 \label{fig:h2bird}
 \end{figure}
 Power, size, and weight constraints on micro air vehicles (MAV) 
-significantly limit their sensing and computational capabilities. They can 
+significantly limit their sensing and computational capabilities. MAVs can 
 execute only the most rudimentary control and state estimation algorithms in 
 real-time.  The constraints on flapping-wing MAVs are even more restrictive. 
 Though they demonstrate safety and noise profiles superior to those of 
 rotorcraft MAVs, this comes at the expense of reduced payload.
 
 The non-linear dynamics of flapping-wing flight compound 
-these constraints~\cite{humbert:dipteran2}\cite{cheng:tandrdamping}. Much 
+these constraints~\cite{cheng:tandrdamping}\cite{humbert:dipteran2}. Much 
 past research on flapping-wing MAVs focuses on overcoming the difficulties 
 of controlling and modeling flapping-wing vehicles in the face of this
 non-linearity\cite{floreano:flying}. Common approaches to simplify these 
 dynamic models include averaging over the wing-beat 
-period~\cite{Schenato:flightcontrol}\cite{cheng:tandrdamping}, and using 
+period~\cite{cheng:tandrdamping}\cite{Schenato:flightcontrol}, and using 
 linear, low-dimensional models to predict flight 
-behavior~\cite{Shigeoka:ornithopter}. These advances lead to the development 
+behavior~\cite{Shigeoka:ornithopter}. These advances led to the development 
 of high-performance platforms such as the sub-15 gram DelFly, described by 
 deCroon et al.~\cite{delfly:design}. 
 
-Many control laws previous researchers developed from dynamic models of 
+Many control laws researchers have developed from dynamic models of 
 flapping-wing flight, such as periodic forcing and other control methods 
 described by~\cite{doman:dynamics}\cite{khan:longitudinal_control}\cite{leonard:averaging}, 
 require powerful on-board computing. In this work, we develop a simpler, 
 less computationally-intensive method of control for negotiating narrow 
 passages, by exploiting cooperation between specialized robotic agents.
+%
 
 In contrast to flight control, there is considerably less previous work on 
 guidance and navigation of flapping-wing MAVs. Baek demonstrated altitude 
@@ -197,31 +199,30 @@ scale~\cite{baek:tracking}.
 
 There also exists a body of work on the guidance and control of fixed- and 
 rotary-wing MAV platforms, but many of these methods make extensive use of 
-GPS or motion capture systems~\cite{kingston:timeattitude}\cite{kanade:3dvision}. 
-Indoors, using GPS to estimate the pose of an MAV is impossible, and motion 
+GPS or motion capture systems~\cite{kanade:3dvision}\cite{kingston:timeattitude}. 
+Indoors, using GPS to estimate the pose of an MAV is unreliable, and motion 
 capture requires extensive and stationary modification of the environment. 
 The power and payload limits on flapping-wing MAVs make complex on-board 
 sensing difficult, so multiagent cooperative control schemes are apt 
 solutions.
 
 The literature on cooperative control of MAVs is similarly limited to larger
-vehicles and purely analytical explorations. Nebot, Hyams, and Jung all 
-demonstrated cooperative visual servoing for heterogeneous UGVs~\cite{Nebot2003Agents}\cite{Hyams1999Cooperative}\cite{Jung1998Range}. 
-Luo and Mehta analyze  UAV-UGV cooperation from a modeling perspective~\cite{Luo2011Air}\cite{Mehta2006Adaptive}. 
-Rudol demonstrated a cooperative visual servoing system similar with 
+vehicles and purely analytical explorations. Hyams et al., Jung et al. and Nebot et al. all 
+demonstrated cooperative visual servoing for heterogeneous UGVs~\cite{Hyams1999Cooperative}\cite{Jung1998Range}\cite{Nebot2003Agents}. 
+Luo, et al. and Mehta, et al. analyze  UAV-UGV cooperation from a modeling perspective~\cite{Luo2011Air}\cite{Mehta2006Adaptive}. 
+Rudol et al. demonstrated a similar cooperative visual servoing system with 
 UGVs and MAVs~\cite{Rudol2008Micro}, but the vehicles used were orders of 
-magnitude larger than the millirobotic systems we target, and so were able 
+magnitude larger than the lightweight systems we target, and so were able 
 to take advantage of high-performance processors and specialized cameras.
 
-The small size of millirobotic air and ground vehicles necessitates 
-specialization, but it also pays dividends agility. A group of specialized 
-heterogeneous millirobots can navigate more challenging terrains and 
+The small size of lightweight air and ground vehicles necessitates 
+specialization, but it also pays dividends in agility. A group of specialized 
+heterogeneous, lightweight robots can navigate more challenging terrains and 
 interact with their environments in ways that larger, monolithic vehicles 
 cannot. Despite this advantage, in order to collectively equal the sensing and 
-computational capabilities of larger robots, they will also have to interact 
+computational capabilities of larger robots, small robots will also have to interact 
 so that multiple robots can benefit from the specialized capabilities of 
-cooperating vehicles. Millirobotic systems will benefit from cooperation 
-even more than their larger counterparts. 
+cooperating vehicles. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
@@ -267,17 +268,17 @@ single-board computer as a reference computation platform. The BeagleBoard
 consumes approximately one watt while running our computer vision and 
 control algorithms. It uses the same processor as popular sub-10 gram 
 processor modules--such as the Gumstix Overo and LogicPD Torpedo--which are 
-light enough for deployment on millirobotic ground vehicles. We pair the 
+light enough for deployment on lightweight ground vehicles. We pair the 
 BeagleBoard with an off-the-shelf consumer USB web camera, for similar image 
 quality and resolution to the miniature camera modules available at 
-millirobot scale. The BeagleBoard communicates with the H$^2$Bird with a 
+millirobot scale. The BeagleBoard communicates with the H$^2$Bird via a 
 USB radio module which implements the IEEE 802.15.4 wireless standard.
 %TODO footnotes: Gumstix, LogidPD
 
 Our ground station software is based on the Ubuntu Linux\footnote{\raggedright Ubuntu: 
 Canonical Ltd., \href{http://www.ubuntu.com/}{http://www.ubuntu.com/}} distribution
 modified with a custom version of the Linux kernel. 
-We use the Python\footnote{\raggedright Python: Python Software Federation, \href{http://www.python.org/}
+We use the Python\footnote{\raggedright Python: Python Software Foundation, \href{http://www.python.org/}
 {http://www.python.org/}} programming language for control, robot 
 communication, and telemetry, and the OpenCV\footnote{\raggedright OpenCV: Willow Garage, 
 \href{http://opencv.willowgarage.com/wiki/}{http://opencv.willowgarage.com/wiki/}} 
@@ -374,7 +375,7 @@ with a variance of 256, and an $\epsilon$ of 0.3. We find the Gaussian
 transition model is sufficient for tracking motion in which frame-to-frame 
 position changes are relatively small. The $\epsilon$-random uniform 
 transitions increase tracking robustness, by forcing the filter to always 
-sample broadly across of the pixel space. This helps prevent overconfidence 
+sample broadly across the pixel space. This helps prevent overconfidence 
 and collapse, and decreases reacquisition delay. 
 
 %............................................................................%
@@ -418,7 +419,7 @@ controllers (Figs.\ref{fig:process_flow} and~\ref{fig:block_diagram}). Using
 the estimate of 2D vehicle pose from the pose estimation algorithm, the 
 ground station calculates an altitude error and horizontal error. The ground 
 station then commands a reference attitude to the H$^2$Bird over radio, 
-according to a PID control law. We apply a fixed-lag window the PID 
+according to a PID control law. We apply a fixed-lag window to the PID 
 controller integral term to prevent wind-up while we launch the ornithopter. 
 We tuned the proportional and derivative terms of this outer controller to 
 dampen the overshoot and drift caused by the cooperative system latency.
@@ -607,7 +608,7 @@ initial heading of the H$^2$Bird is chosen uniformly at random from $(-90^{\circ
 
 We determine the backwards reachable set of initial states for successful
 narrow passage traversal both geometrically and using Monte Carlo simulation.
-We simulate the motion of the ornithopter beginning from various positional
+We also simulate the motion of the ornithopter beginning from various position
 and angular heading initial conditions. We use our model, as determined
 through system identification as described in Section~\ref{sec:system_model},
 using the cooperative control method in Figure~\ref{fig:block_diagram}. The
@@ -745,11 +746,11 @@ edges of the viewing triangle that we determined through experimentation
 supports the reduced probability of success calculated by the simulation. 
 
 Our experimental data validates Figure~\ref{fig:feasible_set}, as there are 
-no successes within the geometrically infeasible region. There are a few 
+no successes within the geometrically infeasible region. There are few 
 successes near the boundary of the infeasible region determined in 
 simulation. While there are successes along the boundary of the camera 
 viewing triangle, there are also many failures. We further explore this 
-behavior using Monte Carlo simulation.
+behavior using a Monte Carlo simulation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
