@@ -37,7 +37,7 @@
 
 %----------------------------------------------------------------------------%
 % METADATA
-\def \papertitle{Cooperative Control and Modeling for Narrow Passage Traversal}
+\def \papertitle{Cooperative Control and Modeling for Narrow Passage Traversal with Millirobots}
 \def \paperkeywords{AAMAS proceedings, multiagent systems, cooperative control, 
 particle filter, micro air vehicle, ground station, visual servoing, pose 
 estimation, flapping wing, ornithopter, biomimetic}
@@ -162,9 +162,9 @@ running a real-time motion tracking algorithm over a live video stream.
 \caption{H$^2$Bird ornithopter MAV}
 \label{fig:h2bird}
 \end{figure}
-Power, size, and weight constraints on micro air vehicles (MAV) 
+Power, size, and weight constraints on 10 gram scale micro air vehicles (MAV) 
 significantly limit their sensing and computational capabilities. MAVs can 
-execute only the most rudimentary control and state estimation algorithms in 
+execute only low-complexity control and state estimation algorithms in 
 real-time.  The constraints on flapping-wing MAVs are even more restrictive. 
 Though they demonstrate safety and noise profiles superior to those of 
 rotorcraft MAVs, this comes at the expense of reduced payload.
@@ -207,7 +207,7 @@ sensing difficult, so multiagent cooperative control schemes are apt
 solutions.
 
 The literature on cooperative control of MAVs is similarly limited to larger
-vehicles and purely analytical explorations. Hyams et al., Jung et al. and Nebot et al. all 
+vehicles or analytical explorations. Hyams et al., Jung et al. and Nebot et al. all 
 demonstrated cooperative visual servoing for heterogeneous UGVs~\cite{Hyams1999Cooperative}\cite{Jung1998Range}\cite{Nebot2003Agents}. 
 Luo, et al. and Mehta, et al. analyze  UAV-UGV cooperation from a modeling perspective~\cite{Luo2011Air}\cite{Mehta2006Adaptive}. 
 Rudol et al. demonstrated a similar cooperative visual servoing system with 
@@ -222,7 +222,9 @@ interact with their environments in ways that larger, monolithic vehicles
 cannot. Despite this advantage, in order to collectively equal the sensing and 
 computational capabilities of larger robots, small robots will also have to interact 
 so that multiple robots can benefit from the specialized capabilities of 
-cooperating vehicles. 
+cooperating vehicles. In this paper we consider both experimentally, and in 
+simulation, the performance of the externally-directed ornithopter to 
+demonstrate how millirobotic system can benefit from cooperation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
@@ -340,7 +342,7 @@ Q_e &= \alpha\cdot q_e/\sin(\alpha /2) \\
 %----------------------------------------------------------------------------%
 \subsection{Ground Station Pose Estimation}
 The ground station performs simple two-dimensional pose estimation on 
-H$^2$Bird using a particle filter-based motion tracking algorithm. This pose 
+H$^2$Bird using a particle filter-based motion tracking algorithm~\cite{thrun2005probabilistic}. This pose 
 estimate is the feedback input to the cooperative visual servoing feedback 
 loop, which is represented as the outermost feedback paths on the block 
 diagrams in Figs.~\ref{fig:process_flow} and~\ref{fig:block_diagram}. We 
@@ -349,8 +351,7 @@ tracking in pixel space. This allows us to perform real-time video tracking
 using the modest computational resources available on the ground station, 
 and similarly, millirobotic ground vehicles.
 
-Our pose estimation algorithm tracks H$^2$Bird's motion in the frame using a 
-particle filter~\cite{thrun2005probabilistic}. We initialize the particles 
+We initialize the particles 
 uniformly across the frame before tracking begins. To improve numerical 
 stability, we normalize the weights of all particles on each iteration, and 
 only resample the particle population when the mean particle weight falls 
@@ -413,13 +414,14 @@ background.
 %----------------------------------------------------------------------------%
 \subsection{Cooperative Visual Servoing}
 \label{sec:visual_servoing_concept}
-The ground station guides the H$^2$Bird by commanding changes to its 
-reference attitude, which is in turn governed by its on-board attitude 
-controllers (Figs.\ref{fig:process_flow} and~\ref{fig:block_diagram}). Using 
+The ground station guides the H$^2$Bird by setting the
+reference attitude of its on-board attitude 
+controller (Figs.\ref{fig:process_flow} and~\ref{fig:block_diagram}). Using 
 the estimate of 2D vehicle pose from the pose estimation algorithm, the 
 ground station calculates an altitude error and horizontal error. The ground 
-station then commands a reference attitude to the H$^2$Bird over radio, 
-according to a PID control law. We apply a fixed-lag window to the PID 
+station then uses a PID control law to calculate a new reference attitude, 
+which it sends to the H$^2$Bird over radio. 
+We apply a fixed-lag window to the PID 
 controller integral term to prevent wind-up while we launch the ornithopter. 
 We tuned the proportional and derivative terms of this outer controller to 
 dampen the overshoot and drift caused by the cooperative system latency.
