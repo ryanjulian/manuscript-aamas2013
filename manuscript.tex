@@ -313,13 +313,13 @@ However, Euler angle parameterizations of vehicle orientation suffer from
 singularities around high pitch angles. So we instead represent the vehicle 
 orientation with quaternions. The quaternion representation allows us to 
 represent relative body and world coordinate angular displacements compactly 
-with quaternion multiplication.
+with quaternion multiplication~\cite{hamilton1866elements}.
 
 Our implementation of quaternion-based control is similar to 
 Knoebe's~\cite{knoebe:quatcontrol}:
 Given a reference pose represented in quaternion form $q_r$, we define the 
 error as the rotation $q_e$ required to reach the reference pose from the 
-estimated pose $q$ (Eq.~\ref{eq:quat_error}). 
+estimated pose $q$:
 \begin{align}
 \label{eq:quat_error}
 q_e &= q^{\prime}\cdot q_r \\
@@ -446,11 +446,13 @@ successful window traversal.
 \label{sec:model_attitude}
 
 We divide our model of the vehicle dynamics into two independent models for 
-simplicity: one for yaw motion, and one for translational motion.
+simplicity. We develop one model for yaw motion, and another for translational motion.
 
-We approximate the yaw dynamics of the ornithopter with a one-dimensional 
-model to limit complexity, and because it matches our physical 
-implementation:
+We approximate the yaw dynamics of the ornithopter with a one-dimensional model to 
+limit complexity, and because it matches our physical implementation. The H$^2$Bird 
+uses an on-board PID controller to follow a particular heading sent by the ground 
+station, and the yaw dynamics are largely decoupled from the rest of the fight dynamics, 
+so our one-dimensional model is a good representation of the yaw motion:
 \begin{equation}
 \label{eq:plain_model}
 \begin{aligned}
@@ -460,7 +462,7 @@ implementation:
 \end{equation}
 We choose the reference heading angle as the input to the model, $u(s)$, and
 model the dynamics of vehicle and on-board PID controller as one system, whose
-output is the physical heading angle, $\theta(s)$. To model the translational position of
+output is the physical heading angle of the H$^2$Bird, $\theta(s)$. To model the translational position of
 the ornithopter, we use a form of Dubin's car model~\cite{lavalle:planning}:
 \begin{equation}
 \label{eq:dubin_car}
@@ -521,6 +523,9 @@ conduct experiments to validate this model.
 
 %----------------------------------------------------------------------------%
 \subsection{System Identification}
+
+In this section, we present the numerical results of the experiments we used to 
+determine the values of the parameters in our system model. 
 
 %............................................................................%
 \subsubsection{Ornithopter Attitude Control}
@@ -586,6 +591,13 @@ We measured a camera capture latency of 40 ms, pose estimation computation
 latency of 12.5 ms, and radio latency of 25 ms.
 %----------------------------------------------------------------------------%
 \subsection{Model Verification}
+
+We validate our system model experimentally by systematically attempting to
+guide the H$^2$Bird through the window using the directed headings from the
+ground station at various starting initial conditions. We compare the results of the
+experiments to the computed backwards reachable set of feasible initial
+conditions and a Monte Carlo simulation to determine the accuracy of our system 
+model.
 
 %............................................................................%
 \subsubsection{Simulation}
@@ -734,7 +746,7 @@ controller often over or under-compensates in certain regions, depending
 upon the PID tuning and the distance from the camera. Tracking noise can 
 also cause passage negotiation to fail. Variations in the H$^2$Bird hand 
 launch can cause the system to respond differently for similar initial 
-conditions. In addition, we changed H$^2$Bird battery approximately every 5 
+conditions. In addition, we changed the H$^2$Bird battery approximately every 5 
 tests, adding more variation to the H$^2$Bird performance by affecting the 
 motor power output.
 
