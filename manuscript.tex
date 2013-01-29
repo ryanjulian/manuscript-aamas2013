@@ -59,6 +59,15 @@ estimation, flapping wing, ornithopter, biomimetic}
     colorlinks, linkcolor=linkCol, citecolor=linkCol, urlcolor=linkCol
 }
 
+% descriptor list for storyboard figure
+\newenvironment{spaced_description}[1]
+  {\begin{list}{}%
+   {\renewcommand\makelabel[1]{##1:\hfill}%
+   \settowidth\labelwidth{\makelabel{#1}}%
+   \setlength\leftmargin{\labelwidth}
+   \addtolength\leftmargin{\labelsep}}}
+  {\end{list}}
+
 %----------------------------------------------------------------------------%
 % pdfLatex clean-up 
 \pdfpagewidth=8.5truein
@@ -592,12 +601,11 @@ latency of 12.5 ms, and radio latency of 25 ms.
 %----------------------------------------------------------------------------%
 \subsection{Model Verification}
 
-We validate our system model experimentally by systematically attempting to
-guide the H$^2$Bird through the window using the directed headings from the
-ground station at various starting initial conditions. We compare the results of the
-experiments to the computed backwards reachable set of feasible initial
-conditions and a Monte Carlo simulation to determine the accuracy of our system 
-model.
+We validate our system model experimentally by systematically guiding the
+H$^2$Bird through the window at various starting initial conditions. We
+compare the results of the experiments to the computed backwards reachable set
+of feasible initial conditions and a Monte Carlo simulation to determine the
+accuracy of our system model.
 
 %............................................................................%
 \subsubsection{Simulation}
@@ -693,14 +701,14 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \end{figure}
 
 Each trial included the following steps (see Fig.~\ref{fig:pf_screencap}):
-\begin{enumerate}
-\item We identify the window to the ground station by dragging a bounding 
+\begin{spaced_description}{\textbf{(4-6)}}
+\item[\textbf{(1,2)}] We identify the window to the ground station by dragging a bounding 
 box over it using a mouse. 
-\item We release H$^2$Bird by hand, in view of the camera at the desired 
+\item[\textbf{(3)}] We release H$^2$Bird by hand, in view of the camera at the desired 
 starting grid point.
-\item The H$^2$Bird attempts to fly through the window, with remote 
+\item[\textbf{(4-6)}] The H$^2$Bird attempts to fly through the window, with remote 
 guidance from the ground station.
-\end{enumerate}
+\end{spaced_description}
 
 Every 5 trials, we replaced the ornithopter's battery with a fully 
 charged one.
