@@ -237,6 +237,9 @@ demonstrate how millirobotic system can benefit from cooperation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
+
+We develop a new flapping-winged MAV and 
+
 %----------------------------------------------------------------------------%
 \subsection{H$^2$Bird Ornithopter}
 
@@ -428,7 +431,7 @@ reference attitude of its on-board attitude
 controller (Figs.\ref{fig:process_flow} and~\ref{fig:block_diagram}). Using 
 the estimate of 2D vehicle pose from the pose estimation algorithm, the 
 ground station calculates an altitude error and horizontal error. The ground 
-station then uses a PID control law to calculate a new reference attitude, 
+station then uses a PID control law to calculate a new reference pitch and yaw, 
 which it sends to the H$^2$Bird over radio. 
 We apply a fixed-lag window to the PID 
 controller integral term to prevent wind-up while we launch the ornithopter. 
@@ -693,7 +696,7 @@ are shown in \textcolor{red}{red}, the current state estimate as a
 \textcolor{blue}{blue}, and the target location as a \textcolor{green}{green} 
 circle. 1.~Particles initialized uniformly across the frame; 2.~Human operator 
 dragging bounding box across the window; 3.~H$^2$Bird enters the frame. 
-Particles converge on its location; 4.~Release H$^2$Bird, which 
+Particles converge on its location; 4.~Release H$^2$Bird, which h
 begins cooperative autonomous flight toward the target; 5.~Visual servoing 
 controller overshoots the window on the left, and commands a right-turn 
 maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
