@@ -182,7 +182,7 @@ The non-linear dynamics of flapping-wing flight compound
 these constraints~\cite{cheng:tandrdamping}\cite{humbert:dipteran2}. Much 
 past research on flapping-wing MAVs focuses on overcoming the difficulties 
 of controlling and modeling flapping-wing vehicles in the face of this
-non-linearity\cite{floreano:flying}. Common approaches to simplify these 
+non-linearity~\cite{floreano:flying}. Common approaches to simplify these 
 dynamic models include averaging over the wing-beat 
 period~\cite{cheng:tandrdamping}\cite{Schenato:flightcontrol}, and using 
 linear, low-dimensional models to predict flight 
@@ -216,13 +216,22 @@ sensing difficult, so multiagent cooperative control schemes are apt
 solutions.
 
 The literature on cooperative control of MAVs is similarly limited to larger
-vehicles or analytical explorations. Hyams et al., Jung et al. and Nebot et al. all 
-demonstrated cooperative visual servoing for heterogeneous UGVs~\cite{Hyams1999Cooperative}\cite{Jung1998Range}\cite{Nebot2003Agents}. 
-Luo, et al. and Mehta, et al. analyze  UAV-UGV cooperation from a modeling perspective~\cite{Luo2011Air}\cite{Mehta2006Adaptive}. 
-Rudol et al. demonstrated a similar cooperative visual servoing system with 
-UGVs and MAVs~\cite{Rudol2008Micro}, but the vehicles used were orders of 
-magnitude larger than the lightweight systems we target, and so were able 
-to take advantage of high-performance processors and specialized cameras.
+vehicles or analytical explorations. Hyams et al., Jung et al. and Nebot et
+al. all demonstrated cooperative visual servoing for heterogeneous
+UGVs~\cite{Hyams1999Cooperative}\cite{Jung1998Range}\cite{Nebot2003Agents}.
+Luo, et al. and Mehta, et al. analyze UAV-UGV cooperation from a modeling
+perspective~\cite{Luo2011Air}\cite{Mehta2006Adaptive}. Rudol et al.
+demonstrated a similar cooperative visual servoing system with UGVs and
+MAVs~\cite{Rudol2008Micro}, but the vehicles used were orders of magnitude
+larger than the lightweight systems we target, and so were able to take
+advantage of high-performance processors and specialized cameras. Stirling et
+al. describe a method for guiding quadrotors, designated as explorers, though
+a network of stationary quadrotors, designated as beacons, through an indoor
+environment~\cite{SwarmStirling}. The beacons provide external sensing for
+navigating the explorers through the environment, and the network can be
+extended by using explorers as beacons in undiscovered areas. Their
+implementation relies solely on local sensing, although our size range
+requires that the actual environment sensing be external to the MAV.
 
 The small size of lightweight air and ground vehicles necessitates 
 specialization, but it also pays dividends in agility. A group of specialized 
