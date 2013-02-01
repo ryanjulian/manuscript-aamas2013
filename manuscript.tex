@@ -263,13 +263,13 @@ control surfaces.}
 \end{figure}
 
 To explore these cooperative control concepts, we designed a new 
-flapping-wing MAV, known as the H$^2$Bird (Fig.~\ref{fig:h2bird}). Built 
+flapping-wing MAV, known as the H$^2$Bird (Figure~\ref{fig:h2bird}). Built 
 around the Silverlit i-Bird RC flyer power train and clap-fling wings\footnote{\raggedright Silverlit Toys Manufactory Ltd.: i-Bird RC Flyer
 \href{http://www.silverlit-flyingclub.com/wingsmaster/}
      {http://www.silverlit-flyingclub.com/wingsmaster/}}, 
 the H$^2$Bird has a wingspan of 26.5 cm and a flight weight of 13 grams. A 
 tail propeller and servo-controlled tail elevator provide control in the yaw 
-and pitch axes (Fig.~\ref{fig:h2Bird_axes}). The on-board ImageProc 2.4\footnote{ImageProc 2.4: \\
+and pitch axes (Figure~\ref{fig:h2Bird_axes}). The on-board ImageProc 2.4\footnote{ImageProc 2.4: \\
 \href{https://github.com/biomimetics/imageproc\_pcb}
      {https://github.com/biomimetics/imageproc\_pcb}} 
 controller includes of a 40 MIPS microprocessor, 6 DOF IMU, 
@@ -320,7 +320,7 @@ We implement attitude estimation and control of the H$^2$Bird on-board to
 achieve high sample-rate attitude control. We estimate the vehicle pose by
 integrating the IMU, and use a proportional-integral-derivative (PID) 
 controller to feed these estimates back to the attitude control flight 
-surfaces (Figs.~\ref{fig:process_flow} and~\ref{fig:block_diagram}).
+surfaces (Figures~\ref{fig:process_flow} and~\ref{fig:block_diagram}).
 
 \begin{figure}[tb]
 \centering
@@ -349,7 +349,7 @@ q_e &= q^{\prime}\cdot q_r \\
 		&= q_{e,w} + q_{e,x}\hat{i} + q_{e,y}\hat{j} + q_{e,z}\hat{k} \notag 
 \end{align}
 We then convert this error quaternion to an angle axis representation and 
-use it as input to the PID controller (Eqs.~\ref{eq:quat_linearize} and~\ref{eq:quat_angle}).
+use it as input to the PID controller (Equations~\ref{eq:quat_linearize} and~\ref{eq:quat_angle}).
 We perform these calculations on-board, with trigonometric lookup tables for 
 real-time performance.
 \begin{align}
@@ -368,7 +368,7 @@ The ground station performs simple two-dimensional pose estimation on
 H$^2$Bird using a particle filter-based motion tracking algorithm~\cite{thrun2005probabilistic}. This pose 
 estimate is the feedback input to the cooperative visual servoing feedback 
 loop, which is represented as the outermost feedback paths on the block 
-diagrams in Figs.~\ref{fig:process_flow} and~\ref{fig:block_diagram}. We 
+diagrams in Figures~\ref{fig:process_flow} and~\ref{fig:block_diagram}. We 
 limit our pose estimation approach to monocular two-dimensional object 
 tracking in pixel space. This allows us to perform real-time video tracking 
 using the modest computational resources available on the ground station, 
@@ -381,9 +381,9 @@ only resample the particle population when the mean particle weight falls
 below a pre-determined threshold. 
 %............................................................................%
 \subsubsection{Motion Model}
-Our motion model (Eq.~\ref{eq:motion_model}) is a simple Gaussian transition 
+Our motion model (Equation~\ref{eq:motion_model}) is a simple Gaussian transition 
 centered around each particle's current position, augmented with an 
-$\epsilon$-random uniform sampling strategy. In Eq.~\ref{eq:motion_model}, 
+$\epsilon$-random uniform sampling strategy. In Equation~\ref{eq:motion_model}, 
 $x^{[i]}_t$ is the position of the $i^\text{th}$ particle in pixel space at 
 time $t$, $\Sigma$ is a chosen covariance matrix, and $b$ is a vector of the 
 bounds of the pixel space.
@@ -404,7 +404,7 @@ and collapse, and decreases reacquisition delay.
 
 %............................................................................%
 \subsubsection{Emission Model}
-Our emission model (Eq.~\ref{eq:emission_model}) implements a sampling
+Our emission model (Equation~\ref{eq:emission_model}) implements a sampling
 approach to motion tracking via na\"{i}ve background subtraction, e.g. frame 
 differencing~\cite{Ahad2011Computer}. On each iteration, the system provides the emission 
 model with $f_0$, the frame representing the background, and $f_t$, the most 
@@ -439,7 +439,7 @@ background.
 \label{sec:visual_servoing_concept}
 The ground station guides the H$^2$Bird by setting the
 reference attitude of its on-board attitude 
-controller (Figs.\ref{fig:process_flow} and~\ref{fig:block_diagram}). Using 
+controller (Figures~\ref{fig:process_flow} and~\ref{fig:block_diagram}). Using 
 the estimate of 2D vehicle pose from the pose estimation algorithm, the 
 ground station calculates an altitude error and horizontal error. The ground 
 station then uses a PID control law to calculate a new reference pitch and yaw, 
@@ -561,7 +561,7 @@ on-board gyroscope. We then used MATLAB\footnote{The MathWorks, Inc. Matlab:
 \href{http://www.mathworks.com/products/matlab/}
      {http://www.mathworks.com/products/matlab/}} 
 to fit a simple low-order model to the step response, as discussed in 
-Sec.~\ref{sec:model_attitude}.
+Section~\ref{sec:model_attitude}.
 
 \begin{figure}[tb]
 \centering
@@ -714,7 +714,7 @@ maneuver to recover; 6.~H$^2$Bird successfully navigates through the window.}
 \label{fig:pf_screencap}
 \end{figure}
 
-Each trial included the following steps (see Fig.~\ref{fig:pf_screencap}):
+Each trial included the following steps (see Figure~\ref{fig:pf_screencap}):
 \begin{spaced_description}{\textbf{(4-6)}}
 \item[\textbf{(1,2)}] We identify the window to the ground station by dragging a bounding 
 box over it using a mouse. 
@@ -790,12 +790,15 @@ behavior using a Monte Carlo simulation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
-We have demonstrated cooperative guidance of a 13 gram flapping-wing MAV with a
-lightweight base station in hardware. In addition, we developed a model of the
-cooperative system using system identification methods on the individual system capabilities, and composing
-it with known system interactions. The corroboration between our simulated and
-experimental results shows that our simplified modeling approach is useful for 
-predicting the performance of cooperative systems at low computational cost. Our model could also be used to determine when to begin control with high probability of success, even though we lack information about the complete pose of the MAV.
+We have demonstrated cooperative guidance of a 13 gram flapping-wing MAV with
+a lightweight base station in hardware. In addition, we developed a model of
+the cooperative system using system identification methods on the individual
+system capabilities, and composing it with known system interactions. The
+corroboration between our simulated and experimental results shows that our
+simplified modeling approach is useful for predicting the performance of
+cooperative systems at low computational cost. Our model could also be used to
+determine when to begin control with high probability of success, even though
+we lack information about the complete pose of the MAV.
 
 We intend to further explore the benefits and limitations of collaboration in
 unstructured environments by deploying our base station on millirobotic ground
