@@ -247,7 +247,9 @@ demonstrate how millirobotic system can benefit from cooperation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Robotic and Vision Platforms}
 
-We develop a new flapping-winged MAV and 
+We develop a new flapping-winged MAV, the H$^2$Bird, and ground station. We
+use these sytems to cooperatively navigate through a narrow passage, by
+sensing the position of the MAV and the goal using the ground station.
 
 %----------------------------------------------------------------------------%
 \subsection{H$^2$Bird Ornithopter}
@@ -579,7 +581,7 @@ PID controller providing inputs to the actuators. We present the results of
 the the step response experiment, along with the response of the fitted model,
 in Figure~\ref{fig:step_response}.
 
-The step response rise time is 1.4 seconds. The H$^2$Bird flies at an 
+We calculated the step response rise time to be 1.4 seconds. The H$^2$Bird flies at an 
 average forward velocity of 1.2 m/s during our experiments, so we estimate 
 the minimum turning radius of the robot to be 1.07 meters:
 \begin{equation}
