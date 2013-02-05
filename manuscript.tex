@@ -317,6 +317,12 @@ computer vision libraries for image capture and processing.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System Concept and Algorithms}
 
+Our system combines both the sensing of the H$^2$Bird and the execution of the
+desired headings to steer the robot towards the goal. The sensing is performed
+on the ground station using frame differencing and a particle filter. The
+H$^2$Bird steers to the heading directed by the ground station using a
+quaternion-based PID controller.
+
 %----------------------------------------------------------------------------%
 \subsection{Ornithopter Attitude Control}
 
