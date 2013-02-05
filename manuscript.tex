@@ -321,7 +321,7 @@ Our system combines both the sensing of the H$^2$Bird and the execution of the
 desired headings to steer the robot towards the goal. The sensing is performed
 on the ground station using frame differencing and a particle filter. The
 H$^2$Bird steers to the heading directed by the ground station using a
-quaternion-based PID controller.
+quaternion-based proportional-integral-derivative controller.
 
 %----------------------------------------------------------------------------%
 \subsection{Ornithopter Attitude Control}
@@ -472,8 +472,8 @@ dampen the overshoot and drift caused by the cooperative system latency.
 \section{System Model}
 \label{sec:system_model}
 
-In this section, we describe the models that we developed to simulate the
-behaviors of the ornithopter and the ground station. We use these models to
+We developed models using system identification concepts to simulate the
+behaviors of the H$^2$Bird and the ground station. We use these models to
 determine the set of initial conditions that are most likely to result in
 successful window traversal.
 
@@ -496,9 +496,9 @@ so our one-dimensional model is a good representation of the yaw motion:
 & \text{where }H(s) = \frac{\theta(s)}{u(s)}
 \end{aligned}
 \end{equation}
-We choose the reference heading angle as the input to the model, $u(s)$, and
+We choose the reference heading angle as the input, $u(s)$, to the model, and
 model the dynamics of vehicle and on-board PID controller as one system, whose
-output is the physical heading angle of the H$^2$Bird, $\theta(s)$. To model the translational position of
+output, $\theta(s)$, is the physical heading angle of the H$^2$Bird. To model the translational position of
 the ornithopter, we use a form of Dubin's car model~\cite{lavalle:planning}:
 \begin{equation}
 \label{eq:dubin_car}
@@ -519,15 +519,19 @@ time-domain output of Equation~\ref{eq:plain_model}, $\theta(t)$.
 \subsection{Ground Station Pose Estimation}
 
 Our model of the ground station includes models for both the camera and the
-pose estimation computation. The camera model contains both a latency, which 
-is in series with the path between the ``Camera'' and 
-``Ornithopter Dynamics'' blocks in Figure~\ref{fig:block_diagram}, and a 
-model of the camera's viewing angle constraints.
+pose estimation computation. Both models contain latencies, which we
+identified in several locations in the block diagram in
+Figure~\ref{fig:block_diagram}. The camera model experiences a delay in series
+with the path between the ``Camera'' and ``Ornithopter Dynamics'' blocks. The
+pose estimation algorithm experiences latency in the pose estimation block
+when updating the particle filter, and during the transmission of the desired
+heading from the external PID controller to the internal PID controller on
+the robot, via radio.
  
-We model the viewing angle of the camera as a pixel map from one edge of a 
-63$^{\circ}$ viewing triangle to the other. The camera has an image width of 
-640 pixels. We calculate the desired heading angle in degrees, for a given 
-distance from the camera:
+In addition to the latencies in the system, we model the viewing angle of the
+camera as a pixel map from one edge of a 63$^{\circ}$ viewing triangle to the
+other. The camera has an image width of 640 pixels. We calculate the desired
+heading angle in degrees, for a given distance from the camera:
 \begin{equation} 
 \label{eq:desired_heading} 
 \text{Desired heading} = \frac{640\,\text{px}}{2d\tan{\frac{63^{\circ}}{2}}}{\times\frac{63^{\circ}}{640\,\text{px}}\times x}
@@ -542,15 +546,9 @@ camera, the ground station's directed heading steadily increases, even
 though the robot has not actually moved farther from the window. These 
 problems are most severe in areas close to the camera.
 
-We experienced latency during experiementation in estimating the pose of the
-ornithopter on the ground station. Referring to
-Figure~\ref{fig:block_diagram}, there were delays in the pose estimation block
-while updating the particle filter, in the PID controller block when
-calculating the new reference attitude, and in the transmission of the desired
-heading from the external controller to the controller on the robot via radio.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Experiments, Results, and Performance}
+\section{Experiments and Results}
 \label{sec:performance}
 To bound the performance of the cooperative control system, we determine 
 the feasible set of initial conditions that result in successful narrow 
@@ -624,7 +622,7 @@ To compute the particle filter and controller latency, we again used system
 timers to determine the average time between the start and end of computation.
 
 We measured a camera capture latency of 40 ms, pose estimation computation 
-latency of 12.5 ms, and radio latency of 25 ms.
+latency of 12.5 ms, and radio transmission latency of 25 ms.
 %----------------------------------------------------------------------------%
 \subsection{Model Verification}
 
@@ -674,14 +672,14 @@ angular heading perpendicular to the window plane. A success, or feasible
 initial condition, consists of a path that intersects the window at some 
 point and does not leave the camera viewing triangle, and is indicated in 
 green. The geometrically infeasible region is computed using the minimum 
-turning radius and the geometry of the camera's field-of-view and is 
-indicated in blue. The region in red is not geometrically feasible, but is 
+turning radius and the geometry of the camera's field-of-view, and is 
+indicated in blue. The region in red is geometrically feasible, but is 
 infeasible as a result of the cooperative control simulation dynamics.
 
 We conducted a Monte Carlo simulation to determine the probability of
 successful window navigation for a given point within the testing area. Using
 this information we can make assumptions about ideal starting positions for
-cooperative control. For each point within a 10 cm grid within the camera
+cooperative control. For each point in a 10 cm grid within the camera
 viewing triangle, we simulated 40 trials using an initial heading randomly
 sampled from a uniform distribution between -90$^{\circ}$ and 90$^{\circ}$,
 with the 0$^{\circ}$ heading perpendicular to the window.
@@ -734,7 +732,7 @@ Each trial included the following steps (see Figure~\ref{fig:pf_screencap}):
 \begin{spaced_description}{\textbf{(4-6)}}
 \item[\textbf{(1,2)}] We identify the window to the ground station by dragging a bounding 
 box over it using a mouse. 
-\item[\textbf{(3)}] We release H$^2$Bird by hand, in view of the camera at the desired 
+\item[\textbf{(3)}] We release the H$^2$Bird by hand, in view of the camera at the desired 
 starting grid point.
 \item[\textbf{(4-6)}] The H$^2$Bird attempts to fly through the window, with remote 
 guidance from the ground station.
@@ -767,47 +765,45 @@ the camera, to determine the success rate near the center of viewing plane.
 \end{minipage}
 \end{figure*}
 
-Conducting the experimental trials as described in 
-Section~\ref{sec:experiments_verification}, we achieved a success rate of 
+As a result of the experimental trials, we achieved a success rate of 
 80\% for initial conditions in the middle of the testing space and in front 
 of the camera. As we moved towards the edges of the feasible region in 
 Figure~\ref{fig:flight_paths}, the success rate diminished to 50\%.
 
-The lower success rate on the edges of the camera frame can be explained by 
-several factors. On the edges of the viewing triangle, the yaw control 
-inputs are large in magnitude, although this is not necessary in all cases. 
-Since the control algorithm we are using has no notion of depth, it applies 
-the same control input whether the ornithopter is close to the camera, where 
-small changes in heading are adequate, or far away from the camera, where 
-large changes in heading are necessary. Due to this phenomenon, the 
-controller often over or under-compensates in certain regions, depending 
-upon the PID tuning and the distance from the camera. Tracking noise can 
-also cause passage negotiation to fail. Variations in the H$^2$Bird hand 
-launch can cause the system to respond differently for similar initial 
-conditions. In addition, we changed the H$^2$Bird battery approximately every 5 
-tests, adding more variation to the H$^2$Bird performance by affecting the 
-motor power output.
+The lower success rate on the edges of the camera frame can be explained by
+several factors. On the edges of the viewing triangle, the yaw control inputs
+are large in magnitude, although this is not necessary in all cases. Since the
+control algorithm we are using has no notion of depth, it applies the same
+control input whether the ornithopter is close to the camera, where small
+changes in heading are adequate, or far away from the camera, where large
+changes in heading are necessary. Due to this phenomenon, the controller often
+over or under-compensates in certain regions, depending upon the PID tuning
+and the distance from the camera. Tracking noise and variations in the
+H$^2$Bird hand launch can cause the system to respond differently for similar
+initial conditions, or to fail completely. In addition, we changed the
+H$^2$Bird battery approximately every 5 tests, adding more variation to the
+H$^2$Bird performance by affecting the motor power output.
 
 The results of our experimental trials verify the results of the Monte Carlo
 simulation of our model. The trials that we conducted in
 Figure~\ref{fig:flight_paths_feasible} correspond to the circled region in
 Figure~\ref{fig:heat_map}. The 80\% success rate that we measured in the
 experiments corroborates our calculated probability of success of
-approximately 80\%. Additionally, the diminished success rate of 50\% near the
-edges of the viewing triangle that we determined through experimentation
-supports the reduced probability of success calculated by the simulation. 
+approximately 80\%, demonstrated by the Monte Carlo simulation. Additionally,
+the diminished success rate of 50\% near the edges of the viewing triangle
+that we determined through experimentation supports the reduced probability of
+success calculated by the simulation.
 
 Our experimental data validates Figure~\ref{fig:feasible_set}, as there are 
 no successes within the geometrically infeasible region. There are few 
 successes near the boundary of the infeasible region determined in 
 simulation. While there are successes along the boundary of the camera 
-viewing triangle, there are also many failures. We further explore this 
-behavior using a Monte Carlo simulation.
+viewing triangle, there are also many failures.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusions and Future Work}
 We have demonstrated cooperative guidance of a 13 gram flapping-wing MAV with
-a lightweight base station in hardware. In addition, we developed a model of
+a lightweight base station. In addition, we developed a model of
 the cooperative system using system identification methods on the individual
 system capabilities, and composing it with known system interactions. The
 corroboration between our simulated and experimental results shows that our
