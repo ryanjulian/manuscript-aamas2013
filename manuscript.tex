@@ -235,7 +235,7 @@ environment~\cite{SwarmStirling}. The beacons provide external sensing for
 navigating the explorers through the environment, and the network can be
 extended by using explorers as beacons in undiscovered areas. Their
 implementation relies solely on local sensing, although our size range
-requires that the actual environment sensing be external to the MAV.
+requires that the actual environment sensing be external to the MAV. Additionally, they do not consider time constraints in their planning, whereas our MAV has a minimum forward speed and turning radius.
 
 The small size of lightweight air and ground vehicles necessitates 
 specialization, but it also pays dividends in agility. A group of specialized 
@@ -393,38 +393,41 @@ below a pre-determined threshold.
 \subsubsection{Motion Model}
 Our motion model (Equation~\ref{eq:motion_model}) is a simple Gaussian transition 
 centered around each particle's current position, augmented with an 
-$\epsilon$-random uniform sampling strategy. In Equation~\ref{eq:motion_model}, 
-$x^{[i]}_t$ is the position of the $i^\text{th}$ particle in pixel space at 
-time $t$, $\Sigma$ is a chosen covariance matrix, and $b$ is a vector of the 
-bounds of the pixel space.
-\begin{equation}
+$\epsilon$-random uniform sampling strategy. The sampling law is as follows:\begin{equation}
 \label{eq:motion_model}
 x^{[i]}_t \sim \begin{cases}
 \mathcal{N}(x^{[i]}_{t-1}, \Sigma), &\text{with probability } 1-\epsilon \\
 \mathcal{U}(0,b),& \text{with probability } \epsilon \\
 \end{cases}\\
 \end{equation}
+In Equation~\ref{eq:motion_model}, $x^{[i]}_t$ is the position of the $i^\text{th}$ 
+particle in pixel space at time $t$, $\Sigma$ is a chosen covariance matrix, and $b$ 
+is a vector of the bounds of the pixel space. The sampling method requires that, with 
+probability $\epsilon$, the particle filter will choose a pixel from a uniform 
+distribution of all of the pixels in the pixel space for the location of the $i^\text{th}$ 
+particle. The $\epsilon$-random uniform transitions increase tracking robustness, by 
+forcing the filter to always sample broadly across the pixel space. This helps prevent 
+overconfidence and collapse, and decreases reacquisition delay. 
+
 In the experiments we present in this work, we used a diagonal covariance matrix 
 with a variance of 256, and an $\epsilon$ of 0.3. We find the Gaussian 
 transition model is sufficient for tracking motion in which frame-to-frame 
-position changes are relatively small. The $\epsilon$-random uniform 
-transitions increase tracking robustness, by forcing the filter to always 
-sample broadly across the pixel space. This helps prevent overconfidence 
-and collapse, and decreases reacquisition delay. 
+position changes are relatively small.
 
 %............................................................................%
 \subsubsection{Emission Model}
-Our emission model (Equation~\ref{eq:emission_model}) implements a sampling
+The emission model weights the particles' likelihood of containing a pixel location that is part of the H$^2$Bird. The particles with higher weights have a greater probability of being resampled. Our emission model implements a sampling
 approach to motion tracking via na\"{i}ve background subtraction, e.g. frame 
-differencing~\cite{Ahad2011Computer}. On each iteration, the system provides the emission 
-model with $f_0$, the frame representing the background, and $f_t$, the most 
-recent frame captured. The model assigns a weight $w^{[i]}_t$ to each 
-particle $x^{[i]}_t$, proportional to the color distance in RGB space 
-between the pixels of $f_0$ and $f_t$ at the location $x^{[i]}_t$.
+differencing~\cite{Ahad2011Computer}: 
 \begin{equation}
 \label{eq:emission_model}
 w^{[i]}_t = 1 + \norm{f_0(x^{[i]}_t)-f_t(x^{[i]}_t)}^2
 \end{equation} 
+On each iteration, the system provides the emission 
+model with $f_0$, the frame representing the background, and $f_t$, the most 
+recent frame captured. The model assigns a weight $w^{[i]}_t$ to each 
+particle $x^{[i]}_t$, proportional to the color distance in RGB space 
+between the pixels of $f_0$ and $f_t$ at the location $x^{[i]}_t$.
 Hence, particles are more likely to be resampled in regions of 
 the image which are dissimilar in color from the background.
 
