@@ -236,7 +236,7 @@ relies solely on local sensing, although our size range requires that the
 actual environment sensing be external to the MAV. Additionally, they do not
 consider time constraints in their planning, whereas our MAV has a minimum
 forward speed and turning radius.
-
+\looseness -1
 The small size of lightweight air and ground vehicles necessitates 
 specialization, but it also pays dividends in agility. A group of specialized 
 heterogeneous, lightweight robots can navigate more challenging terrains and 
@@ -347,7 +347,7 @@ singularities around high pitch angles. So we instead represent the vehicle
 orientation with quaternions. The quaternion representation allows us to 
 represent relative body and world coordinate angular displacements compactly 
 with quaternion multiplication~\cite{hamilton1866elements}.
-
+\looseness -1
 Our implementation of quaternion-based control is similar to 
 Knoebe's~\cite{knoebe:quatcontrol}:
 Given a reference pose represented in quaternion form $q_r$, we define the 
@@ -479,7 +479,7 @@ determine the set of initial conditions that are most likely to result in
 successful window traversal.
 
 %----------------------------------------------------------------------------%
-~\subsection{Ornithopter Attitude Control}
+\subsection{Ornithopter Attitude Control}
 \label{sec:model_attitude}
 
 We divide our model of the vehicle dynamics into two independent models for 
@@ -775,12 +775,13 @@ viewing triangle, there are also many failures.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-~\section{Conclusions and Future Work}
+\section{Conclusions and Future Work}
 We have demonstrated cooperative guidance of a 13 gram flapping-wing MAV with
 a lightweight base station. In addition, we developed a model of
 the cooperative system using system identification methods on the individual
-system capabilities, and composing it with known system interactions. The
-corroboration between our simulated and experimental results shows that our
+system capabilities, and composing it with known system interactions. 
+
+\noindent The corroboration between our simulated and experimental results shows that our
 simplified modeling approach is useful for predicting the performance of
 cooperative systems at low computational cost. Our model could also be used to
 determine when to begin control with high probability of success, even though
