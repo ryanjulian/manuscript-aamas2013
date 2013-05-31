@@ -1,4 +1,4 @@
 manuscript-icra2013
 ====================
 
-Manuscript for ICRA 2013 iBird tracking paper
+Manuscript for AAMAS 2013 iBird tracking paper
